@@ -1,6 +1,6 @@
-# ASP.NET Boilerplate ReactJS Template
+# Elevation Amdin Potal
 
-The React.js integration for ABP Boilerplate framework. This template is built on React+Mobx+Typescript. SOLID, SoC principles are used.
+ This template is built on React+Mobx+Typescript. SOLID, SoC principles are used.
 
 ![](_screenshots/dashboard.png)
 
@@ -46,8 +46,3 @@ This framework is designed by utilizing MVC design pattern and layered architect
 
 ![](_screenshots/architecture.jpg)
 
-## Authors of ASP.NET Boilerplate ReactJS Template
-
-* **Rashiduddin Yoldash** - *Initial work* - [ryoldash](https://github.com/ryoldash)
-* **Mehmet Yasir Aktunç** - *Initial work* - [mhmtyasr](https://github.com/mhmtyasr)
-* **Samet Kabay** - *Initial work* - [smtkby](https://github.com/smtkby)
