@@ -121,18 +121,19 @@ class Login extends React.Component<ILoginProps> {
                 <FormItem name={'password'} rules={rules.password}>
                   <Input placeholder={L('Password')} prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" size="large" />
                 </FormItem>
-                <Row style={{ margin: '0px 0px 10px 15px ' }}>
-                  <Col span={12} offset={0}>
-                    <Checkbox checked={loginModel.rememberMe} onChange={loginModel.toggleRememberMe} style={{ paddingRight: 8 }} />
-                    {L('RememberMe')}
-                    <br />
-                    <a>{L('ForgotPassword')}</a>
-                  </Col>
-
-                  <Col span={8} offset={4}>
+                <Row style={{ margin: '0px 0px 10px 15px ',textAlign: 'center'}}>
+                  <Col span={8} offset={8}>
                     <Button style={{ backgroundColor: '#f5222d', color: 'white' }} htmlType={'submit'} danger>
                       {L('LogIn')}
                     </Button>
+                  </Col>
+                 
+                </Row>
+                <Row style={{textAlign: 'center'}}>
+                <Col span={8} offset={8}>
+                    <Checkbox checked={loginModel.rememberMe} onChange={loginModel.toggleRememberMe} style={{ paddingRight: 8 }} />
+                    {L('RememberMe')}
+                    
                   </Col>
                 </Row>
               </Card>

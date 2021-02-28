@@ -2,19 +2,19 @@ import './index.less';
 
 import * as React from 'react';
 
-import { Avatar, Col, Dropdown, Menu, Row } from 'antd';
-import { MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from '@ant-design/icons';
-
+import {  Col,  Row } from 'antd';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+/*
 import { L } from '../../lib/abpUtility';
 import { Link } from 'react-router-dom';
 
 import profilePicture from '../../images/user.png';
-
+*/
 export interface IHeaderProps {
   collapsed?: any;
   toggle?: any;
 }
-
+/*
 const userDropdownMenu = (
   <Menu>
     <Menu.Item key="2">
@@ -25,7 +25,7 @@ const userDropdownMenu = (
     </Menu.Item>
   </Menu>
 );
-
+*/
 export class Header extends React.Component<IHeaderProps> {
   render() {
     return (
@@ -37,7 +37,7 @@ export class Header extends React.Component<IHeaderProps> {
             <MenuFoldOutlined className="trigger" onClick={this.props.toggle} />
           )}
         </Col>
-        <Col style={{ padding: '0px 15px 0px 15px', textAlign: 'right' }} span={12}>
+        {/*<Col style={{ padding: '0px 15px 0px 15px', textAlign: 'right' }} span={12}>
           <Dropdown overlay={userDropdownMenu} trigger={['click']}>
             <Avatar
               style={{ height: 45, width: 45 }}
@@ -46,7 +46,7 @@ export class Header extends React.Component<IHeaderProps> {
               src={profilePicture}
             />
           </Dropdown>
-        </Col>
+          </Col>*/}
       </Row>
     );
   }

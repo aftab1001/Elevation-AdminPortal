@@ -1,5 +1,5 @@
 import LoadableComponent from './../Loadable/index';
-import { HomeOutlined, UserOutlined, WalletOutlined, AppstoreOutlined,TagsOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, WalletOutlined, AppstoreOutlined,TagsOutlined,LogoutOutlined } from '@ant-design/icons';
 
 export const userRouter: any = [
   {
@@ -89,7 +89,8 @@ export const appRouters: any = [
     permission: '',
     title: 'Logout',
     name: 'logout',
-    showInMenu: false,
+    icon: LogoutOutlined,
+    showInMenu: true,
     component: LoadableComponent(() => import('../../components/Logout')),
   },
   {
