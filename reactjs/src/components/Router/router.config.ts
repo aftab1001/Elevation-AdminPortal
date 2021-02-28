@@ -1,5 +1,5 @@
 import LoadableComponent from './../Loadable/index';
-import { HomeOutlined, UserOutlined, TagsOutlined, AppstoreOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, WalletOutlined, AppstoreOutlined,TagsOutlined } from '@ant-design/icons';
 
 export const userRouter: any = [
   {
@@ -47,7 +47,7 @@ export const appRouters: any = [
     icon: UserOutlined,
     showInMenu: true,
     component: LoadableComponent(() => import('../../scenes/Users')),
-  },
+  } ,
   {
     path: '/roles',
     permission: 'Pages.Roles',
@@ -58,6 +58,24 @@ export const appRouters: any = [
     component: LoadableComponent(() => import('../../scenes/Roles')),
   },
   {
+    path: '/rooms',
+    permission: 'Pages.Tenants',
+    title: 'Rooms',
+    name: 'rooms',
+    icon: WalletOutlined,
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/Rooms')),
+  },
+  {
+    path: '/apartments',
+    permission: 'Pages.Tenants',
+    title: 'Apartments',
+    name: 'apartments',
+    icon: WalletOutlined,
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/Apartments')),
+  },
+  {
     path: '/tenants',
     permission: 'Pages.Tenants',
     title: 'Tenants',
@@ -65,15 +83,6 @@ export const appRouters: any = [
     icon: AppstoreOutlined,
     showInMenu: true,
     component: LoadableComponent(() => import('../../scenes/Tenants')),
-  },
-  {
-    path: '/about',
-    permission: '',
-    title: 'About',
-    name: 'about',
-    icon: InfoCircleOutlined,
-    showInMenu: true,
-    component: LoadableComponent(() => import('../../scenes/About')),
   },
   {
     path: '/logout',

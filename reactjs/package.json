@@ -30,7 +30,7 @@
     "extends": "react-app"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "set PORT=9001 && craco start",
     "build": "craco build",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "craco test",

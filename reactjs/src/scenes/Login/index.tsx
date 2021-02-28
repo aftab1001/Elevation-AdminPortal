@@ -2,13 +2,14 @@ import './index.less';
 
 import * as React from 'react';
 
-import { Button, Card, Checkbox, Col, Form, Input, Modal, Row } from 'antd';
+import { Button, Card, Checkbox,Avatar, Col, Form, Input, Modal, Row } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { inject, observer } from 'mobx-react';
 
 import AccountStore from '../../stores/accountStore';
 import AuthenticationStore from '../../stores/authenticationStore';
 import { FormInstance } from 'antd/lib/form';
+import AbpLogo from './../../images/logo.svg';
 import { L } from '../../lib/abpUtility';
 import { Redirect } from 'react-router-dom';
 import SessionStore from '../../stores/sessionStore';
@@ -78,19 +79,7 @@ class Login extends React.Component<ILoginProps> {
             <Col span={8} offset={8}>
               <Card>
                 <Row>
-                  {!!this.props.sessionStore!.currentLogin.tenant ? (
-                    <Col span={24} offset={0} style={{ textAlign: 'center' }}>
-                      <Button type="link" onClick={loginModel.toggleShowModal}>
-                        {L('CurrentTenant')} : {this.props.sessionStore!.currentLogin.tenant.tenancyName}
-                      </Button>
-                    </Col>
-                  ) : (
-                    <Col span={24} offset={0} style={{ textAlign: 'center' }}>
-                      <Button type="link" onClick={loginModel.toggleShowModal}>
-                        {L('NotSelected')}
-                      </Button>
-                    </Col>
-                  )}
+                <Avatar shape="square" style={{ height: 70, width: 80, margin:"0 auto" }} src={AbpLogo} />                  
                 </Row>
               </Card>
             </Col>
@@ -107,9 +96,10 @@ class Login extends React.Component<ILoginProps> {
             >
               <Row>
                 <Col span={8} offset={8}>
-                  <h3>{L('TenancyName')}</h3>
+                  <h3>{L('TenancyName')}123</h3>
                 </Col>
                 <Col>
+               
                   <FormItem name={'tenancyName'}>
                     <Input placeholder={L('TenancyName')} prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} size="large" />
                   </FormItem>
@@ -122,7 +112,7 @@ class Login extends React.Component<ILoginProps> {
             <Col span={8} offset={8}>
               <Card>
                 <div style={{ textAlign: 'center' }}>
-                  <h3>{L('WellcomeMessage')}</h3>
+                  <h3>Welcome to admin portal</h3>
                 </div>
                 <FormItem name={'userNameOrEmailAddress'} rules={rules.userNameOrEmailAddress}>
                   <Input placeholder={L('UserNameOrEmail')} prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} size="large" />
