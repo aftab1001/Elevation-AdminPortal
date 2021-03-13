@@ -1521,6 +1521,72 @@ namespace Elevations.Migrations
                     b.ToTable("AbpUsers");
                 });
 
+            modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.Rooms", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ImageSequence")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Price")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RoomsCategory")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomsCategory");
+
+                    b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.RoomsCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoomsCategory");
+                });
+
             modelBuilder.Entity("Elevations.MultiTenancy.Tenant", b =>
                 {
                     b.Property<int>("Id")
@@ -1800,6 +1866,15 @@ namespace Elevations.Migrations
                     b.Navigation("DeleterUser");
 
                     b.Navigation("LastModifierUser");
+                });
+
+            modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.Rooms", b =>
+                {
+                    b.HasOne("Elevations.EntityFrameworkCore.HotelDto.RoomsCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("RoomsCategory");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Elevations.MultiTenancy.Tenant", b =>
