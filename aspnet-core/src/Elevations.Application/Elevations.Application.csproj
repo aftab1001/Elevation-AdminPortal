@@ -11,6 +11,9 @@
     <RootNamespace>Elevations</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="RoomCategory\IApartmentAppService.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Elevations.Core\Elevations.Core.csproj" />
     <ProjectReference Include="..\Elevations.EntityFrameworkCore\Elevations.EntityFrameworkCore.csproj" />
   </ItemGroup>

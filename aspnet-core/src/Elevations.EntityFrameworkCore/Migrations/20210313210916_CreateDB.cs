@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Elevations.Migrations
 {
-    public partial class CreateDb : Migration
+    public partial class CreateDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -444,6 +444,20 @@ namespace Elevations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ApartmentCategory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApartmentCategory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RoomsCategory",
                 columns: table => new
                 {
@@ -782,6 +796,34 @@ namespace Elevations.Migrations
                         principalTable: "AbpWebhookEvents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Apartments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApartmentCategory = table.Column<int>(type: "int", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageSequence = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Apartments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Apartments_ApartmentCategory_ApartmentCategory",
+                        column: x => x.ApartmentCategory,
+                        principalTable: "ApartmentCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1262,6 +1304,11 @@ namespace Elevations.Migrations
                 column: "WebhookEventId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Apartments_ApartmentCategory",
+                table: "Apartments",
+                column: "ApartmentCategory");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rooms_RoomsCategory",
                 table: "Rooms",
                 column: "RoomsCategory");
@@ -1351,6 +1398,9 @@ namespace Elevations.Migrations
                 name: "AbpWebhookSubscriptions");
 
             migrationBuilder.DropTable(
+                name: "Apartments");
+
+            migrationBuilder.DropTable(
                 name: "Rooms");
 
             migrationBuilder.DropTable(
@@ -1367,6 +1417,9 @@ namespace Elevations.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpWebhookEvents");
+
+            migrationBuilder.DropTable(
+                name: "ApartmentCategory");
 
             migrationBuilder.DropTable(
                 name: "RoomsCategory");

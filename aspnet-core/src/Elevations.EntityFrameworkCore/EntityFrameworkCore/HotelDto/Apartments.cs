@@ -14,8 +14,8 @@
             CreationTime = DateTime.Now;
         }
 
-        [ForeignKey(nameof(RoomsCategory))]
-        public RoomsCategory Category { get; set; }
+        [ForeignKey(nameof(ApartmentCategory))]
+        public ApartmentCategory Category { get; set; }
 
         [Required]
         public string Description { get; set; }

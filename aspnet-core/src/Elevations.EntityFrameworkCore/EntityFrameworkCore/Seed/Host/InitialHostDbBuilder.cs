@@ -17,6 +17,8 @@
             new DefaultSettingsCreator(_context).Create();
             new DefaultRoomsCategoryBuilder(_context).Create();
             new DefaultRoomsBuilder(_context).Create();
+            new DefaultApartmentCategoryBuilder(_context).Create();
+            new ApartmentCategories(_context).Create();
 
             _context.SaveChanges();
         }
