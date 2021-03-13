@@ -7,3 +7,9 @@ bin/
 aspnet-core/src/Elevations.Web.Host/App_Data/Logs/
 aspnet-core/src/Elevations.Web.Mvc/App_Data/Logs/
 aspnet-core/src/Elevations.Migrator/Logs/Logs.txt
+aspnet-core/src/Elevations.Migrator/appsettings.json
+aspnet-core/src/Elevations.Migrator/appsettings.json
+aspnet-core/src/Elevations.Migrator/appsettings.json
+aspnet-core/src/Elevations.Migrator/appsettings.json
+aspnet-core/src/Elevations.Web.Host/appsettings.json
+*.json

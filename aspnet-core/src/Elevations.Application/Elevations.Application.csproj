@@ -12,5 +12,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Elevations.Core\Elevations.Core.csproj" />
+    <ProjectReference Include="..\Elevations.EntityFrameworkCore\Elevations.EntityFrameworkCore.csproj" />
   </ItemGroup>
 </Project>
