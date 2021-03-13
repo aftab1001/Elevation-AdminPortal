@@ -24,4 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Elevations.Core\Elevations.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
 </Project>
