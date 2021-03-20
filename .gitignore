@@ -13,3 +13,6 @@ aspnet-core/src/Elevations.Migrator/appsettings.json
 aspnet-core/src/Elevations.Migrator/appsettings.json
 aspnet-core/src/Elevations.Web.Host/appsettings.json
 *.json
+*.json
+*.json
+aspnet-core/src/Elevations.Migrator/appsettings.json

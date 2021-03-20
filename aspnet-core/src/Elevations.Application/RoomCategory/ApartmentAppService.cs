@@ -15,7 +15,7 @@
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
 
-   
+    [AbpAuthorize(PermissionNames.Pages_Apartments)]
     public class ApartmentAppService :
         AsyncCrudAppService<Apartments, ApartmentDto, int, PagedRoleResultRequestDto, UpdateApartmentDto, ApartmentDto>,
         IApartmentService
