@@ -4,6 +4,8 @@ import UserStore from './userStore';
 import SessionStore from './sessionStore';
 import AuthenticationStore from './authenticationStore';
 import AccountStore from './accountStore';
+import RoomStore from './roomStore';
+import ApartmentStore from './apartmentStore';
 
 export default function initializeStores() {
   return {
@@ -13,5 +15,8 @@ export default function initializeStores() {
     userStore: new UserStore(),
     sessionStore: new SessionStore(),
     accountStore: new AccountStore(),
+    roomStore: new RoomStore(),
+    apartmentStore: new ApartmentStore(),
+
   };
 }

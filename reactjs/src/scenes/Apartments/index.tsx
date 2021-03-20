@@ -3,40 +3,39 @@ import * as React from 'react';
 import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, Tag } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { inject, observer } from 'mobx-react';
-
 import AppComponentBase from '../../components/AppComponentBase';
-import CreateOrUpdateTenant from './components/createOrUpdateApartment';
+import CreateOrUpdateApartment from './components/createOrUpdateApartment';
 import { EntityDto } from '../../services/dto/entityDto';
 import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
-import TenantStore from '../../stores/tenantStore';
+import ApartmentStore from '../../stores/apartmentStore';
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
 
-export interface ITenantProps {
-  tenantStore: TenantStore;
+export interface IApartmentProps {
+  apartmentStore: ApartmentStore;
 }
 
-export interface ITenantState {
+export interface IApartmentState {
   modalVisible: boolean;
   maxResultCount: number;
   skipCount: number;
-  tenantId: number;
+  apartmentId: number;
   filter: string;
 }
 
 const confirm = Modal.confirm;
 const Search = Input.Search;
 
-@inject(Stores.TenantStore)
+@inject(Stores.ApartmentStore)
 @observer
-class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
+class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
   formRef = React.createRef<FormInstance>();
 
   state = {
     modalVisible: false,
     maxResultCount: 10,
     skipCount: 0,
-    tenantId: 0,
+    apartmentId: 0,
     filter: '',
   };
 
@@ -45,7 +44,7 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
   }
 
   async getAll() {
-    await this.props.tenantStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
+    await this.props.apartmentStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
   }
 
   handleTableChange = (pagination: any) => {
@@ -60,18 +59,18 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
 
   async createOrUpdateModalOpen(entityDto: EntityDto) {
     if (entityDto.id === 0) {
-      this.props.tenantStore.createTenant();
+      this.props.apartmentStore.createApartment();
     } else {
-      await this.props.tenantStore.get(entityDto);
+      await this.props.apartmentStore.get(entityDto);
     }
 
-    this.setState({ tenantId: entityDto.id });
+    this.setState({ apartmentId: entityDto.id });
     this.Modal();
 
     setTimeout(() => {
       if (entityDto.id !== 0) {
         this.formRef.current?.setFieldsValue({
-          ...this.props.tenantStore.tenantModel,
+          ...this.props.apartmentStore.apartmentModel,
         });
       } else {
         this.formRef.current?.resetFields();
@@ -84,7 +83,7 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
     confirm({
       title: 'Do you Want to delete Apartment?',
       onOk() {
-        self.props.tenantStore.delete(input);
+        self.props.apartmentStore.delete(input);
       },
       onCancel() {},
     });
@@ -92,10 +91,10 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
 
   handleCreate = async () => {
     this.formRef.current?.validateFields().then(async (values: any) => {
-      if (this.state.tenantId === 0) {
-        await this.props.tenantStore.create(values);
+      if (this.state.apartmentId === 0) {
+        await this.props.apartmentStore.create(values);
       } else {
-        await this.props.tenantStore.update({ id: this.state.tenantId, ...values });
+        await this.props.apartmentStore.update({ id: this.state.apartmentId, ...values });
       }
 
       await this.getAll();
@@ -109,7 +108,7 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
   };
 
   public render() {
-    const { tenants } = this.props.tenantStore;
+    const { apartments } = this.props.apartmentStore;
     const columns = [
       { title: L('Apartment'), dataIndex: 'tenancyName', key: 'tenancyName', width: 150, render: (text: string) => <div>{text}</div> },
       { title: L('Name'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
@@ -155,7 +154,7 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
             xl={{ span: 2, offset: 0 }}
             xxl={{ span: 2, offset: 0 }}
           >
-            <h2>{L('Tenants')}</h2>
+            <h2>{L('Apartments')}</h2>
           </Col>
           <Col
             xs={{ span: 14, offset: 0 }}
@@ -185,15 +184,15 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
             <Table
               rowKey="id"
               bordered={true}
-              pagination={{ pageSize: this.state.maxResultCount, total: tenants === undefined ? 0 : tenants.totalCount, defaultCurrent: 1 }}
+              pagination={{ pageSize: this.state.maxResultCount, total: apartments === undefined ? 0 : apartments.totalCount, defaultCurrent: 1 }}
               columns={columns}
-              loading={tenants === undefined ? true : false}
-              dataSource={tenants === undefined ? [] : tenants.items}
+              loading={apartments === undefined ? true : false}
+              dataSource={apartments === undefined ? [] : apartments.items}
               onChange={this.handleTableChange}
             />
           </Col>
         </Row>
-        <CreateOrUpdateTenant
+        <CreateOrUpdateApartment
           formRef={this.formRef}
           visible={this.state.modalVisible}
           onCancel={() =>
@@ -201,7 +200,7 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
               modalVisible: false,
             })
           }
-          modalType={this.state.tenantId === 0 ? 'edit' : 'create'}
+          modalType={this.state.apartmentId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}
         />
       </Card>
@@ -209,4 +208,4 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
   }
 }
 
-export default Tenant;
+export default Apartment;

@@ -59,7 +59,7 @@ export const appRouters: any = [
   },
   {
     path: '/rooms',
-    permission: 'Pages.Tenants',
+    permission: 'Pages.Rooms',
     title: 'Rooms',
     name: 'rooms',
     icon: WalletOutlined,
@@ -68,7 +68,7 @@ export const appRouters: any = [
   },
   {
     path: '/apartments',
-    permission: 'Pages.Tenants',
+    permission: 'Pages.Apartments',
     title: 'Apartments',
     name: 'apartments',
     icon: WalletOutlined,

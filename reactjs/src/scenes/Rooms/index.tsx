@@ -5,38 +5,38 @@ import { FormInstance } from 'antd/lib/form';
 import { inject, observer } from 'mobx-react';
 
 import AppComponentBase from '../../components/AppComponentBase';
-import CreateOrUpdateTenant from './components/createOrUpdateRooms';
+import CreateOrUpdateRoom from './components/createOrUpdateRooms';
 import { EntityDto } from '../../services/dto/entityDto';
 import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
-import TenantStore from '../../stores/tenantStore';
+import RoomStore from '../../stores/roomStore';
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
 
-export interface ITenantProps {
-  tenantStore: TenantStore;
+export interface IRoomProps {
+  roomStore: RoomStore;
 }
 
-export interface ITenantState {
+export interface IRoomState {
   modalVisible: boolean;
   maxResultCount: number;
   skipCount: number;
-  tenantId: number;
+  roomId: number;
   filter: string;
 }
 
 const confirm = Modal.confirm;
 const Search = Input.Search;
 
-@inject(Stores.TenantStore)
+@inject(Stores.RoomStore)
 @observer
-class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
+class Room extends AppComponentBase<IRoomProps, IRoomState> {
   formRef = React.createRef<FormInstance>();
 
   state = {
     modalVisible: false,
     maxResultCount: 10,
     skipCount: 0,
-    tenantId: 0,
+    roomId: 0,
     filter: '',
   };
 
@@ -45,7 +45,7 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
   }
 
   async getAll() {
-    await this.props.tenantStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
+    await this.props.roomStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
   }
 
   handleTableChange = (pagination: any) => {
@@ -60,18 +60,18 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
 
   async createOrUpdateModalOpen(entityDto: EntityDto) {
     if (entityDto.id === 0) {
-      this.props.tenantStore.createTenant();
+      this.props.roomStore.createRoom();
     } else {
-      await this.props.tenantStore.get(entityDto);
+      await this.props.roomStore.get(entityDto);
     }
 
-    this.setState({ tenantId: entityDto.id });
+    this.setState({ roomId: entityDto.id });
     this.Modal();
 
     setTimeout(() => {
       if (entityDto.id !== 0) {
         this.formRef.current?.setFieldsValue({
-          ...this.props.tenantStore.tenantModel,
+          ...this.props.roomStore.roomModel,
         });
       } else {
         this.formRef.current?.resetFields();
@@ -84,7 +84,7 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
     confirm({
       title: 'Do you Want to delete rooms?',
       onOk() {
-        self.props.tenantStore.delete(input);
+        self.props.roomStore.delete(input);
       },
       onCancel() {},
     });
@@ -92,10 +92,10 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
 
   handleCreate = async () => {
     this.formRef.current?.validateFields().then(async (values: any) => {
-      if (this.state.tenantId === 0) {
-        await this.props.tenantStore.create(values);
+      if (this.state.roomId === 0) {
+        await this.props.roomStore.create(values);
       } else {
-        await this.props.tenantStore.update({ id: this.state.tenantId, ...values });
+        await this.props.roomStore.update({ id: this.state.roomId, ...values });
       }
 
       await this.getAll();
@@ -109,7 +109,8 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
   };
 
   public render() {
-    const { tenants } = this.props.tenantStore;
+    console.log("props",this.props);
+    const { rooms } = this.props.roomStore;
     const columns = [
       { title: L('RoomName'), dataIndex: 'tenancyName', key: 'tenancyName', width: 150, render: (text: string) => <div>{text}</div> },
       { title: L('Name'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
@@ -155,7 +156,7 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
             xl={{ span: 2, offset: 0 }}
             xxl={{ span: 2, offset: 0 }}
           >
-            <h2>{L('Tenants')}</h2>
+            <h2>{L('Rooms')}</h2>
           </Col>
           <Col
             xs={{ span: 14, offset: 0 }}
@@ -185,15 +186,15 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
             <Table
               rowKey="id"
               bordered={true}
-              pagination={{ pageSize: this.state.maxResultCount, total: tenants === undefined ? 0 : tenants.totalCount, defaultCurrent: 1 }}
+              pagination={{ pageSize: this.state.maxResultCount, total: rooms === undefined ? 0 : rooms.totalCount, defaultCurrent: 1 }}
               columns={columns}
-              loading={tenants === undefined ? true : false}
-              dataSource={tenants === undefined ? [] : tenants.items}
+              loading={rooms === undefined ? true : false}
+              dataSource={rooms === undefined ? [] : rooms.items}
               onChange={this.handleTableChange}
             />
           </Col>
         </Row>
-        <CreateOrUpdateTenant
+        <CreateOrUpdateRoom
           formRef={this.formRef}
           visible={this.state.modalVisible}
           onCancel={() =>
@@ -201,7 +202,7 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
               modalVisible: false,
             })
           }
-          modalType={this.state.tenantId === 0 ? 'edit' : 'create'}
+          modalType={this.state.roomId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}
         />
       </Card>
@@ -209,4 +210,4 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
   }
 }
 
-export default Tenant;
+export default Room;

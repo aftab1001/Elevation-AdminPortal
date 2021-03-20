@@ -37,6 +37,7 @@ class RoleStore {
 
   @action
   async getRolesAsync(getRoleAsyncInput: GetRoleAsyncInput) {
+    
     await roleService.getRolesAsync(getRoleAsyncInput);
   }
 
@@ -59,6 +60,7 @@ class RoleStore {
   @action
   async getAllPermissions() {
     var result = await roleService.getAllPermissions();
+    debugger;
     this.allPermissions = result;
   }
 
