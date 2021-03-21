@@ -1,6 +1,8 @@
 export interface GetAllApartmentOutput {
-  tenancyName: string;
+  image: string;
   name: string;
-  isActive: boolean;
+  description: string;
+  imageSequence: number;
+  price: string;
   id: number;
 }

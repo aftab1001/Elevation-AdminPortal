@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, Tag } from 'antd';
+import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { inject, observer } from 'mobx-react';
 import AppComponentBase from '../../components/AppComponentBase';
@@ -109,15 +109,44 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
 
   public render() {
     const { apartments } = this.props.apartmentStore;
+    const getDescData= (desc:string,type:string) =>{
+      return JSON.parse(desc)[type]
+    }
     const columns = [
-      { title: L('Apartment'), dataIndex: 'tenancyName', key: 'tenancyName', width: 150, render: (text: string) => <div>{text}</div> },
-      { title: L('Name'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
       {
-        title: L('IsActive'),
-        dataIndex: 'isActive',
-        key: 'isActive',
+        title: L('Name'),
+        dataIndex: 'name',
+        key: 'name',
         width: 150,
-        render: (text: boolean) => (text === true ? <Tag color="#2db7f5">{L('Yes')}</Tag> : <Tag color="red">{L('No')}</Tag>),
+        render: (text: string) => <div>{text}</div>,
+      },      
+      {
+        title: L('Price'),
+        dataIndex: 'price',
+        key: 'price',
+        width: 50,
+        render: (text: number) => <div>{text}</div>,
+      },      
+      {
+        title: L('Bed'),
+        dataIndex: 'description',
+        key: 'description',
+        width: 50,
+        render: (text: string) => <div>{getDescData(text,"Bed")}</div>,
+      },
+      {
+        title: L('Bath'),
+        dataIndex: 'description',
+        key: 'description',
+        width: 50,
+        render: (text: string) => <div>{getDescData(text,"Bath")}</div>,
+      },
+      {
+        title: L('Length'),
+        dataIndex: 'description',
+        key: 'description',
+        width: 50,
+        render: (text: string) => <div>{getDescData(text,"Length")}</div>,
       },
       {
         title: L('Actions'),

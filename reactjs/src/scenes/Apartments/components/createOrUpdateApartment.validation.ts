@@ -1,15 +1,9 @@
 import { L } from '../../../lib/abpUtility';
 
-const rules = {
-  tenancyName: [{ required: true, message: L('ThisFieldIsRequired') }],
+const rules = {  
   name: [{ required: true, message: L('ThisFieldIsRequired') }],
-  adminEmailAddress: [
-    { required: true, message: L('ThisFieldIsRequired') },
-    {
-      type: 'email',
-      message: 'The input is not valid E-mail!',
-    }
-  ],
+  price: [{ required: true, message: L('ThisFieldIsRequired') }],
+  
 };
 
 export default rules;

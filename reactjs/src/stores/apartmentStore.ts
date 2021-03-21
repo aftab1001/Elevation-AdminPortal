@@ -21,9 +21,11 @@ class ApartmentStore {
   async createApartment() {
     this.apartmentModel = {
       id: 0,
-      isActive: true,
       name: '',
-      tenancyName: '',
+      image: '',
+      description: '',
+      imageSequence: 0,
+      price: '',
     };
   }
 
@@ -40,7 +42,9 @@ class ApartmentStore {
   @action
   async delete(entityDto: EntityDto) {
     await apartmentService.delete(entityDto);
-    this.apartments.items = this.apartments.items.filter((x: GetAllApartmentOutput) => x.id !== entityDto.id);
+    this.apartments.items = this.apartments.items.filter(
+      (x: GetAllApartmentOutput) => x.id !== entityDto.id
+    );
   }
 
   @action
