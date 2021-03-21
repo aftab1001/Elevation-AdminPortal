@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, Tag } from 'antd';
+import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { inject, observer } from 'mobx-react';
 
@@ -45,11 +45,18 @@ class Room extends AppComponentBase<IRoomProps, IRoomState> {
   }
 
   async getAll() {
-    await this.props.roomStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
+    await this.props.roomStore.getAll({
+      maxResultCount: this.state.maxResultCount,
+      skipCount: this.state.skipCount,
+      keyword: this.state.filter,
+    });
   }
 
   handleTableChange = (pagination: any) => {
-    this.setState({ skipCount: (pagination.current - 1) * this.state.maxResultCount! }, async () => await this.getAll());
+    this.setState(
+      { skipCount: (pagination.current - 1) * this.state.maxResultCount! },
+      async () => await this.getAll()
+    );
   };
 
   Modal = () => {
@@ -108,29 +115,59 @@ class Room extends AppComponentBase<IRoomProps, IRoomState> {
     this.setState({ filter: value }, async () => await this.getAll());
   };
 
-  public render() {
-    console.log("props",this.props);
+  public render() {    
     const { rooms } = this.props.roomStore;
+    const getDescData= (desc:string,type:string) =>{
+      return JSON.parse(desc)[type]
+    }
     const columns = [
-      { title: L('RoomName'), dataIndex: 'tenancyName', key: 'tenancyName', width: 150, render: (text: string) => <div>{text}</div> },
-      { title: L('Name'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
       {
-        title: L('IsActive'),
-        dataIndex: 'isActive',
-        key: 'isActive',
+        title: L('Name'),
+        dataIndex: 'name',
+        key: 'name',
         width: 150,
-        render: (text: boolean) => (text === true ? <Tag color="#2db7f5">{L('Yes')}</Tag> : <Tag color="red">{L('No')}</Tag>),
+        render: (text: string) => <div>{text}</div>,
+      },      
+      {
+        title: L('Price'),
+        dataIndex: 'price',
+        key: 'price',
+        width: 50,
+        render: (text: number) => <div>{text}</div>,
+      },      
+      {
+        title: L('Bed'),
+        dataIndex: 'description',
+        key: 'description',
+        width: 50,
+        render: (text: string) => <div>{getDescData(text,"Bed")}</div>,
+      },
+      {
+        title: L('Bath'),
+        dataIndex: 'description',
+        key: 'description',
+        width: 50,
+        render: (text: string) => <div>{getDescData(text,"Bath")}</div>,
+      },
+      {
+        title: L('Length'),
+        dataIndex: 'description',
+        key: 'description',
+        width: 50,
+        render: (text: string) => <div>{getDescData(text,"Length")}</div>,
       },
       {
         title: L('Actions'),
-        width: 150,
+        width: 100,
         render: (text: string, item: any) => (
           <div>
             <Dropdown
               trigger={['click']}
               overlay={
                 <Menu>
-                  <Menu.Item onClick={() => this.createOrUpdateModalOpen({ id: item.id })}>{L('Edit')}</Menu.Item>
+                  <Menu.Item onClick={() => this.createOrUpdateModalOpen({ id: item.id })}>
+                    {L('Edit')}
+                  </Menu.Item>
                   <Menu.Item onClick={() => this.delete({ id: item.id })}>{L('Delete')}</Menu.Item>
                 </Menu>
               }
@@ -166,7 +203,12 @@ class Room extends AppComponentBase<IRoomProps, IRoomState> {
             xl={{ span: 1, offset: 21 }}
             xxl={{ span: 1, offset: 21 }}
           >
-            <Button type="primary" shape="circle" icon={<PlusOutlined />} onClick={() => this.createOrUpdateModalOpen({ id: 0 })} />
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<PlusOutlined />}
+              onClick={() => this.createOrUpdateModalOpen({ id: 0 })}
+            />
           </Col>
         </Row>
         <Row>
@@ -186,7 +228,11 @@ class Room extends AppComponentBase<IRoomProps, IRoomState> {
             <Table
               rowKey="id"
               bordered={true}
-              pagination={{ pageSize: this.state.maxResultCount, total: rooms === undefined ? 0 : rooms.totalCount, defaultCurrent: 1 }}
+              pagination={{
+                pageSize: this.state.maxResultCount,
+                total: rooms === undefined ? 0 : rooms.totalCount,
+                defaultCurrent: 1,
+              }}
               columns={columns}
               loading={rooms === undefined ? true : false}
               dataSource={rooms === undefined ? [] : rooms.items}

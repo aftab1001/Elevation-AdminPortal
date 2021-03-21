@@ -1,5 +1,4 @@
 import { action, observable } from 'mobx';
-
 import CreateRoomInput from '../services/room/dto/createRoomInput';
 import { EntityDto } from '../services/dto/entityDto';
 import { GetAllRoomOutput } from '../services/room/dto/getAllRoomOutput';
@@ -22,9 +21,11 @@ class RoomStore {
   async createRoom() {
     this.roomModel = {
       id: 0,
-      isActive: true,
+      image: '',
       name: '',
-      tenancyName: '',
+      description: '',
+      imageSequence: 0,
+      price: '',
     };
   }
 

@@ -1,7 +1,7 @@
 export default class CreateRoomInput {
-  tenancyName!: string;
+  image!: string;
   name!: string;
-  adminEmailAddress!: string;
-  connectionString!: string;
-  isActive!: boolean;
+  description!: string;
+  imageSequence!: number;
+  price!: string;
 }

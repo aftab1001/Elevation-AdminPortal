@@ -1,6 +1,8 @@
 export default class GetRoomOutput {
-  tenancyName!: string;
+  image!: string;
   name!: string;
-  isActive!: boolean;
+  description!: string;  
+  imageSequence!: number;
+  price!: string;
   id!: number;
 }
