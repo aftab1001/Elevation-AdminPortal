@@ -109,9 +109,7 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
 
   public render() {
     const { apartments } = this.props.apartmentStore;
-    const getDescData= (desc:string,type:string) =>{
-      return JSON.parse(desc)[type]
-    }
+    
     const columns = [
       {
         title: L('Name'),
@@ -129,24 +127,24 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
       },      
       {
         title: L('Bed'),
-        dataIndex: 'description',
-        key: 'description',
+        dataIndex: 'bed',
+        key: 'bed',
         width: 50,
-        render: (text: string) => <div>{getDescData(text,"Bed")}</div>,
+        render: (text: string) => <div>{text}</div>,
       },
       {
         title: L('Bath'),
-        dataIndex: 'description',
-        key: 'description',
+        dataIndex: 'bath',
+        key: 'bath',
         width: 50,
-        render: (text: string) => <div>{getDescData(text,"Bath")}</div>,
+        render: (text: string) => <div>{text}</div>,
       },
       {
         title: L('Length'),
-        dataIndex: 'description',
-        key: 'description',
+        dataIndex: 'length',
+        key: 'length',
         width: 50,
-        render: (text: string) => <div>{getDescData(text,"Length")}</div>,
+        render: (text: string) => <div>{text}</div>,
       },
       {
         title: L('Actions'),
