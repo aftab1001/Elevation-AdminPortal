@@ -26,6 +26,12 @@
 
         public string Name { get; set; }
 
+        public long Bed { get; set; }
+
+        public long Length { get; set; }
+
+        public long Bath { get; set; }
+
         public string Price { get; set; }
 
         public ApartmentCategory ApartmentCategory { get; set; }
