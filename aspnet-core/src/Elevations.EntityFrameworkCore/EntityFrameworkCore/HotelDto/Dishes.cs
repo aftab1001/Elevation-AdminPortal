@@ -8,6 +8,10 @@
     [Table("Dishes")]
     public class Dishes : AuditedEntity
     {
+        public long Bath { get; set; }
+
+        public long Bed { get; set; }
+
         public string Description { get; set; }
 
         [Required]
@@ -15,6 +19,8 @@
 
         [Required]
         public int ImageSequence { get; set; }
+
+        public long Length { get; set; }
 
         [Required]
         public string Name { get; set; }

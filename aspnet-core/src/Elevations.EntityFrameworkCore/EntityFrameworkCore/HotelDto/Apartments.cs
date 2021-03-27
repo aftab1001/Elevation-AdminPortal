@@ -14,6 +14,12 @@
             CreationTime = DateTime.Now;
         }
 
+        [Required]
+        public long Bath { get; set; }
+
+        [Required]
+        public long Bed { get; set; }
+
         [ForeignKey(nameof(ApartmentCategory))]
         public ApartmentCategory Category { get; set; }
 
@@ -25,6 +31,9 @@
 
         [Required]
         public int ImageSequence { get; set; }
+
+        [Required]
+        public long Length { get; set; }
 
         [Required]
         public string Name { get; set; }
