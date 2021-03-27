@@ -23,7 +23,9 @@ class ApartmentStore {
       id: 0,
       name: '',
       image: '',
-      description: '',
+      bed: 0,  
+      length: 0,  
+      bath: 0,  
       imageSequence: 0,
       price: '',
     };

@@ -38,13 +38,22 @@ class CreateOrUpdateApartment extends React.Component<ICreateOrUpdateApartmentPr
     const { visible, onCancel, onCreate, formRef } = this.props;
 
     return (
-      <Modal visible={visible} onCancel={onCancel} onOk={onCreate} title={L('Tenants')} width={550}>
+      <Modal visible={visible} onCancel={onCancel} onOk={onCreate} title={L('Apartments')} width={550}>
         <Form ref={formRef}>
           
           <Form.Item label={L('Name')} name={'name'} rules={rules.name} {...formItemLayout}>
             <Input />
           </Form.Item>
           <Form.Item label={L('Price')} name={'price'} rules={rules.price} {...formItemLayout}>
+            <Input />
+          </Form.Item>
+          <Form.Item label={L('Bed')} name={'bed'} rules={rules.bed} {...formItemLayout}>
+            <Input />
+          </Form.Item>
+          <Form.Item label={L('Bath')} name={'bath'} rules={rules.bath} {...formItemLayout}>
+            <Input />
+          </Form.Item>
+          <Form.Item label={L('length')} name={'length'} rules={rules.length} {...formItemLayout}>
             <Input />
           </Form.Item>
           
