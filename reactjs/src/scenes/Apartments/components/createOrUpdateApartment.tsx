@@ -105,6 +105,9 @@ class CreateOrUpdateApartment extends React.Component<
           <Form.Item label={L('length')} name={'length'} rules={rules.length} {...formItemLayout}>
             <Input />
           </Form.Item>
+          <Form.Item label={L('Description')} name={'description'} rules={rules.description} {...formItemLayout} hidden={true}>
+            <Input  />
+          </Form.Item>
           <Form.Item label={L('Image')} name={'image'}>
             <ImgCrop rotate>
               <Upload
@@ -114,7 +117,7 @@ class CreateOrUpdateApartment extends React.Component<
                 onChange={this.onChange}
                 onPreview={this.onPreview}
               >
-                {this.state.fileList.length < 3 && '+ Upload'}
+                {this.state.fileList.length <1  && '+ Upload'}
               </Upload>
             </ImgCrop>
           </Form.Item>

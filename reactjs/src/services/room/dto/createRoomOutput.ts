@@ -1,6 +1,7 @@
 export default interface CreateRoomOutput {
   image: string;
   name: string;
+  description: string;
   bed: number;  
   length: number;  
   bath: number;  

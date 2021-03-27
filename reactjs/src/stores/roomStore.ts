@@ -23,6 +23,7 @@ class RoomStore {
       id: 0,
       image: '',
       name: '',
+      description: '',
       bed: 0,  
       length: 0,  
       bath: 0,  

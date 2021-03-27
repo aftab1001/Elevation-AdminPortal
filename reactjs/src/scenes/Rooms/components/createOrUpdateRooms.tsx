@@ -54,6 +54,15 @@ class CreateOrUpdateRooms extends React.Component<ICreateOrUpdateRoomsProps> {
           </Form.Item>
           <Form.Item label={L('length')} name={'length'} rules={rules.length} {...formItemLayout}>
             <Input />
+            <Form.Item
+              label={L('Description')}
+              name={'description'}
+              rules={rules.description}
+              {...formItemLayout}
+              hidden={true}
+            >
+              <Input />
+            </Form.Item>
           </Form.Item>
         </Form>
       </Modal>
