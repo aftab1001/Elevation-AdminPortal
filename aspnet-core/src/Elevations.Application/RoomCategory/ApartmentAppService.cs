@@ -27,7 +27,7 @@
         {
             this.apartmentRepository = apartmentRepository;
         }
-
+        [AbpAllowAnonymous]
         public Task<ListResultDto<ApartmentDto>> GetAllApartment()
         {
             IQueryable<Apartments> roomsList = apartmentRepository.GetAll();
