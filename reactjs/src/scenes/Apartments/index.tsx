@@ -10,6 +10,7 @@ import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
 import ApartmentStore from '../../stores/apartmentStore';
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import "./../../../node_modules/antd/dist/antd.css";
 
 export interface IApartmentProps {
   apartmentStore: ApartmentStore;

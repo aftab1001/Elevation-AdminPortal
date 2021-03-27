@@ -1,6 +1,7 @@
 import LoadableComponent from './../Loadable/index';
 import { HomeOutlined, UserOutlined, WalletOutlined, AppstoreOutlined,TagsOutlined,LogoutOutlined } from '@ant-design/icons';
 
+//@import '~antd/dist/antd.css';
 export const userRouter: any = [
   {
     path: '/user',
