@@ -25,19 +25,22 @@ class CreateOrUpdateApartment extends React.Component<
     super(props);
     this.state = {
       fileList: [
-        {
-          uid: '-1',
-          name: 'image.png',
-          status: 'done',
-          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        },
+        
       ],
     };
   }
 
-  onChange = (newFileList: any) => {
-    console.log('new file list', newFileList);
-    this.setState({ fileList: newFileList.fileList });
+  onChange = (info: any) => {
+    
+    info.fileList.forEach(function(file:any, index:number) {
+      let reader = new FileReader();
+      reader.onload = (e:any) => {
+         file.url =  e.target.result;
+      };
+      reader.readAsDataURL(info.file.originFileObj);
+    });
+    console.log('new file list', info.fileList);
+    this.setState({ fileList: info.fileList });
   };
 
   onPreview = async (file: any) => {
@@ -54,6 +57,8 @@ class CreateOrUpdateApartment extends React.Component<
     const imgWindow: any = window.open(src);
     imgWindow.document.write(image.outerHTML);
   };
+
+
   render() {
     const formItemLayout = {
       labelCol: {
@@ -73,7 +78,7 @@ class CreateOrUpdateApartment extends React.Component<
         xxl: { span: 18 },
       },
     };
-    console.log('filelist', this.state.fileList);
+    
     const { visible, onCancel, onCreate, formRef } = this.props;
 
     return (
@@ -84,7 +89,7 @@ class CreateOrUpdateApartment extends React.Component<
         title={L('Apartments')}
         width={550}
       >
-        <Form ref={formRef}>
+        <Form ref={formRef} >
           <Form.Item label={L('Name')} name={'name'} rules={rules.name} {...formItemLayout}>
             <Input />
           </Form.Item>
