@@ -12,6 +12,7 @@
         public Apartments()
         {
             CreationTime = DateTime.Now;
+            Category = new ApartmentCategory();
         }
 
         [Required]

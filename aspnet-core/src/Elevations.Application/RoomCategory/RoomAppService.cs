@@ -15,6 +15,7 @@
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
 
+
     [AbpAuthorize(PermissionNames.Pages_Rooms)]
     public class RoomAppService :
         AsyncCrudAppService<Rooms, RoomDto, int, PagedRoleResultRequestDto, UpdateRoomDto, RoomDto>,
@@ -27,7 +28,7 @@
         {
             this.roomsRepository = roomsRepository;
         }
-     
+
         [AbpAllowAnonymous]
         public Task<ListResultDto<RoomDto>> GetAllRooms()
         {
@@ -37,9 +38,26 @@
                 new ListResultDto<RoomDto>(ObjectMapper.Map<List<RoomDto>>(roomsList).OrderBy(p => p.Name).ToList()));
         }
 
-        public Task<RoomDto> UpdateRooms(EntityDto input)
+        public override async Task<RoomDto> UpdateAsync(RoomDto input)
         {
-            throw new NotImplementedException();
+            CheckUpdatePermission();
+
+            Rooms rooms = new()
+                              {
+                                  Category = input.RoomCategoryName, Image = input.Image, Name = input.Name,
+                                  Bath = input.Bath, Bed = input.Bed, Description = input.Description
+                              };
+            rooms.Name = input.Name;
+            rooms.ImageSequence = input.ImageSequence;
+            rooms.Length = input.Length;
+            rooms.Price = input.Price;
+            rooms.Id = input.Id;
+
+            await roomsRepository.UpdateAsync(rooms);
+
+            return MapToEntityDto(rooms);
         }
+
+      
     }
 }

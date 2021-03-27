@@ -10,6 +10,7 @@
     using Elevations.RoomCategory.Dto;
 
     [AbpAuthorize(PermissionNames.Pages_Reservation)]
+
     public class ReservationAppService : AsyncCrudAppService<Reservation, ReservationDto, int, PagedRoleResultRequestDto
         , UpdateReservationDto, ReservationDto>
 

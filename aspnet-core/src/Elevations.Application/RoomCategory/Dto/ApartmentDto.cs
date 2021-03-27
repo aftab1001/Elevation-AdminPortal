@@ -10,6 +10,11 @@
     [AutoMapFrom(typeof(Apartments))]
     public class ApartmentDto : EntityDto<int>
     {
+        public ApartmentDto()
+        {
+            ApartmentCategory = new ApartmentCategory();
+
+        }
         public DateTime CreationTime { get; set; }
 
         public long CreatorUserId { get; set; }
@@ -18,7 +23,7 @@
 
         public string Image { get; set; }
 
-        public long ImageSequence { get; set; }
+        public int ImageSequence { get; set; }
 
         public DateTime LastModificationTime { get; set; }
 

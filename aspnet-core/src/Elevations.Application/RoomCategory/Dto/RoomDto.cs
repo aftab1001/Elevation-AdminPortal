@@ -16,11 +16,11 @@
 
         public string Description { get; set; }
 
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public string Image { get; set; }
 
-        public long ImageSequence { get; set; }
+        public int ImageSequence { get; set; }
 
         public DateTime LastModificationTime { get; set; }
 
