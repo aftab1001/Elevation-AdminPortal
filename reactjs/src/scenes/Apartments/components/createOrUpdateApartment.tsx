@@ -30,7 +30,7 @@ class CreateOrUpdateApartment extends React.Component<
     const image = this.props.formRef.current?.getFieldValue('image');
     this.setState({ fileList: [{ uid: -1, url: image }] });
   };
-  
+
   onChange = (info: any) => {
     
     info.fileList.forEach(function (file: any, index: number) {
@@ -62,10 +62,7 @@ class CreateOrUpdateApartment extends React.Component<
     imgWindow.document.write(image.outerHTML);
   };
 
-  componentDidMount = () => {
-    // let image = this.props.formRef.current?.getFieldValue('image');
-    // console.log('image', image);
-  };
+  
   render() {
     const formItemLayout = {
       labelCol: {

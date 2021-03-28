@@ -80,6 +80,7 @@ class Room extends AppComponentBase<IRoomProps, IRoomState> {
         this.formRef.current?.setFieldsValue({
           ...this.props.roomStore.roomModel,
         });
+        this.formRef.current?.submit();
       } else {
         this.formRef.current?.resetFields();
       }
