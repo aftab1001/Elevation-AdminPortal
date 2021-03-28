@@ -4,7 +4,6 @@ import { Form, Input, Modal, Upload } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
 import rules from './createOrUpdateApartment.validation';
-import ImgCrop from 'antd-img-crop';
 
 export interface ICreateOrUpdateApartmentProps {
   visible: boolean;
@@ -24,22 +23,27 @@ class CreateOrUpdateApartment extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      fileList: [
-        
-      ],
+      fileList: [],
     };
   }
-
+  onFieldsChange = (changedFields: any, allFields: any) => {
+    const image = this.props.formRef.current?.getFieldValue('image');
+    this.setState({ fileList: [{ uid: -1, url: image }] });
+  };
+  
   onChange = (info: any) => {
     
-    info.fileList.forEach(function(file:any, index:number) {
+    info.fileList.forEach(function (file: any, index: number) {
       let reader = new FileReader();
-      reader.onload = (e:any) => {
-         file.url =  e.target.result;
+      reader.onload = (e: any) => {
+        file.url = e.target.result;
       };
       reader.readAsDataURL(info.file.originFileObj);
     });
-    console.log('new file list', info.fileList);
+    //console.log('new file list', info.fileList);
+    this.props.formRef.current?.setFieldsValue({
+      image: info.fileList[0]?.url,
+    });
     this.setState({ fileList: info.fileList });
   };
 
@@ -58,7 +62,10 @@ class CreateOrUpdateApartment extends React.Component<
     imgWindow.document.write(image.outerHTML);
   };
 
-
+  componentDidMount = () => {
+    // let image = this.props.formRef.current?.getFieldValue('image');
+    // console.log('image', image);
+  };
   render() {
     const formItemLayout = {
       labelCol: {
@@ -78,7 +85,7 @@ class CreateOrUpdateApartment extends React.Component<
         xxl: { span: 18 },
       },
     };
-    
+
     const { visible, onCancel, onCreate, formRef } = this.props;
 
     return (
@@ -89,7 +96,7 @@ class CreateOrUpdateApartment extends React.Component<
         title={L('Apartments')}
         width={550}
       >
-        <Form ref={formRef} >
+        <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
           <Form.Item label={L('Name')} name={'name'} rules={rules.name} {...formItemLayout}>
             <Input />
           </Form.Item>
@@ -105,21 +112,34 @@ class CreateOrUpdateApartment extends React.Component<
           <Form.Item label={L('length')} name={'length'} rules={rules.length} {...formItemLayout}>
             <Input />
           </Form.Item>
-          <Form.Item label={L('Description')} name={'description'} rules={rules.description} {...formItemLayout} hidden={true}>
-            <Input  />
+          <Form.Item
+            label={L('Description')}
+            name={'description'}
+            rules={rules.description}
+            {...formItemLayout}
+            hidden={true}
+          >
+            <Input />
           </Form.Item>
-          <Form.Item label={L('Image')} name={'image'}>
-            <ImgCrop rotate>
-              <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture-card"
-                fileList={this.state.fileList}
-                onChange={this.onChange}
-                onPreview={this.onPreview}
-              >
-                {this.state.fileList.length <1  && '+ Upload'}
-              </Upload>
-            </ImgCrop>
+          <Form.Item
+            label={L('Image')}
+            name={'image'}
+            rules={rules.description}
+            {...formItemLayout}
+            hidden={true}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item label={L('Image')}>
+            <Upload
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              listType="picture-card"
+              fileList={this.state.fileList}
+              onChange={this.onChange}
+              onPreview={this.onPreview}
+            >
+              {this.state.fileList.length < 1 && '+ Upload'}
+            </Upload>
           </Form.Item>
         </Form>
       </Modal>

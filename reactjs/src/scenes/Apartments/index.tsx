@@ -10,7 +10,7 @@ import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
 import ApartmentStore from '../../stores/apartmentStore';
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import "./../../../node_modules/antd/dist/antd.css";
+import './../../../node_modules/antd/dist/antd.css';
 
 export interface IApartmentProps {
   apartmentStore: ApartmentStore;
@@ -45,11 +45,18 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
   }
 
   async getAll() {
-    await this.props.apartmentStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
+    await this.props.apartmentStore.getAll({
+      maxResultCount: this.state.maxResultCount,
+      skipCount: this.state.skipCount,
+      keyword: this.state.filter,
+    });
   }
 
   handleTableChange = (pagination: any) => {
-    this.setState({ skipCount: (pagination.current - 1) * this.state.maxResultCount! }, async () => await this.getAll());
+    this.setState(
+      { skipCount: (pagination.current - 1) * this.state.maxResultCount! },
+      async () => await this.getAll()
+    );
   };
 
   Modal = () => {
@@ -73,6 +80,8 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
         this.formRef.current?.setFieldsValue({
           ...this.props.apartmentStore.apartmentModel,
         });
+        this.formRef.current?.submit();
+     
       } else {
         this.formRef.current?.resetFields();
       }
@@ -110,7 +119,7 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
 
   public render() {
     const { apartments } = this.props.apartmentStore;
-    
+
     const columns = [
       {
         title: L('Name'),
@@ -118,14 +127,14 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
         key: 'name',
         width: 150,
         render: (text: string) => <div>{text}</div>,
-      },      
+      },
       {
         title: L('Price'),
         dataIndex: 'price',
         key: 'price',
         width: 50,
         render: (text: number) => <div>{text}</div>,
-      },      
+      },
       {
         title: L('Bed'),
         dataIndex: 'bed',
@@ -156,7 +165,9 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
               trigger={['click']}
               overlay={
                 <Menu>
-                  <Menu.Item onClick={() => this.createOrUpdateModalOpen({ id: item.id })}>{L('Edit')}</Menu.Item>
+                  <Menu.Item onClick={() => this.createOrUpdateModalOpen({ id: item.id })}>
+                    {L('Edit')}
+                  </Menu.Item>
                   <Menu.Item onClick={() => this.delete({ id: item.id })}>{L('Delete')}</Menu.Item>
                 </Menu>
               }
@@ -192,7 +203,12 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
             xl={{ span: 1, offset: 21 }}
             xxl={{ span: 1, offset: 21 }}
           >
-            <Button type="primary" shape="circle" icon={<PlusOutlined />} onClick={() => this.createOrUpdateModalOpen({ id: 0 })} />
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<PlusOutlined />}
+              onClick={() => this.createOrUpdateModalOpen({ id: 0 })}
+            />
           </Col>
         </Row>
         <Row>
@@ -212,7 +228,11 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
             <Table
               rowKey="id"
               bordered={true}
-              pagination={{ pageSize: this.state.maxResultCount, total: apartments === undefined ? 0 : apartments.totalCount, defaultCurrent: 1 }}
+              pagination={{
+                pageSize: this.state.maxResultCount,
+                total: apartments === undefined ? 0 : apartments.totalCount,
+                defaultCurrent: 1,
+              }}
               columns={columns}
               loading={apartments === undefined ? true : false}
               dataSource={apartments === undefined ? [] : apartments.items}
@@ -229,7 +249,7 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
             })
           }
           modalType={this.state.apartmentId === 0 ? 'edit' : 'create'}
-          onCreate={this.handleCreate}
+          onCreate={this.handleCreate}          
         />
       </Card>
     );
