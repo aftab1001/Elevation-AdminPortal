@@ -77,6 +77,15 @@ export const appRouters: any = [
     component: LoadableComponent(() => import('../../scenes/Apartments')),
   },
   {
+    path: '/news',
+    permission: 'Pages.News',
+    title: 'News',
+    name: 'news',
+    icon: WalletOutlined,
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/News')),
+  },
+  {
     path: '/tenants',
     permission: 'Pages.Tenants',
     title: 'Tenants',
