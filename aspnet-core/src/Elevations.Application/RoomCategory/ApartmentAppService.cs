@@ -14,7 +14,8 @@
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
 
-     [AbpAuthorize(PermissionNames.Pages_Apartments)]
+     //[AbpAuthorize(PermissionNames.Pages_Apartments)]
+     [AbpAllowAnonymous]
     public class ApartmentAppService :
         AsyncCrudAppService<Apartments, ApartmentDto, int, PagedRoleResultRequestDto, UpdateApartmentDto, ApartmentDto>,
         IApartmentService
@@ -35,6 +36,29 @@
             return Task.FromResult(
                 new ListResultDto<ApartmentDto>(
                     ObjectMapper.Map<List<ApartmentDto>>(roomsList).OrderBy(p => p.Name).ToList()));
+        }
+
+        public override async Task<ApartmentDto> CreateAsync(UpdateApartmentDto input)
+        {
+            CheckCreatePermission();
+
+            Apartments apartments = new Apartments
+                                        {
+                                            Category = input.ApartmentCategory,
+                                            Image = input.Image,
+                                            Name = input.Name,
+                                            Bath = input.Bath,
+                                            Bed = input.Bed,
+                                            Description = input.Description
+                                        };
+            apartments.Name = input.Name;
+            apartments.ImageSequence = input.ImageSequence;
+            apartments.Length = input.Length;
+            apartments.Price = input.Price;
+
+            await apartmentRepository.InsertAsync(apartments);
+
+            return MapToEntityDto(apartments);
         }
 
         public override async Task<ApartmentDto> UpdateAsync(ApartmentDto input)

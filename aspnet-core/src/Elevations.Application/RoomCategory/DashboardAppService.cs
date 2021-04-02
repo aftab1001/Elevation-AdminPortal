@@ -9,7 +9,8 @@
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
 
-    [AbpAuthorize(PermissionNames.Pages_Dashboard)]
+    //[AbpAuthorize(PermissionNames.Pages_Dashboard)]
+    [AbpAllowAnonymous]
     public class DashboardAppService : AsyncCrudAppService<Dashboard, DashboardDto, int, PagedRoleResultRequestDto,
         DashboardDto, DashboardDto>
 

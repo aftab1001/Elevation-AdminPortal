@@ -8,6 +8,13 @@
 
     public class UpdateApartmentDto : IEntityDto<int>
     {
+        public UpdateApartmentDto()
+        {
+            ApartmentCategory = new ApartmentCategory();
+        }
+
+        public ApartmentCategory ApartmentCategory { get; set; }
+
         public DateTime CreationTime { get; set; }
 
         public long CreatorUserId { get; set; }
@@ -16,7 +23,7 @@
 
         public string Image { get; set; }
 
-        public long ImageSequence { get; set; }
+        public int ImageSequence { get; set; }
 
         public DateTime LastModificationTime { get; set; }
 

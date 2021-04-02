@@ -1,6 +1,5 @@
 ﻿namespace Elevations.RoomCategory
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -10,13 +9,12 @@
     using Abp.Authorization;
     using Abp.Domain.Repositories;
 
-    using Elevations.Authorization;
     using Elevations.EntityFrameworkCore.HotelDto;
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
 
-
-    [AbpAuthorize(PermissionNames.Pages_Rooms)]
+    //  [AbpAuthorize(PermissionNames.Pages_Rooms)]
+    [AbpAllowAnonymous]
     public class RoomAppService :
         AsyncCrudAppService<Rooms, RoomDto, int, PagedRoleResultRequestDto, UpdateRoomDto, RoomDto>,
         IRoomAppService
@@ -27,6 +25,17 @@
             : base(roomsRepository)
         {
             this.roomsRepository = roomsRepository;
+        }
+
+        public override async Task<RoomDto> CreateAsync(UpdateRoomDto input)
+        {
+            CheckCreatePermission();
+
+            Rooms room = ObjectMapper.Map<Rooms>(input);
+
+            await roomsRepository.InsertAsync(room);
+
+            return MapToEntityDto(room);
         }
 
         [AbpAllowAnonymous]
@@ -57,7 +66,5 @@
 
             return MapToEntityDto(rooms);
         }
-
-      
     }
 }

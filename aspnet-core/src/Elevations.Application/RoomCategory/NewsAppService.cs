@@ -9,7 +9,8 @@
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
 
-    [AbpAuthorize(PermissionNames.Pages_News)]
+    //[AbpAuthorize(PermissionNames.Pages_News)]
+    [AbpAllowAnonymous]
     public class NewsAppService : AsyncCrudAppService<News, NewsDto, int, PagedRoleResultRequestDto
         , UpdateNewsDto, NewsDto>
 
