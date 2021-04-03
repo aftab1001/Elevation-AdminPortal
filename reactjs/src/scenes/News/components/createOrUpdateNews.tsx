@@ -26,9 +26,9 @@ class CreateOrUpdateNews extends React.Component<
     };
   }
   onFieldsChange = (changedFields: any, allFields: any) => {
-    const image = this.props.formRef.current?.getFieldValue('image');
-    console.log('image', image);
-    this.setState({ fileList: [{ uid: -1, url: image }] });
+    const image1 = this.props.formRef.current?.getFieldValue('image1');
+
+    this.setState({ fileList: [{ uid: -1, url: image1 }] });
   };
 
   onChange = (info: any) => {
@@ -88,26 +88,51 @@ class CreateOrUpdateNews extends React.Component<
         <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
           <Form.Item label={L('Title')} name={'title'} rules={rules.title} {...formItemLayout}>
             <Input />
-          </Form.Item>          
-          <Form.Item
-            label={L('Description')}
-            name={'description'}
-            rules={rules.description}
-            {...formItemLayout}            
-          >
-            <Input />
           </Form.Item>
-
           <Form.Item
-            label={L('Image')}
-            name={'image'}
-            rules={rules.description}
+            label={L('Description 1')}
+            name={'description1'}
+            rules={rules.description1}
             {...formItemLayout}
-            hidden={true}
           >
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item
+            label={L('Description 2')}
+            name={'description2'}
+            rules={rules.description2}
+            {...formItemLayout}
+          >
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item
+            label={L('Description 3')}
+            name={'description3'}
+            rules={rules.description3}
+            {...formItemLayout}
+          >
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item
+            label={L('Description 4')}
+            name={'description4'}
+            rules={rules.description4}
+            {...formItemLayout}
+          >
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item
+            label={L('Description 5')}
+            name={'description5'}
+            rules={rules.description5}
+            {...formItemLayout}
+          >
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item label={L('Image1')} name={'image1'} {...formItemLayout} hidden={true}>
             <Input />
           </Form.Item>
-          <Form.Item label={L('Image')}>
+          <Form.Item label={L('Image1')} {...formItemLayout}>
             <Upload
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
               listType="picture-card"

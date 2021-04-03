@@ -21,14 +21,19 @@ class NewsStore {
   async createNews() {
     this.newsModel = {
       id: 0,
-      image: '',
       title: '',
-      description: '',
-      image1: '',  
-      image2: '',        
+      name: '',
+      description1: '',
+      description2: '',
+      description3: '',
+      description4: '',
+      description5: '',
+      image1: '',
+      image2: '',
+      image3: '',
+      image4: '',
+      image5: '',
       imageSequence: 0,
-      
-      
     };
   }
 

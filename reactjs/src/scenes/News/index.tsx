@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { inject, observer } from 'mobx-react';
-
 import AppComponentBase from '../../components/AppComponentBase';
 import CreateOrUpdateNew from './components/createOrUpdateNews';
 import { EntityDto } from '../../services/dto/entityDto';
@@ -116,20 +115,28 @@ class New extends AppComponentBase<INewProps, INewState> {
     this.setState({ filter: value }, async () => await this.getAll());
   };
 
-  public render() {    
-    const { news } = this.props.newsStore;   
+  public render() {
+    const { news } = this.props.newsStore;
+    console.log('news', news);
     const columns = [
       {
-        title: L('Title'),
-        dataIndex: 'title',
-        key: 'title',
+        title: L('Name'),
+        dataIndex: 'name',
+        key: 'name',
         width: 150,
         render: (text: string) => <div>{text}</div>,
-      },      
+      },
+      {
+        title: L('Image'),
+        dataIndex: 'image1',
+        key: 'image1',
+        width: 150,
+        render: (text: string) => <img alt="example" src={text} style={{ width: 150 }} />,
+      },
       {
         title: L('Description'),
-        dataIndex: 'description',
-        key: 'description',
+        dataIndex: 'description1',
+        key: 'description1',
         width: 150,
         render: (text: string) => <div>{text}</div>,
       },

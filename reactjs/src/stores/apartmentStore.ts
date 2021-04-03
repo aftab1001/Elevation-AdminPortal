@@ -22,7 +22,11 @@ class ApartmentStore {
     this.apartmentModel = {
       id: 0,
       name: '',
-      image: '',
+      image1: '',
+      image2: '',
+      image3: '',
+      image4: '',
+      image5: '',
       description: '',
       bed: 0,  
       length: 0,  

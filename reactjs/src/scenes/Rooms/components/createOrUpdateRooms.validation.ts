@@ -7,6 +7,7 @@ const rules = {
   bath: [{ required: true, message: L('ThisFieldIsRequired') }],
   length: [{ required: true, message: L('ThisFieldIsRequired') }],
   description: [{  }],
+  image: [{  }],
   
 };
 

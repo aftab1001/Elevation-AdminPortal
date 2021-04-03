@@ -116,8 +116,8 @@ class Room extends AppComponentBase<IRoomProps, IRoomState> {
     this.setState({ filter: value }, async () => await this.getAll());
   };
 
-  public render() {    
-    const { rooms } = this.props.roomStore;   
+  public render() {
+    const { rooms } = this.props.roomStore;
     const columns = [
       {
         title: L('Name'),
@@ -125,14 +125,21 @@ class Room extends AppComponentBase<IRoomProps, IRoomState> {
         key: 'name',
         width: 150,
         render: (text: string) => <div>{text}</div>,
-      },      
+      },
+      {
+        title: L('Image'),
+        dataIndex: 'image1',
+        key: 'image1',
+        width: 150,
+        render: (text: string) => <img alt="example" src={text} style={{ width: 150 }} />,
+      },
       {
         title: L('Price'),
         dataIndex: 'price',
         key: 'price',
         width: 50,
         render: (text: number) => <div>{text}</div>,
-      },      
+      },
       {
         title: L('Bed'),
         dataIndex: 'bed',

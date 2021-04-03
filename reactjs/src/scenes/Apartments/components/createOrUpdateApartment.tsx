@@ -27,7 +27,7 @@ class CreateOrUpdateApartment extends React.Component<
     };
   }
   onFieldsChange = (changedFields: any, allFields: any) => {
-    const image = this.props.formRef.current?.getFieldValue('image');
+    const image = this.props.formRef.current?.getFieldValue('image1');
     this.setState({ fileList: [{ uid: -1, url: image }] });
   };
 
@@ -119,15 +119,52 @@ class CreateOrUpdateApartment extends React.Component<
             <Input />
           </Form.Item>
           <Form.Item
-            label={L('Image')}
-            name={'image'}
-            rules={rules.description}
+            label={L('Image 1')}
+            name={'image1'}
+            rules={rules.image}
             {...formItemLayout}
             hidden={true}
           >
             <Input />
           </Form.Item>
-          <Form.Item label={L('Image')}>
+          <Form.Item
+            label={L('Image 2')}
+            name={'image2'}
+            rules={rules.image}
+            {...formItemLayout}
+            hidden={true}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label={L('Image 3')}
+            name={'image3'}
+            rules={rules.image}
+            {...formItemLayout}
+            hidden={true}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label={L('Image 4')}
+            name={'image4'}
+            rules={rules.image}
+            {...formItemLayout}
+            hidden={true}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label={L('Image 5')}
+            name={'image5'}
+            rules={rules.image}
+            {...formItemLayout}
+            hidden={true}
+          >
+            <Input />
+          </Form.Item>
+          
+          <Form.Item label={L('Image')} {...formItemLayout}>
             <Upload
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
               listType="picture-card"

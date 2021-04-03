@@ -128,6 +128,14 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
         width: 150,
         render: (text: string) => <div>{text}</div>,
       },
+      
+      {
+        title: L('Image'),
+        dataIndex: 'image1',
+        key: 'image1',
+        width: 150,
+        render: (text: string) => <img alt="example" src={text} style={{ width: 150 }} />,
+      },
       {
         title: L('Price'),
         dataIndex: 'price',

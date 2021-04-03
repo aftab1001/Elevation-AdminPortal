@@ -21,7 +21,11 @@ class RoomStore {
   async createRoom() {
     this.roomModel = {
       id: 0,
-      image: '',
+      image1: '',
+      image2: '',
+      image3: '',
+      image4: '',
+      image5: '',
       name: '',
       description: '',
       bed: 0,  
