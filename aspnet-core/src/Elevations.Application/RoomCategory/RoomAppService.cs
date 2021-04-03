@@ -53,7 +53,12 @@
 
             Rooms rooms = new()
                               {
-                                  Category = input.RoomCategoryName, Image = input.Image, Name = input.Name,
+                                  Category = input.Category, Image1 = input.Image1, 
+                                  Image2 =  input.Image2,
+                                  Image3 =  input.Image3,
+                                  Image4 = input.Image4,
+                                  Image5 = input.Image5,
+                                  Name = input.Name,
                                   Bath = input.Bath, Bed = input.Bed, Description = input.Description
                               };
             rooms.Name = input.Name;

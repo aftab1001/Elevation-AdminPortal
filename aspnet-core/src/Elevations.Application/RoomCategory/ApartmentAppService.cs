@@ -45,7 +45,7 @@
             Apartments apartments = new Apartments
                                         {
                                             Category = input.ApartmentCategory,
-                                            Image = input.Image,
+                                            Image1 = input.Image,
                                             Name = input.Name,
                                             Bath = input.Bath,
                                             Bed = input.Bed,
@@ -67,10 +67,15 @@
 
             Apartments apartments = new Apartments
                                         {
-                                            Category = input.ApartmentCategory, Image = input.Image, Name = input.Name,
+                                            Category = input.ApartmentCategory, Image1 = input.Image1, Name = input.Name,
                                             Bath = input.Bath, Bed = input.Bed, Description = input.Description
                                         };
             apartments.Name = input.Name;
+            apartments.Image2 = input.Image2;
+            apartments.Image2 = input.Image3;
+            apartments.Image4 = input.Image4;
+            apartments.Image5 = input.Image5;
+
             apartments.ImageSequence = input.ImageSequence;
             apartments.Length = input.Length;
             apartments.Price = input.Price;
