@@ -13,6 +13,8 @@ export interface ICreateOrUpdateNewsProps {
 }
 export interface ICreateOrUpdateNewsState {
   fileList: any;
+  fileList2: any;
+  fileList3: any;
 }
 
 class CreateOrUpdateNews extends React.Component<
@@ -23,15 +25,21 @@ class CreateOrUpdateNews extends React.Component<
     super(props);
     this.state = {
       fileList: [],
+      fileList2: [],
+      fileList3: [],
     };
   }
   onFieldsChange = (changedFields: any, allFields: any) => {
     const image1 = this.props.formRef.current?.getFieldValue('image1');
+    const image2 = this.props.formRef.current?.getFieldValue('image2');
+    const image3 = this.props.formRef.current?.getFieldValue('image3');
 
     this.setState({ fileList: [{ uid: -1, url: image1 }] });
+    this.setState({ fileList2: [{ uid: -1, url: image2 }] });
+    this.setState({ fileList3: [{ uid: -1, url: image3 }] });
   };
 
-  onChange = (info: any) => {
+  onChange = (fieldName: string, info: any) => {
     info.fileList.forEach(function (file: any, index: number) {
       let reader = new FileReader();
       reader.onload = (e: any) => {
@@ -40,10 +48,22 @@ class CreateOrUpdateNews extends React.Component<
       reader.readAsDataURL(info.file.originFileObj);
     });
 
-    this.props.formRef.current?.setFieldsValue({
-      image: info.fileList[0]?.url,
-    });
-    this.setState({ fileList: info.fileList });
+    if (fieldName === 'image1') {
+      this.props.formRef.current?.setFieldsValue({
+        image1: info.fileList[0]?.url,
+      });
+      this.setState({ fileList: info.fileList });
+    } else if (fieldName === 'image2') {
+      this.props.formRef.current?.setFieldsValue({
+        image2: info.fileList[0]?.url,
+      });
+      this.setState({ fileList2: info.fileList });
+    } else if (fieldName === 'image3') {
+      this.props.formRef.current?.setFieldsValue({
+        image3: info.fileList[0]?.url,
+      });
+      this.setState({ fileList3: info.fileList });
+    }
   };
 
   onPreview = async (file: any) => {
@@ -80,11 +100,29 @@ class CreateOrUpdateNews extends React.Component<
         xxl: { span: 18 },
       },
     };
+    const formItemLayoutImage = {
+      labelCol: {
+        xs: { span: 6 },
+        sm: { span: 6 },
+        md: { span: 6 },
+        lg: { span: 6 },
+        xl: { span: 6 },
+        xxl: { span: 6 },
+      },
+      wrapperCol: {
+        xs: { span: 9 },
+        sm: { span: 9 },
+        md: { span: 9 },
+        lg: { span: 9 },
+        xl: { span: 9 },
+        xxl: { span: 9 },
+      },
+    };
 
     const { visible, onCancel, onCreate, formRef } = this.props;
 
     return (
-      <Modal visible={visible} onCancel={onCancel} onOk={onCreate} title={L('News')} width={550}>
+      <Modal visible={visible} onCancel={onCancel} onOk={onCreate} title={L('News')} width={850}>
         <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
           <Form.Item label={L('Title')} name={'title'} rules={rules.title} {...formItemLayout}>
             <Input />
@@ -132,15 +170,44 @@ class CreateOrUpdateNews extends React.Component<
           <Form.Item label={L('Image1')} name={'image1'} {...formItemLayout} hidden={true}>
             <Input />
           </Form.Item>
-          <Form.Item label={L('Image1')} {...formItemLayout}>
+          <Form.Item label={L('Image2')} name={'image2'} {...formItemLayout} hidden={true}>
+            <Input />
+          </Form.Item>
+          <Form.Item label={L('Image3')} name={'image3'} {...formItemLayout} hidden={true}>
+            <Input />
+          </Form.Item>
+
+          <Form.Item label={L('Image1')} {...formItemLayoutImage}>
             <Upload
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
               listType="picture-card"
               fileList={this.state.fileList}
-              onChange={this.onChange}
+              onChange={this.onChange.bind(this, 'image1')}
               onPreview={this.onPreview}
             >
               {this.state.fileList.length < 1 && '+ Upload'}
+            </Upload>
+          </Form.Item>
+          <Form.Item label={L('Image2')} {...formItemLayoutImage}>
+            <Upload
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              listType="picture-card"
+              fileList={this.state.fileList2}
+              onChange={this.onChange.bind(this, 'image2')}
+              onPreview={this.onPreview}
+            >
+              {this.state.fileList2.length < 1 && '+ Upload'}
+            </Upload>
+          </Form.Item>
+          <Form.Item label={L('Image3')} {...formItemLayoutImage}>
+            <Upload
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              listType="picture-card"
+              fileList={this.state.fileList3}
+              onChange={this.onChange.bind(this, 'image3')}
+              onPreview={this.onPreview}
+            >
+              {this.state.fileList3.length < 1 && '+ Upload'}
             </Upload>
           </Form.Item>
         </Form>
