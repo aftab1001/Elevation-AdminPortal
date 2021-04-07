@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Input, Modal, Upload } from 'antd';
+import { Form, Input, Modal, Upload, Col, Row } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
 import rules from './createOrUpdateNews.validation';
@@ -122,7 +122,14 @@ class CreateOrUpdateNews extends React.Component<
     const { visible, onCancel, onCreate, formRef } = this.props;
 
     return (
-      <Modal visible={visible} onCancel={onCancel} onOk={onCreate} title={L('News')} width={850}>
+      <Modal
+        visible={visible}
+        onCancel={onCancel}
+        onOk={onCreate}
+        title={L('News')}
+        width={1050}
+        style={{ top: 50 }}
+      >
         <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
           <Form.Item label={L('Title')} name={'title'} rules={rules.title} {...formItemLayout}>
             <Input />
@@ -176,40 +183,47 @@ class CreateOrUpdateNews extends React.Component<
           <Form.Item label={L('Image3')} name={'image3'} {...formItemLayout} hidden={true}>
             <Input />
           </Form.Item>
-
-          <Form.Item label={L('Image1')} {...formItemLayoutImage}>
-            <Upload
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              listType="picture-card"
-              fileList={this.state.fileList}
-              onChange={this.onChange.bind(this, 'image1')}
-              onPreview={this.onPreview}
-            >
-              {this.state.fileList.length < 1 && '+ Upload'}
-            </Upload>
-          </Form.Item>
-          <Form.Item label={L('Image2')} {...formItemLayoutImage}>
-            <Upload
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              listType="picture-card"
-              fileList={this.state.fileList2}
-              onChange={this.onChange.bind(this, 'image2')}
-              onPreview={this.onPreview}
-            >
-              {this.state.fileList2.length < 1 && '+ Upload'}
-            </Upload>
-          </Form.Item>
-          <Form.Item label={L('Image3')} {...formItemLayoutImage}>
-            <Upload
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              listType="picture-card"
-              fileList={this.state.fileList3}
-              onChange={this.onChange.bind(this, 'image3')}
-              onPreview={this.onPreview}
-            >
-              {this.state.fileList3.length < 1 && '+ Upload'}
-            </Upload>
-          </Form.Item>
+          <Row>
+            <Col span={8}>
+              <Form.Item label={L('Image1')} {...formItemLayoutImage}>
+                <Upload
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  listType="picture-card"
+                  fileList={this.state.fileList}
+                  onChange={this.onChange.bind(this, 'image1')}
+                  onPreview={this.onPreview}
+                >
+                  {this.state.fileList.length < 1 && '+ Upload'}
+                </Upload>
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label={L('Image2')} {...formItemLayoutImage}>
+                <Upload
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  listType="picture-card"
+                  fileList={this.state.fileList2}
+                  onChange={this.onChange.bind(this, 'image2')}
+                  onPreview={this.onPreview}
+                >
+                  {this.state.fileList2.length < 1 && '+ Upload'}
+                </Upload>
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label={L('Image3')} {...formItemLayoutImage}>
+                <Upload
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  listType="picture-card"
+                  fileList={this.state.fileList3}
+                  onChange={this.onChange.bind(this, 'image3')}
+                  onPreview={this.onPreview}
+                >
+                  {this.state.fileList3.length < 1 && '+ Upload'}
+                </Upload>
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </Modal>
     );
