@@ -4,20 +4,13 @@
 
     using Abp.Application.Services.Dto;
 
-    using Elevations.EntityFrameworkCore.HotelDto;
-
     public class UpdateApartmentDto : IEntityDto<int>
     {
-        public UpdateApartmentDto()
-        {
-            ApartmentCategory = new ApartmentCategory();
-        }
-
-        public ApartmentCategory ApartmentCategory { get; set; }
-
         public long Bath { get; set; }
 
         public long Bed { get; set; }
+
+        public string CategoryName { get; set; }
 
         public DateTime CreationTime { get; set; }
 

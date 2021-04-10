@@ -1,6 +1,5 @@
 ﻿namespace Elevations.RoomCategory
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -11,7 +10,6 @@
     using Abp.Domain.Repositories;
 
     using Elevations.EntityFrameworkCore.HotelDto;
-    using Elevations.Migrations;
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
 
@@ -21,12 +19,17 @@
         AsyncCrudAppService<Apartments, ApartmentDto, int, PagedRoleResultRequestDto, UpdateApartmentDto, ApartmentDto>,
         IApartmentService
     {
+        private readonly IRepository<ApartmentCategory> apartmentCategoryRepository;
+
         private readonly IRepository<Apartments> apartmentRepository;
 
-        public ApartmentAppService(IRepository<Apartments> apartmentRepository)
+        public ApartmentAppService(
+            IRepository<Apartments> apartmentRepository,
+            IRepository<ApartmentCategory> apartmentCategoryRepository)
             : base(apartmentRepository)
         {
             this.apartmentRepository = apartmentRepository;
+            this.apartmentCategoryRepository = apartmentCategoryRepository;
         }
 
         public override async Task<ApartmentDto> CreateAsync(UpdateApartmentDto input)
@@ -35,23 +38,19 @@
 
             Apartments apartments = new()
                                         {
-                                            Category = input.ApartmentCategory, Image1 = input.Image, Name = input.Name,
-                                            Bath = input.Bath, Bed = input.Bed, Description = input.Description
+                                            Category = apartmentCategoryRepository.GetAll()
+                                                .FirstOrDefault(x => x.Name == input.CategoryName),
+                                            Image1 = input.Image, Name = input.Name, Bath = input.Bath, Bed = input.Bed,
+                                            Description = input.Description
                                         };
 
-            
             apartments.Name = input.Name;
             apartments.ImageSequence = input.ImageSequence;
             apartments.Length = input.Length;
             apartments.Price = input.Price;
-            apartments.Category = new ApartmentCategory
-                                      {
-                                          Name = input.ApartmentCategory.Name, CreationTime = DateTime.Now
-                                      };
 
-
-            await apartmentRepository.InsertAsync(apartments);
-
+            int insertedId = await apartmentRepository.InsertAndGetIdAsync(apartments);
+            apartments.Id = insertedId;
             return MapToEntityDto(apartments);
         }
 
@@ -71,9 +70,10 @@
 
             Apartments apartments = new()
                                         {
-                                            Category = input.ApartmentCategory, Image1 = input.Image1,
-                                            Name = input.Name, Bath = input.Bath, Bed = input.Bed,
-                                            Description = input.Description
+                                            Category = apartmentCategoryRepository.GetAll()
+                                                .FirstOrDefault(x => x.Name == input.CategoryName),
+                                            Image1 = input.Image1, Name = input.Name, Bath = input.Bath,
+                                            Bed = input.Bed, Description = input.Description
                                         };
             apartments.Name = input.Name;
             apartments.Image2 = input.Image2;

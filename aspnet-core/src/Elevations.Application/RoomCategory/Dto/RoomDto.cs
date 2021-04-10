@@ -12,7 +12,7 @@
 
         public long Bed { get; set; }
 
-        public RoomsCategory Category { get; set; }
+        public string CategoryName { get; set; }
 
         public string Description { get; set; }
 

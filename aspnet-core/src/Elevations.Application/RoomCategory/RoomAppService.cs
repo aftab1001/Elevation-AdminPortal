@@ -1,6 +1,5 @@
 ﻿namespace Elevations.RoomCategory
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -20,12 +19,15 @@
         AsyncCrudAppService<Rooms, RoomDto, int, PagedRoleResultRequestDto, UpdateRoomDto, RoomDto>,
         IRoomAppService
     {
+        private readonly IRepository<RoomsCategory> roomsCategory;
+
         private readonly IRepository<Rooms> roomsRepository;
 
-        public RoomAppService(IRepository<Rooms> roomsRepository)
+        public RoomAppService(IRepository<Rooms> roomsRepository, IRepository<RoomsCategory> roomsCategory)
             : base(roomsRepository)
         {
             this.roomsRepository = roomsRepository;
+            this.roomsCategory = roomsCategory;
         }
 
         public override async Task<RoomDto> CreateAsync(UpdateRoomDto input)
@@ -34,17 +36,18 @@
 
             Rooms rooms = new()
                               {
-                                  Category = input.Category, Image1 = input.Image1, Image2 = input.Image2,
-                                  Image3 = input.Image3, Image4 = input.Image4, Image5 = input.Image5,
-                                  Name = input.Name, Bath = input.Bath, Bed = input.Bed, Description = input.Description
+                                  Category = roomsCategory.GetAll().FirstOrDefault(x => x.Name == input.CategoryName),
+                                  Image1 = input.Image1, Image2 = input.Image2, Image3 = input.Image3,
+                                  Image4 = input.Image4, Image5 = input.Image5, Name = input.Name, Bath = input.Bath,
+                                  Bed = input.Bed, Description = input.Description
                               };
             rooms.Name = input.Name;
             rooms.ImageSequence = input.ImageSequence;
             rooms.Length = input.Length;
             rooms.Price = input.Price;
 
-            await roomsRepository.InsertAsync(rooms);
-
+      var insertedId =   await roomsRepository.InsertAndGetIdAsync(rooms);
+      rooms.Id = insertedId;
             return MapToEntityDto(rooms);
         }
 
@@ -63,9 +66,10 @@
 
             Rooms rooms = new()
                               {
-                                  Category = input.Category, Image1 = input.Image1, Image2 = input.Image2,
-                                  Image3 = input.Image3, Image4 = input.Image4, Image5 = input.Image5,
-                                  Name = input.Name, Bath = input.Bath, Bed = input.Bed, Description = input.Description
+                                  Category = roomsCategory.GetAll().FirstOrDefault(x => x.Name == input.CategoryName),
+                                  Image1 = input.Image1, Image2 = input.Image2, Image3 = input.Image3,
+                                  Image4 = input.Image4, Image5 = input.Image5, Name = input.Name, Bath = input.Bath,
+                                  Bed = input.Bed, Description = input.Description
                               };
 
             rooms.Name = input.Name;
@@ -73,10 +77,9 @@
             rooms.Length = input.Length;
             rooms.Price = input.Price;
             rooms.Id = input.Id;
-            rooms.Category = new RoomsCategory { Name = input.Category.Name, CreationTime = DateTime.Now };
 
-            await roomsRepository.UpdateAsync(rooms);
-
+         await roomsRepository.UpdateAsync(rooms);
+       
             return MapToEntityDto(rooms);
         }
     }

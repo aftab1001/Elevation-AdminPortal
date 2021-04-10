@@ -8,16 +8,11 @@
     [AutoMapFrom(typeof(Apartments))]
     public class ApartmentDto : EntityDto<int>
     {
-        public ApartmentDto()
-        {
-            ApartmentCategory = new ApartmentCategory();
-        }
-
-        public ApartmentCategory ApartmentCategory { get; set; }
-
         public long Bath { get; set; }
 
         public long Bed { get; set; }
+
+        public string CategoryName { get; set; }
 
         public string Description { get; set; }
 
