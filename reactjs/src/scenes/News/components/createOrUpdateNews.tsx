@@ -131,6 +131,9 @@ class CreateOrUpdateNews extends React.Component<
         style={{ top: 50 }}
       >
         <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
+        <Form.Item label={L('Name')} name={'name'} rules={rules.name} {...formItemLayout}>
+            <Input />
+          </Form.Item>
           <Form.Item label={L('Title')} name={'title'} rules={rules.title} {...formItemLayout}>
             <Input />
           </Form.Item>
