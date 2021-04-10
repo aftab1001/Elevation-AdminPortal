@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Form, Input, Modal, Upload,Select } from 'antd';
+import { Form, Input, Modal, Upload, Select } from 'antd';
 
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
@@ -29,8 +29,11 @@ class CreateOrUpdateRooms extends React.Component<
   }
   onFieldsChange = (changedFields: any, allFields: any) => {
     const image = this.props.formRef.current?.getFieldValue('image1');
-    
-    this.setState({ fileList: [{ uid: -1, url: image }] });
+    if (image && image !== '') {
+      this.setState({ fileList: [{ uid: -1, url: image }] });
+    } else {
+      this.setState({ fileList: [] });
+    }
   };
 
   onChange = (info: any) => {
@@ -127,7 +130,6 @@ class CreateOrUpdateRooms extends React.Component<
             name={'categoryName'}
             rules={rules.categoryName}
             {...formItemLayout}
-            
           >
             <Select placeholder="Please Select Category" defaultValue="GuestHouse">
               <Select.Option value="GuestHouse">Guest Home</Select.Option>

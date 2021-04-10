@@ -80,11 +80,10 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
         this.formRef.current?.setFieldsValue({
           ...this.props.apartmentStore.apartmentModel,
         });
-        this.formRef.current?.submit();
-     
       } else {
         this.formRef.current?.resetFields();
       }
+      this.formRef.current?.submit();
     }, 100);
   }
 
@@ -128,7 +127,7 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
         width: 150,
         render: (text: string) => <div>{text}</div>,
       },
-      
+
       {
         title: L('Image'),
         dataIndex: 'image1',
@@ -257,7 +256,7 @@ class Apartment extends AppComponentBase<IApartmentProps, IApartmentState> {
             })
           }
           modalType={this.state.apartmentId === 0 ? 'edit' : 'create'}
-          onCreate={this.handleCreate}          
+          onCreate={this.handleCreate}
         />
       </Card>
     );
