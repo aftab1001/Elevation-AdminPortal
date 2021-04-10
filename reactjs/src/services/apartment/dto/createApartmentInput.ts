@@ -11,4 +11,5 @@ export default class CreateTenantInput {
   bath!: number;  
   imageSequence!: number;
   price!: string;
+  categoryName!:string;
 }

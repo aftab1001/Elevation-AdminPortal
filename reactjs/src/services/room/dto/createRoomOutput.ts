@@ -12,4 +12,5 @@ export default interface CreateRoomOutput {
   imageSequence: number;
   price: string;
   id: number;
+  categoryName:string;
 }

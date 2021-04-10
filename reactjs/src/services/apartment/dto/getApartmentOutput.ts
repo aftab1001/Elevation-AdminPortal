@@ -12,4 +12,5 @@ export default class GetTenantOutput {
   imageSequence!: number;
   price!: string;  
   id!: number;
+  categoryName!:string;
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Form, Input, Modal, Upload } from 'antd';
+import { Form, Input, Modal, Upload,Select } from 'antd';
 
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
@@ -43,7 +43,7 @@ class CreateOrUpdateRooms extends React.Component<
     });
 
     this.props.formRef.current?.setFieldsValue({
-      image: info.fileList[0]?.url,
+      image1: info.fileList[0]?.url,
     });
     this.setState({ fileList: info.fileList });
   };
@@ -122,6 +122,19 @@ class CreateOrUpdateRooms extends React.Component<
           >
             <Input />
           </Form.Item>
+          <Form.Item
+            label={L('Room Category')}
+            name={'categoryName'}
+            rules={rules.categoryName}
+            {...formItemLayout}
+            
+          >
+            <Select placeholder="Please Select Category" defaultValue="GuestHouse">
+              <Select.Option value="GuestHouse">Guest Home</Select.Option>
+              <Select.Option value="MeetingRoom">Meeting Room</Select.Option>
+            </Select>
+          </Form.Item>
+
           <Form.Item
             label={L('Image')}
             name={'image2'}

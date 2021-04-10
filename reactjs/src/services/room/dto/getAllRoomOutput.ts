@@ -12,4 +12,5 @@ export interface GetAllRoomOutput {
   imageSequence: number;
   price: string;
   id: number;
+  categoryName:string;
 }

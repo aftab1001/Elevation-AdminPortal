@@ -12,6 +12,7 @@ class ApartmentModel {
   imageSequence!: number;
   price!: string;
   id!: number;
+  categoryName!:string;
 }
 
 export default ApartmentModel;

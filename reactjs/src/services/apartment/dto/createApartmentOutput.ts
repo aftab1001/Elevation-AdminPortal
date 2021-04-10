@@ -12,4 +12,5 @@ export default interface CreateTenantOutput {
   imageSequence: number;
   price: string;
   id: number;
+  categoryName:string;
 }
