@@ -1,123 +1,57 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace Elevations.Migrations
+﻿namespace Elevations.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class news : Migration
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.RenameColumn(
-                name: "Image",
-                table: "News",
-                newName: "Image1");
-
-            migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "News",
-                newName: "Name");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Description1",
-                table: "News",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Description2",
-                table: "News",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Description3",
-                table: "News",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Description4",
-                table: "News",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Description5",
-                table: "News",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image2",
-                table: "News",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image3",
-                table: "News",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image4",
-                table: "News",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image5",
-                table: "News",
-                type: "nvarchar(max)",
-                nullable: true);
-        }
-
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Description1",
-                table: "News");
+            migrationBuilder.DropColumn("Description1", "News");
 
-            migrationBuilder.DropColumn(
-                name: "Description2",
-                table: "News");
+            migrationBuilder.DropColumn("Description2", "News");
 
-            migrationBuilder.DropColumn(
-                name: "Description3",
-                table: "News");
+            migrationBuilder.DropColumn("Description3", "News");
 
-            migrationBuilder.DropColumn(
-                name: "Description4",
-                table: "News");
+            migrationBuilder.DropColumn("Description4", "News");
 
-            migrationBuilder.DropColumn(
-                name: "Description5",
-                table: "News");
+            migrationBuilder.DropColumn("Description5", "News");
 
-            migrationBuilder.DropColumn(
-                name: "Image2",
-                table: "News");
+            migrationBuilder.DropColumn("Image2", "News");
 
-            migrationBuilder.DropColumn(
-                name: "Image3",
-                table: "News");
+            migrationBuilder.DropColumn("Image3", "News");
 
-            migrationBuilder.DropColumn(
-                name: "Image4",
-                table: "News");
+            migrationBuilder.DropColumn("Image4", "News");
 
-            migrationBuilder.DropColumn(
-                name: "Image5",
-                table: "News");
+            migrationBuilder.DropColumn("Image5", "News");
 
-            migrationBuilder.RenameColumn(
-                name: "Name",
-                table: "News",
-                newName: "Description");
+            migrationBuilder.RenameColumn("Name", "News", "Description");
 
-            migrationBuilder.RenameColumn(
-                name: "Image1",
-                table: "News",
-                newName: "Image");
+            migrationBuilder.RenameColumn("Image1", "News", "Image");
+        }
+
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.RenameColumn("Image", "News", "Image1");
+
+            migrationBuilder.RenameColumn("Description", "News", "Name");
+
+            migrationBuilder.AddColumn<string>("Description1", "News", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Description2", "News", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Description3", "News", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Description4", "News", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Description5", "News", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Image2", "News", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Image3", "News", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Image4", "News", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Image5", "News", "nvarchar(max)", nullable: true);
         }
     }
 }

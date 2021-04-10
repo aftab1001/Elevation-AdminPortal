@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Elevations.Configuration.Dto
+﻿namespace Elevations.Configuration.Dto
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class ChangeUiThemeInput
     {
         [Required]

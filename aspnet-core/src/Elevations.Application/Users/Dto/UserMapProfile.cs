@@ -1,15 +1,15 @@
-﻿using AutoMapper;
-using Elevations.Authorization.Users;
-
-namespace Elevations.Users.Dto
+﻿namespace Elevations.Users.Dto
 {
+    using AutoMapper;
+
+    using Elevations.Authorization.Users;
+
     public class UserMapProfile : Profile
     {
         public UserMapProfile()
         {
             CreateMap<UserDto, User>();
-            CreateMap<UserDto, User>()
-                .ForMember(x => x.Roles, opt => opt.Ignore())
+            CreateMap<UserDto, User>().ForMember(x => x.Roles, opt => opt.Ignore())
                 .ForMember(x => x.CreationTime, opt => opt.Ignore());
 
             CreateMap<CreateUserDto, User>();

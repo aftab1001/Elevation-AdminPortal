@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Abp.Authorization.Roles;
-using Elevations.Authorization.Users;
-
-namespace Elevations.Authorization.Roles
+﻿namespace Elevations.Authorization.Roles
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using Abp.Authorization.Roles;
+
+    using Elevations.Authorization.Users;
+
     public class Role : AbpRole<User>
     {
         public const int MaxDescriptionLength = 5000;
@@ -23,6 +25,6 @@ namespace Elevations.Authorization.Roles
         }
 
         [StringLength(MaxDescriptionLength)]
-        public string Description {get; set;}
+        public string Description { get; set; }
     }
 }

@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using Abp.Extensions;
-
-namespace Elevations.Identity
+﻿namespace Elevations.Identity
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+
+    using Abp.Extensions;
+
     public class ExternalLoginInfoHelper
     {
         public static (string name, string surname) GetNameAndSurnameFromClaims(List<Claim> claims)
@@ -12,13 +13,13 @@ namespace Elevations.Identity
             string name = null;
             string surname = null;
 
-            var givennameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
+            Claim? givennameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
             if (givennameClaim != null && !givennameClaim.Value.IsNullOrEmpty())
             {
                 name = givennameClaim.Value;
             }
 
-            var surnameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
+            Claim? surnameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
             if (surnameClaim != null && !surnameClaim.Value.IsNullOrEmpty())
             {
                 surname = surnameClaim.Value;
@@ -26,14 +27,14 @@ namespace Elevations.Identity
 
             if (name == null || surname == null)
             {
-                var nameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+                Claim? nameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
                 if (nameClaim != null)
                 {
-                    var nameSurName = nameClaim.Value;
+                    string nameSurName = nameClaim.Value;
                     if (!nameSurName.IsNullOrEmpty())
                     {
-                        var lastSpaceIndex = nameSurName.LastIndexOf(' ');
-                        if (lastSpaceIndex < 1 || lastSpaceIndex > (nameSurName.Length - 2))
+                        int lastSpaceIndex = nameSurName.LastIndexOf(' ');
+                        if (lastSpaceIndex < 1 || lastSpaceIndex > nameSurName.Length - 2)
                         {
                             name = surname = nameSurName;
                         }

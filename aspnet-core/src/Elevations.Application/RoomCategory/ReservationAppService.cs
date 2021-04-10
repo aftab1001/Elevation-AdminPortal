@@ -4,7 +4,6 @@
     using Abp.Authorization;
     using Abp.Domain.Repositories;
 
-    using Elevations.Authorization;
     using Elevations.EntityFrameworkCore.HotelDto;
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;

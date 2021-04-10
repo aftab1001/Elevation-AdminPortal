@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Abp.Authorization.Users;
-using Abp.Extensions;
-
-namespace Elevations.Authorization.Users
+﻿namespace Elevations.Authorization.Users
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Abp.Authorization.Users;
+    using Abp.Extensions;
+
     public class User : AbpUser<User>
     {
         public const string DefaultPassword = "123qwe";
@@ -16,15 +17,11 @@ namespace Elevations.Authorization.Users
 
         public static User CreateTenantAdminUser(int tenantId, string emailAddress)
         {
-            var user = new User
-            {
-                TenantId = tenantId,
-                UserName = AdminUserName,
-                Name = AdminUserName,
-                Surname = AdminUserName,
-                EmailAddress = emailAddress,
-                Roles = new List<UserRole>()
-            };
+            User user = new User
+                            {
+                                TenantId = tenantId, UserName = AdminUserName, Name = AdminUserName,
+                                Surname = AdminUserName, EmailAddress = emailAddress, Roles = new List<UserRole>()
+                            };
 
             user.SetNormalizedNames();
 

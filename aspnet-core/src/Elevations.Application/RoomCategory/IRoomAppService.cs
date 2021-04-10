@@ -12,6 +12,5 @@
         IRoomAppService : IAsyncCrudAppService<RoomDto, int, PagedRoleResultRequestDto, UpdateRoomDto, RoomDto>
     {
         Task<ListResultDto<RoomDto>> GetAllRooms();
-        
     }
 }

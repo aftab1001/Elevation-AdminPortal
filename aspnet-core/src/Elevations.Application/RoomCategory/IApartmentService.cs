@@ -8,10 +8,9 @@
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
 
-    public interface
-        IApartmentService : IAsyncCrudAppService<ApartmentDto, int, PagedRoleResultRequestDto, UpdateApartmentDto, ApartmentDto>
+    public interface IApartmentService : IAsyncCrudAppService<ApartmentDto, int, PagedRoleResultRequestDto,
+        UpdateApartmentDto, ApartmentDto>
     {
         Task<ListResultDto<ApartmentDto>> GetAllApartment();
-        
     }
 }

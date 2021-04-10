@@ -1,11 +1,14 @@
-﻿using System.Threading.Tasks;
-using Abp.Dependency;
-
-namespace Elevations.Authentication.External
+﻿namespace Elevations.Authentication.External
 {
+    using System.Threading.Tasks;
+
+    using Abp.Dependency;
+
     public abstract class ExternalAuthProviderApiBase : IExternalAuthProviderApi, ITransientDependency
     {
         public ExternalLoginProviderInfo ProviderInfo { get; set; }
+
+        public abstract Task<ExternalAuthUserInfo> GetUserInfo(string accessCode);
 
         public void Initialize(ExternalLoginProviderInfo providerInfo)
         {
@@ -14,10 +17,8 @@ namespace Elevations.Authentication.External
 
         public async Task<bool> IsValidUser(string userId, string accessCode)
         {
-            var userInfo = await GetUserInfo(accessCode);
+            ExternalAuthUserInfo userInfo = await GetUserInfo(accessCode);
             return userInfo.ProviderKey == userId;
         }
-
-        public abstract Task<ExternalAuthUserInfo> GetUserInfo(string accessCode);
     }
 }

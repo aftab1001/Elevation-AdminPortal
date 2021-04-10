@@ -1,37 +1,34 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Abp.Application.Services;
-using Abp.IdentityFramework;
-using Abp.Runtime.Session;
-using Elevations.Authorization.Users;
-using Elevations.MultiTenancy;
-
-namespace Elevations
+﻿namespace Elevations
 {
+    using System;
+    using System.Threading.Tasks;
+
+    using Abp.Application.Services;
+    using Abp.IdentityFramework;
+    using Abp.Runtime.Session;
+
+    using Elevations.Authorization.Users;
+    using Elevations.MultiTenancy;
+
+    using Microsoft.AspNetCore.Identity;
+
     /// <summary>
-    /// Derive your application services from this class.
+    ///     Derive your application services from this class.
     /// </summary>
     public abstract class ElevationsAppServiceBase : ApplicationService
     {
-        public TenantManager TenantManager { get; set; }
-
-        public UserManager UserManager { get; set; }
-
         protected ElevationsAppServiceBase()
         {
             LocalizationSourceName = ElevationsConsts.LocalizationSourceName;
         }
 
-        protected virtual async Task<User> GetCurrentUserAsync()
-        {
-            var user = await UserManager.FindByIdAsync(AbpSession.GetUserId().ToString());
-            if (user == null)
-            {
-                throw new Exception("There is no current user!");
-            }
+        public TenantManager TenantManager { get; set; }
 
-            return user;
+        public UserManager UserManager { get; set; }
+
+        protected virtual void CheckErrors(IdentityResult identityResult)
+        {
+            identityResult.CheckErrors(LocalizationManager);
         }
 
         protected virtual Task<Tenant> GetCurrentTenantAsync()
@@ -39,9 +36,15 @@ namespace Elevations
             return TenantManager.GetByIdAsync(AbpSession.GetTenantId());
         }
 
-        protected virtual void CheckErrors(IdentityResult identityResult)
+        protected virtual async Task<User> GetCurrentUserAsync()
         {
-            identityResult.CheckErrors(LocalizationManager);
+            User user = await UserManager.FindByIdAsync(AbpSession.GetUserId().ToString());
+            if (user == null)
+            {
+                throw new Exception("There is no current user!");
+            }
+
+            return user;
         }
     }
 }

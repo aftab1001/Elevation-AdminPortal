@@ -1,14 +1,16 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Abp;
-using Abp.Extensions;
-using Abp.Notifications;
-using Abp.Timing;
-using Abp.Web.Security.AntiForgery;
-using Elevations.Controllers;
-
 namespace Elevations.Web.Host.Controllers
 {
+    using System.Threading.Tasks;
+
+    using Abp;
+    using Abp.Extensions;
+    using Abp.Notifications;
+    using Abp.Timing;
+
+    using Elevations.Controllers;
+
+    using Microsoft.AspNetCore.Mvc;
+
     public class HomeController : ElevationsControllerBase
     {
         private readonly INotificationPublisher _notificationPublisher;
@@ -24,8 +26,8 @@ namespace Elevations.Web.Host.Controllers
         }
 
         /// <summary>
-        /// This is a demo code to demonstrate sending notification to default tenant admin and host admin uers.
-        /// Don't use this code in production !!!
+        ///     This is a demo code to demonstrate sending notification to default tenant admin and host admin uers.
+        ///     Don't use this code in production !!!
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
@@ -36,15 +38,14 @@ namespace Elevations.Web.Host.Controllers
                 message = "This is a test notification, created at " + Clock.Now;
             }
 
-            var defaultTenantAdmin = new UserIdentifier(1, 2);
-            var hostAdmin = new UserIdentifier(null, 1);
+            UserIdentifier defaultTenantAdmin = new UserIdentifier(1, 2);
+            UserIdentifier hostAdmin = new UserIdentifier(null, 1);
 
             await _notificationPublisher.PublishAsync(
                 "App.SimpleMessage",
                 new MessageNotificationData(message),
                 severity: NotificationSeverity.Info,
-                userIds: new[] { defaultTenantAdmin, hostAdmin }
-            );
+                userIds: new[] { defaultTenantAdmin, hostAdmin });
 
             return Content("Sent notification: " + message);
         }

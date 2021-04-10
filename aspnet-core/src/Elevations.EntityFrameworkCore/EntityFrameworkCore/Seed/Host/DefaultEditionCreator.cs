@@ -1,11 +1,14 @@
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Abp.Application.Editions;
-using Abp.Application.Features;
-using Elevations.Editions;
-
 namespace Elevations.EntityFrameworkCore.Seed.Host
 {
+    using System.Linq;
+
+    using Abp.Application.Editions;
+    using Abp.Application.Features;
+
+    using Elevations.Editions;
+
+    using Microsoft.EntityFrameworkCore;
+
     public class DefaultEditionCreator
     {
         private readonly ElevationsDbContext _context;
@@ -22,10 +25,15 @@ namespace Elevations.EntityFrameworkCore.Seed.Host
 
         private void CreateEditions()
         {
-            var defaultEdition = _context.Editions.IgnoreQueryFilters().FirstOrDefault(e => e.Name == EditionManager.DefaultEditionName);
+            Edition? defaultEdition = _context.Editions.IgnoreQueryFilters()
+                .FirstOrDefault(e => e.Name == EditionManager.DefaultEditionName);
             if (defaultEdition == null)
             {
-                defaultEdition = new Edition { Name = EditionManager.DefaultEditionName, DisplayName = EditionManager.DefaultEditionName };
+                defaultEdition = new Edition
+                                     {
+                                         Name = EditionManager.DefaultEditionName,
+                                         DisplayName = EditionManager.DefaultEditionName
+                                     };
                 _context.Editions.Add(defaultEdition);
                 _context.SaveChanges();
 
@@ -35,17 +43,14 @@ namespace Elevations.EntityFrameworkCore.Seed.Host
 
         private void CreateFeatureIfNotExists(int editionId, string featureName, bool isEnabled)
         {
-            if (_context.EditionFeatureSettings.IgnoreQueryFilters().Any(ef => ef.EditionId == editionId && ef.Name == featureName))
+            if (_context.EditionFeatureSettings.IgnoreQueryFilters()
+                .Any(ef => ef.EditionId == editionId && ef.Name == featureName))
             {
                 return;
             }
 
-            _context.EditionFeatureSettings.Add(new EditionFeatureSetting
-            {
-                Name = featureName,
-                Value = isEnabled.ToString(),
-                EditionId = editionId
-            });
+            _context.EditionFeatureSettings.Add(
+                new EditionFeatureSetting { Name = featureName, Value = isEnabled.ToString(), EditionId = editionId });
             _context.SaveChanges();
         }
     }

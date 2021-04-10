@@ -3,10 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using Abp.Authorization.Users;
     using Abp.Domain.Entities.Auditing;
-
-    using Elevations.Authorization.Users;
 
     [Table("Reservation")]
     public class Reservation : AuditedEntity
@@ -15,11 +12,6 @@
 
         [Required]
         public string Email { get; set; }
-
-        public string Message { get; set; }
-
-        [Required]
-        public string Name { get; set; }
 
         [Required]
         public string Image1 { get; set; }
@@ -32,5 +24,9 @@
 
         public string Image5 { get; set; }
 
+        public string Message { get; set; }
+
+        [Required]
+        public string Name { get; set; }
     }
 }

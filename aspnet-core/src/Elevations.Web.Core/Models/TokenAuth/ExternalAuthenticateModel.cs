@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Abp.Authorization.Users;
-
-namespace Elevations.Models.TokenAuth
+﻿namespace Elevations.Models.TokenAuth
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using Abp.Authorization.Users;
+
     public class ExternalAuthenticateModel
     {
         [Required]
@@ -10,10 +11,10 @@ namespace Elevations.Models.TokenAuth
         public string AuthProvider { get; set; }
 
         [Required]
-        [StringLength(UserLogin.MaxProviderKeyLength)]
-        public string ProviderKey { get; set; }
+        public string ProviderAccessCode { get; set; }
 
         [Required]
-        public string ProviderAccessCode { get; set; }
+        [StringLength(UserLogin.MaxProviderKeyLength)]
+        public string ProviderKey { get; set; }
     }
 }

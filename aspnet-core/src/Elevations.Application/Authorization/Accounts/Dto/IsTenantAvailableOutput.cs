@@ -2,10 +2,6 @@ namespace Elevations.Authorization.Accounts.Dto
 {
     public class IsTenantAvailableOutput
     {
-        public TenantAvailabilityState State { get; set; }
-
-        public int? TenantId { get; set; }
-
         public IsTenantAvailableOutput()
         {
         }
@@ -15,5 +11,9 @@ namespace Elevations.Authorization.Accounts.Dto
             State = state;
             TenantId = tenantId;
         }
+
+        public TenantAvailabilityState State { get; set; }
+
+        public int? TenantId { get; set; }
     }
 }

@@ -1,25 +1,27 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Abp.Reflection.Extensions;
-
-namespace Elevations.Web
+﻿namespace Elevations.Web
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+
+    using Abp.Reflection.Extensions;
+
     /// <summary>
-    /// This class is used to find root path of the web project in;
-    /// unit tests (to find views) and entity framework core command line commands (to find conn string).
+    ///     This class is used to find root path of the web project in;
+    ///     unit tests (to find views) and entity framework core command line commands (to find conn string).
     /// </summary>
     public static class WebContentDirectoryFinder
     {
         public static string CalculateContentRootFolder()
         {
-            var coreAssemblyDirectoryPath = Path.GetDirectoryName(typeof(ElevationsCoreModule).GetAssembly().Location);
+            string? coreAssemblyDirectoryPath =
+                Path.GetDirectoryName(typeof(ElevationsCoreModule).GetAssembly().Location);
             if (coreAssemblyDirectoryPath == null)
             {
                 throw new Exception("Could not find location of Elevations.Core assembly!");
             }
 
-            var directoryInfo = new DirectoryInfo(coreAssemblyDirectoryPath);
+            DirectoryInfo directoryInfo = new DirectoryInfo(coreAssemblyDirectoryPath);
             while (!DirectoryContains(directoryInfo.FullName, "Elevations.sln"))
             {
                 if (directoryInfo.Parent == null)
@@ -30,13 +32,13 @@ namespace Elevations.Web
                 directoryInfo = directoryInfo.Parent;
             }
 
-            var webMvcFolder = Path.Combine(directoryInfo.FullName, "src", "Elevations.Web.Mvc");
+            string webMvcFolder = Path.Combine(directoryInfo.FullName, "src", "Elevations.Web.Mvc");
             if (Directory.Exists(webMvcFolder))
             {
                 return webMvcFolder;
             }
 
-            var webHostFolder = Path.Combine(directoryInfo.FullName, "src", "Elevations.Web.Host");
+            string webHostFolder = Path.Combine(directoryInfo.FullName, "src", "Elevations.Web.Host");
             if (Directory.Exists(webHostFolder))
             {
                 return webHostFolder;

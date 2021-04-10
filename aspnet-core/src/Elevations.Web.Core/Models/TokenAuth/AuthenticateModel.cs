@@ -1,20 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Abp.Auditing;
-using Abp.Authorization.Users;
-
-namespace Elevations.Models.TokenAuth
+﻿namespace Elevations.Models.TokenAuth
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using Abp.Auditing;
+    using Abp.Authorization.Users;
+
     public class AuthenticateModel
     {
-        [Required]
-        [StringLength(AbpUserBase.MaxEmailAddressLength)]
-        public string UserNameOrEmailAddress { get; set; }
-
         [Required]
         [StringLength(AbpUserBase.MaxPlainPasswordLength)]
         [DisableAuditing]
         public string Password { get; set; }
 
         public bool RememberClient { get; set; }
+
+        [Required]
+        [StringLength(AbpUserBase.MaxEmailAddressLength)]
+        public string UserNameOrEmailAddress { get; set; }
     }
 }

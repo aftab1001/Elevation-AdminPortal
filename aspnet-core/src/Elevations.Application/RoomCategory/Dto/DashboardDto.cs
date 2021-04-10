@@ -2,8 +2,6 @@
 {
     using Abp.Application.Services.Dto;
 
-    using Elevations.EntityFrameworkCore.HotelDto;
-
     public class DashboardDto : EntityDto<int>
     {
         public string Description1 { get; set; }

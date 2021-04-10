@@ -1,41 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Abp.Localization;
-using Abp.MultiTenancy;
-
-namespace Elevations.EntityFrameworkCore.Seed.Host
+﻿namespace Elevations.EntityFrameworkCore.Seed.Host
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Abp.Localization;
+    using Abp.MultiTenancy;
+
+    using Microsoft.EntityFrameworkCore;
+
     public class DefaultLanguagesCreator
     {
-        public static List<ApplicationLanguage> InitialLanguages => GetInitialLanguages();
-
         private readonly ElevationsDbContext _context;
-
-        private static List<ApplicationLanguage> GetInitialLanguages()
-        {
-            var tenantId = ElevationsConsts.MultiTenancyEnabled ? null : (int?)MultiTenancyConsts.DefaultTenantId;
-            return new List<ApplicationLanguage>
-            {
-                new ApplicationLanguage(tenantId, "en", "English", "famfamfam-flags us"),
-                new ApplicationLanguage(tenantId, "ar", "العربية", "famfamfam-flags sa"),
-                new ApplicationLanguage(tenantId, "de", "German", "famfamfam-flags de"),
-                new ApplicationLanguage(tenantId, "it", "Italiano", "famfamfam-flags it"),
-                new ApplicationLanguage(tenantId, "fa", "فارسی", "famfamfam-flags ir"),
-                new ApplicationLanguage(tenantId, "fr", "Français", "famfamfam-flags fr"),
-                new ApplicationLanguage(tenantId, "pt-BR", "Português", "famfamfam-flags br"),
-                new ApplicationLanguage(tenantId, "tr", "Türkçe", "famfamfam-flags tr"),
-                new ApplicationLanguage(tenantId, "ru", "Русский", "famfamfam-flags ru"),
-                new ApplicationLanguage(tenantId, "zh-Hans", "简体中文", "famfamfam-flags cn"),
-                new ApplicationLanguage(tenantId, "es-MX", "Español México", "famfamfam-flags mx"),
-                new ApplicationLanguage(tenantId, "nl", "Nederlands", "famfamfam-flags nl"),
-                new ApplicationLanguage(tenantId, "ja", "日本語", "famfamfam-flags jp")
-            };
-        }
 
         public DefaultLanguagesCreator(ElevationsDbContext context)
         {
             _context = context;
+        }
+
+        public static List<ApplicationLanguage> InitialLanguages
+        {
+            get
+            {
+                return GetInitialLanguages();
+            }
         }
 
         public void Create()
@@ -43,23 +30,45 @@ namespace Elevations.EntityFrameworkCore.Seed.Host
             CreateLanguages();
         }
 
-        private void CreateLanguages()
+        private static List<ApplicationLanguage> GetInitialLanguages()
         {
-            foreach (var language in InitialLanguages)
-            {
-                AddLanguageIfNotExists(language);
-            }
+            int? tenantId = ElevationsConsts.MultiTenancyEnabled ? null : (int?)MultiTenancyConsts.DefaultTenantId;
+            return new List<ApplicationLanguage>
+                       {
+                           new(tenantId, "en", "English", "famfamfam-flags us"),
+                           new(tenantId, "ar", "العربية", "famfamfam-flags sa"),
+                           new(tenantId, "de", "German", "famfamfam-flags de"),
+                           new(tenantId, "it", "Italiano", "famfamfam-flags it"),
+                           new(tenantId, "fa", "فارسی", "famfamfam-flags ir"),
+                           new(tenantId, "fr", "Français", "famfamfam-flags fr"),
+                           new(tenantId, "pt-BR", "Português", "famfamfam-flags br"),
+                           new(tenantId, "tr", "Türkçe", "famfamfam-flags tr"),
+                           new(tenantId, "ru", "Русский", "famfamfam-flags ru"),
+                           new(tenantId, "zh-Hans", "简体中文", "famfamfam-flags cn"),
+                           new(tenantId, "es-MX", "Español México", "famfamfam-flags mx"),
+                           new(tenantId, "nl", "Nederlands", "famfamfam-flags nl"),
+                           new(tenantId, "ja", "日本語", "famfamfam-flags jp")
+                       };
         }
 
         private void AddLanguageIfNotExists(ApplicationLanguage language)
         {
-            if (_context.Languages.IgnoreQueryFilters().Any(l => l.TenantId == language.TenantId && l.Name == language.Name))
+            if (_context.Languages.IgnoreQueryFilters()
+                .Any(l => l.TenantId == language.TenantId && l.Name == language.Name))
             {
                 return;
             }
 
             _context.Languages.Add(language);
             _context.SaveChanges();
+        }
+
+        private void CreateLanguages()
+        {
+            foreach (ApplicationLanguage language in InitialLanguages)
+            {
+                AddLanguageIfNotExists(language);
+            }
         }
     }
 }

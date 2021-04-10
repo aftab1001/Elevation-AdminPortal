@@ -1,12 +1,14 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Abp.Configuration;
-using Abp.Localization;
-using Abp.MultiTenancy;
-using Abp.Net.Mail;
-
-namespace Elevations.EntityFrameworkCore.Seed.Host
+﻿namespace Elevations.EntityFrameworkCore.Seed.Host
 {
+    using System.Linq;
+
+    using Abp.Configuration;
+    using Abp.Localization;
+    using Abp.MultiTenancy;
+    using Abp.Net.Mail;
+
+    using Microsoft.EntityFrameworkCore;
+
     public class DefaultSettingsCreator
     {
         private readonly ElevationsDbContext _context;
@@ -35,7 +37,8 @@ namespace Elevations.EntityFrameworkCore.Seed.Host
 
         private void AddSettingIfNotExists(string name, string value, int? tenantId = null)
         {
-            if (_context.Settings.IgnoreQueryFilters().Any(s => s.Name == name && s.TenantId == tenantId && s.UserId == null))
+            if (_context.Settings.IgnoreQueryFilters()
+                .Any(s => s.Name == name && s.TenantId == tenantId && s.UserId == null))
             {
                 return;
             }

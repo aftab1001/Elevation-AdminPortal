@@ -1,14 +1,15 @@
-using System.Threading.Tasks;
-using Abp.Web.Security.AntiForgery;
-using Microsoft.AspNetCore.Antiforgery;
-using Elevations.Controllers;
-using Microsoft.AspNetCore.Mvc;
-
 namespace Elevations.Web.Host.Controllers
 {
+    using Abp.Web.Security.AntiForgery;
+
+    using Elevations.Controllers;
+
+    using Microsoft.AspNetCore.Antiforgery;
+
     public class AntiForgeryController : ElevationsControllerBase
     {
         private readonly IAntiforgery _antiforgery;
+
         private readonly IAbpAntiForgeryManager _antiForgeryManager;
 
         public AntiForgeryController(IAntiforgery antiforgery, IAbpAntiForgeryManager antiForgeryManager)

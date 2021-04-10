@@ -1,16 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Elevations.Users.Dto
+﻿namespace Elevations.Users.Dto
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class ResetPasswordDto
     {
         [Required]
         public string AdminPassword { get; set; }
 
         [Required]
-        public long UserId { get; set; }
+        public string NewPassword { get; set; }
 
         [Required]
-        public string NewPassword { get; set; }
+        public long UserId { get; set; }
     }
 }

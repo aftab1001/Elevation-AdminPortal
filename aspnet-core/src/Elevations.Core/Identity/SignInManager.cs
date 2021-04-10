@@ -1,18 +1,19 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Abp.Authorization;
-using Abp.Authorization.Users;
-using Abp.Configuration;
-using Abp.Domain.Uow;
-using Elevations.Authorization.Roles;
-using Elevations.Authorization.Users;
-using Elevations.MultiTenancy;
-
-namespace Elevations.Identity
+﻿namespace Elevations.Identity
 {
+    using Abp.Authorization;
+    using Abp.Configuration;
+    using Abp.Domain.Uow;
+
+    using Elevations.Authorization.Roles;
+    using Elevations.Authorization.Users;
+    using Elevations.MultiTenancy;
+
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+
     public class SignInManager : AbpSignInManager<Tenant, Role, User>
     {
         public SignInManager(
@@ -25,7 +26,16 @@ namespace Elevations.Identity
             ISettingManager settingManager,
             IAuthenticationSchemeProvider schemes,
             IUserConfirmation<User> userConfirmation)
-            : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, unitOfWorkManager, settingManager, schemes, userConfirmation)
+            : base(
+                userManager,
+                contextAccessor,
+                claimsFactory,
+                optionsAccessor,
+                logger,
+                unitOfWorkManager,
+                settingManager,
+                schemes,
+                userConfirmation)
         {
         }
     }

@@ -1,17 +1,20 @@
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using Abp.Authorization;
-using Abp.Authorization.Roles;
-using Abp.Domain.Repositories;
-using Abp.Domain.Uow;
-using Abp.Organizations;
-using Abp.Runtime.Caching;
-using Abp.Zero.Configuration;
-using Elevations.Authorization.Users;
-
 namespace Elevations.Authorization.Roles
 {
+    using System.Collections.Generic;
+
+    using Abp.Authorization;
+    using Abp.Authorization.Roles;
+    using Abp.Domain.Repositories;
+    using Abp.Domain.Uow;
+    using Abp.Organizations;
+    using Abp.Runtime.Caching;
+    using Abp.Zero.Configuration;
+
+    using Elevations.Authorization.Users;
+
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Logging;
+
     public class RoleManager : AbpRoleManager<Role, User>
     {
         public RoleManager(
@@ -27,14 +30,15 @@ namespace Elevations.Authorization.Roles
             IRepository<OrganizationUnit, long> organizationUnitRepository,
             IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository)
             : base(
-                  store,
-                  roleValidators,
-                  keyNormalizer,
-                  errors, logger,
-                  permissionManager,
-                  cacheManager,
-                  unitOfWorkManager,
-                  roleManagementConfig,
+                store,
+                roleValidators,
+                keyNormalizer,
+                errors,
+                logger,
+                permissionManager,
+                cacheManager,
+                unitOfWorkManager,
+                roleManagementConfig,
                 organizationUnitRepository,
                 organizationUnitRoleRepository)
         {

@@ -1,12 +1,13 @@
-﻿using System;
-using Abp.Dependency;
-
-namespace Elevations.Timing
+﻿namespace Elevations.Timing
 {
+    using System;
+
+    using Abp.Dependency;
+
     public class AppTimes : ISingletonDependency
     {
         /// <summary>
-        /// Gets the startup time of the application.
+        ///     Gets the startup time of the application.
         /// </summary>
         public DateTime StartupTime { get; set; }
     }

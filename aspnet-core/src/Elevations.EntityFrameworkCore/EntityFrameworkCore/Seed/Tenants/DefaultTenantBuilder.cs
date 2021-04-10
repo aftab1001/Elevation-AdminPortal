@@ -1,11 +1,15 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Abp.MultiTenancy;
-using Elevations.Editions;
-using Elevations.MultiTenancy;
-
-namespace Elevations.EntityFrameworkCore.Seed.Tenants
+﻿namespace Elevations.EntityFrameworkCore.Seed.Tenants
 {
+    using System.Linq;
+
+    using Abp.Application.Editions;
+    using Abp.MultiTenancy;
+
+    using Elevations.Editions;
+    using Elevations.MultiTenancy;
+
+    using Microsoft.EntityFrameworkCore;
+
     public class DefaultTenantBuilder
     {
         private readonly ElevationsDbContext _context;
@@ -24,12 +28,14 @@ namespace Elevations.EntityFrameworkCore.Seed.Tenants
         {
             // Default tenant
 
-            var defaultTenant = _context.Tenants.IgnoreQueryFilters().FirstOrDefault(t => t.TenancyName == AbpTenantBase.DefaultTenantName);
+            Tenant? defaultTenant = _context.Tenants.IgnoreQueryFilters()
+                .FirstOrDefault(t => t.TenancyName == AbpTenantBase.DefaultTenantName);
             if (defaultTenant == null)
             {
                 defaultTenant = new Tenant(AbpTenantBase.DefaultTenantName, AbpTenantBase.DefaultTenantName);
 
-                var defaultEdition = _context.Editions.IgnoreQueryFilters().FirstOrDefault(e => e.Name == EditionManager.DefaultEditionName);
+                Edition? defaultEdition = _context.Editions.IgnoreQueryFilters()
+                    .FirstOrDefault(e => e.Name == EditionManager.DefaultEditionName);
                 if (defaultEdition != null)
                 {
                     defaultTenant.EditionId = defaultEdition.Id;

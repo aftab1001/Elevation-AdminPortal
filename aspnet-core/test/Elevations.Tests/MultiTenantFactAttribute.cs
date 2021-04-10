@@ -1,7 +1,7 @@
-﻿using Xunit;
-
-namespace Elevations.Tests
+﻿namespace Elevations.Tests
 {
+    using Xunit;
+
     public sealed class MultiTenantFactAttribute : FactAttribute
     {
         public MultiTenantFactAttribute()

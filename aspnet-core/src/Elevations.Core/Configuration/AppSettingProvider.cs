@@ -1,16 +1,21 @@
-﻿using System.Collections.Generic;
-using Abp.Configuration;
-
-namespace Elevations.Configuration
+﻿namespace Elevations.Configuration
 {
+    using System.Collections.Generic;
+
+    using Abp.Configuration;
+
     public class AppSettingProvider : SettingProvider
     {
         public override IEnumerable<SettingDefinition> GetSettingDefinitions(SettingDefinitionProviderContext context)
         {
             return new[]
-            {
-                new SettingDefinition(AppSettingNames.UiTheme, "red", scopes: SettingScopes.Application | SettingScopes.Tenant | SettingScopes.User, isVisibleToClients: true)
-            };
+                       {
+                           new SettingDefinition(
+                               AppSettingNames.UiTheme,
+                               "red",
+                               scopes: SettingScopes.Application | SettingScopes.Tenant | SettingScopes.User,
+                               isVisibleToClients: true)
+                       };
         }
     }
 }

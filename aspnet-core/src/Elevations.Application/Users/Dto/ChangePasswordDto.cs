@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Elevations.Users.Dto
+﻿namespace Elevations.Users.Dto
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class ChangePasswordDto
     {
         [Required]

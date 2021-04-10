@@ -14,10 +14,10 @@
 
         public string Email { get; set; }
 
+        public int ImageSequence { get; set; }
+
         public string Message { get; set; }
 
         public string Name { get; set; }
-
-        public int ImageSequence { get; set; }
     }
 }

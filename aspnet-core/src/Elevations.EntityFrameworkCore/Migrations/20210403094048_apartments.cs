@@ -1,264 +1,118 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace Elevations.Migrations
+﻿namespace Elevations.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class apartments : Migration
     {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn("Image2", "Rooms");
+
+            migrationBuilder.DropColumn("Image3", "Rooms");
+
+            migrationBuilder.DropColumn("Image4", "Rooms");
+
+            migrationBuilder.DropColumn("Image5", "Rooms");
+
+            migrationBuilder.DropColumn("Image1", "Reservation");
+
+            migrationBuilder.DropColumn("Image2", "Reservation");
+
+            migrationBuilder.DropColumn("Image3", "Reservation");
+
+            migrationBuilder.DropColumn("Image4", "Reservation");
+
+            migrationBuilder.DropColumn("Image5", "Reservation");
+
+            migrationBuilder.DropColumn("Image2", "Dishes");
+
+            migrationBuilder.DropColumn("Image3", "Dishes");
+
+            migrationBuilder.DropColumn("Image4", "Dishes");
+
+            migrationBuilder.DropColumn("Image5", "Dishes");
+
+            migrationBuilder.DropColumn("Image2", "Dashboard");
+
+            migrationBuilder.DropColumn("Image3", "Dashboard");
+
+            migrationBuilder.DropColumn("Image4", "Dashboard");
+
+            migrationBuilder.DropColumn("Image5", "Dashboard");
+
+            migrationBuilder.DropColumn("Image2", "Apartments");
+
+            migrationBuilder.DropColumn("Image3", "Apartments");
+
+            migrationBuilder.DropColumn("Image4", "Apartments");
+
+            migrationBuilder.DropColumn("Image5", "Apartments");
+
+            migrationBuilder.RenameColumn("Image1", "Rooms", "Image");
+
+            migrationBuilder.RenameColumn("Image1", "Dishes", "Image");
+
+            migrationBuilder.RenameColumn("Image1", "Dashboard", "Image");
+
+            migrationBuilder.RenameColumn("Image1", "Apartments", "Image");
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Image",
-                table: "Rooms",
-                newName: "Image1");
+            migrationBuilder.RenameColumn("Image", "Rooms", "Image1");
 
-            migrationBuilder.RenameColumn(
-                name: "Image",
-                table: "Dishes",
-                newName: "Image1");
+            migrationBuilder.RenameColumn("Image", "Dishes", "Image1");
 
-            migrationBuilder.RenameColumn(
-                name: "Image",
-                table: "Dashboard",
-                newName: "Image1");
+            migrationBuilder.RenameColumn("Image", "Dashboard", "Image1");
 
-            migrationBuilder.RenameColumn(
-                name: "Image",
-                table: "Apartments",
-                newName: "Image1");
+            migrationBuilder.RenameColumn("Image", "Apartments", "Image1");
+
+            migrationBuilder.AddColumn<string>("Image2", "Rooms", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Image3", "Rooms", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Image4", "Rooms", "nvarchar(max)", nullable: true);
+
+            migrationBuilder.AddColumn<string>("Image5", "Rooms", "nvarchar(max)", nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Image2",
-                table: "Rooms",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image3",
-                table: "Rooms",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image4",
-                table: "Rooms",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image5",
-                table: "Rooms",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image1",
-                table: "Reservation",
-                type: "nvarchar(max)",
+                "Image1",
+                "Reservation",
+                "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image2",
-                table: "Reservation",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image2", "Reservation", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image3",
-                table: "Reservation",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image3", "Reservation", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image4",
-                table: "Reservation",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image4", "Reservation", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image5",
-                table: "Reservation",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image5", "Reservation", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image2",
-                table: "Dishes",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image2", "Dishes", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image3",
-                table: "Dishes",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image3", "Dishes", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image4",
-                table: "Dishes",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image4", "Dishes", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image5",
-                table: "Dishes",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image5", "Dishes", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image2",
-                table: "Dashboard",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image2", "Dashboard", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image3",
-                table: "Dashboard",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image3", "Dashboard", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image4",
-                table: "Dashboard",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image4", "Dashboard", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image5",
-                table: "Dashboard",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image5", "Dashboard", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image2",
-                table: "Apartments",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image2", "Apartments", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image3",
-                table: "Apartments",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image3", "Apartments", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image4",
-                table: "Apartments",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Image4", "Apartments", "nvarchar(max)", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Image5",
-                table: "Apartments",
-                type: "nvarchar(max)",
-                nullable: true);
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "Image2",
-                table: "Rooms");
-
-            migrationBuilder.DropColumn(
-                name: "Image3",
-                table: "Rooms");
-
-            migrationBuilder.DropColumn(
-                name: "Image4",
-                table: "Rooms");
-
-            migrationBuilder.DropColumn(
-                name: "Image5",
-                table: "Rooms");
-
-            migrationBuilder.DropColumn(
-                name: "Image1",
-                table: "Reservation");
-
-            migrationBuilder.DropColumn(
-                name: "Image2",
-                table: "Reservation");
-
-            migrationBuilder.DropColumn(
-                name: "Image3",
-                table: "Reservation");
-
-            migrationBuilder.DropColumn(
-                name: "Image4",
-                table: "Reservation");
-
-            migrationBuilder.DropColumn(
-                name: "Image5",
-                table: "Reservation");
-
-            migrationBuilder.DropColumn(
-                name: "Image2",
-                table: "Dishes");
-
-            migrationBuilder.DropColumn(
-                name: "Image3",
-                table: "Dishes");
-
-            migrationBuilder.DropColumn(
-                name: "Image4",
-                table: "Dishes");
-
-            migrationBuilder.DropColumn(
-                name: "Image5",
-                table: "Dishes");
-
-            migrationBuilder.DropColumn(
-                name: "Image2",
-                table: "Dashboard");
-
-            migrationBuilder.DropColumn(
-                name: "Image3",
-                table: "Dashboard");
-
-            migrationBuilder.DropColumn(
-                name: "Image4",
-                table: "Dashboard");
-
-            migrationBuilder.DropColumn(
-                name: "Image5",
-                table: "Dashboard");
-
-            migrationBuilder.DropColumn(
-                name: "Image2",
-                table: "Apartments");
-
-            migrationBuilder.DropColumn(
-                name: "Image3",
-                table: "Apartments");
-
-            migrationBuilder.DropColumn(
-                name: "Image4",
-                table: "Apartments");
-
-            migrationBuilder.DropColumn(
-                name: "Image5",
-                table: "Apartments");
-
-            migrationBuilder.RenameColumn(
-                name: "Image1",
-                table: "Rooms",
-                newName: "Image");
-
-            migrationBuilder.RenameColumn(
-                name: "Image1",
-                table: "Dishes",
-                newName: "Image");
-
-            migrationBuilder.RenameColumn(
-                name: "Image1",
-                table: "Dashboard",
-                newName: "Image");
-
-            migrationBuilder.RenameColumn(
-                name: "Image1",
-                table: "Apartments",
-                newName: "Image");
+            migrationBuilder.AddColumn<string>("Image5", "Apartments", "nvarchar(max)", nullable: true);
         }
     }
 }

@@ -1,27 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Abp.Authorization.Users;
-using Abp.Domain.Services;
-using Abp.IdentityFramework;
-using Abp.Runtime.Session;
-using Abp.UI;
-using Elevations.Authorization.Roles;
-using Elevations.MultiTenancy;
-
-namespace Elevations.Authorization.Users
+﻿namespace Elevations.Authorization.Users
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Abp.Authorization.Users;
+    using Abp.Domain.Services;
+    using Abp.IdentityFramework;
+    using Abp.Runtime.Session;
+    using Abp.UI;
+
+    using Elevations.Authorization.Roles;
+    using Elevations.MultiTenancy;
+
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+
     public class UserRegistrationManager : DomainService
     {
-        public IAbpSession AbpSession { get; set; }
+        private readonly IPasswordHasher<User> _passwordHasher;
+
+        private readonly RoleManager _roleManager;
 
         private readonly TenantManager _tenantManager;
+
         private readonly UserManager _userManager;
-        private readonly RoleManager _roleManager;
-        private readonly IPasswordHasher<User> _passwordHasher;
 
         public UserRegistrationManager(
             TenantManager tenantManager,
@@ -37,27 +41,30 @@ namespace Elevations.Authorization.Users
             AbpSession = NullAbpSession.Instance;
         }
 
-        public async Task<User> RegisterAsync(string name, string surname, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed)
+        public IAbpSession AbpSession { get; set; }
+
+        public async Task<User> RegisterAsync(
+            string name,
+            string surname,
+            string emailAddress,
+            string userName,
+            string plainPassword,
+            bool isEmailConfirmed)
         {
             CheckForTenant();
 
-            var tenant = await GetActiveTenantAsync();
+            Tenant tenant = await GetActiveTenantAsync();
 
-            var user = new User
-            {
-                TenantId = tenant.Id,
-                Name = name,
-                Surname = surname,
-                EmailAddress = emailAddress,
-                IsActive = true,
-                UserName = userName,
-                IsEmailConfirmed = isEmailConfirmed,
-                Roles = new List<UserRole>()
-            };
+            User user = new User
+                            {
+                                TenantId = tenant.Id, Name = name, Surname = surname, EmailAddress = emailAddress,
+                                IsActive = true, UserName = userName, IsEmailConfirmed = isEmailConfirmed,
+                                Roles = new List<UserRole>()
+                            };
 
             user.SetNormalizedNames();
-           
-            foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
+
+            foreach (Role defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
             {
                 user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
             }
@@ -68,6 +75,11 @@ namespace Elevations.Authorization.Users
             await CurrentUnitOfWork.SaveChangesAsync();
 
             return user;
+        }
+
+        protected virtual void CheckErrors(IdentityResult identityResult)
+        {
+            identityResult.CheckErrors(LocalizationManager);
         }
 
         private void CheckForTenant()
@@ -90,7 +102,7 @@ namespace Elevations.Authorization.Users
 
         private async Task<Tenant> GetActiveTenantAsync(int tenantId)
         {
-            var tenant = await _tenantManager.FindByIdAsync(tenantId);
+            Tenant tenant = await _tenantManager.FindByIdAsync(tenantId);
             if (tenant == null)
             {
                 throw new UserFriendlyException(L("UnknownTenantId{0}", tenantId));
@@ -102,11 +114,6 @@ namespace Elevations.Authorization.Users
             }
 
             return tenant;
-        }
-
-        protected virtual void CheckErrors(IdentityResult identityResult)
-        {
-            identityResult.CheckErrors(LocalizationManager);
         }
     }
 }

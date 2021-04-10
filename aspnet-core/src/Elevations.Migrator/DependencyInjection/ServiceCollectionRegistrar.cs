@@ -1,15 +1,18 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Castle.Windsor.MsDependencyInjection;
-using Abp.Dependency;
-using Elevations.Identity;
-
-namespace Elevations.Migrator.DependencyInjection
+﻿namespace Elevations.Migrator.DependencyInjection
 {
+    using Abp.Dependency;
+
+    using Castle.Windsor.MsDependencyInjection;
+
+    using Elevations.Identity;
+
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class ServiceCollectionRegistrar
     {
         public static void Register(IIocManager iocManager)
         {
-            var services = new ServiceCollection();
+            ServiceCollection services = new ServiceCollection();
 
             IdentityRegistrar.Register(services);
 

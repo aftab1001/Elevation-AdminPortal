@@ -1,30 +1,35 @@
-using System;
-using Castle.MicroKernel.Registration;
-using NSubstitute;
-using Abp.AutoMapper;
-using Abp.Dependency;
-using Abp.Modules;
-using Abp.Configuration.Startup;
-using Abp.Net.Mail;
-using Abp.TestBase;
-using Abp.Zero.Configuration;
-using Abp.Zero.EntityFrameworkCore;
-using Elevations.EntityFrameworkCore;
-using Elevations.Tests.DependencyInjection;
-
 namespace Elevations.Tests
 {
-    [DependsOn(
-        typeof(ElevationsApplicationModule),
-        typeof(ElevationsEntityFrameworkModule),
-        typeof(AbpTestBaseModule)
-        )]
+    using System;
+
+    using Abp.AutoMapper;
+    using Abp.Configuration.Startup;
+    using Abp.Dependency;
+    using Abp.Modules;
+    using Abp.Net.Mail;
+    using Abp.TestBase;
+    using Abp.Zero.Configuration;
+    using Abp.Zero.EntityFrameworkCore;
+
+    using Castle.MicroKernel.Registration;
+
+    using Elevations.EntityFrameworkCore;
+    using Elevations.Tests.DependencyInjection;
+
+    using NSubstitute;
+
+    [DependsOn(typeof(ElevationsApplicationModule), typeof(ElevationsEntityFrameworkModule), typeof(AbpTestBaseModule))]
     public class ElevationsTestModule : AbpModule
     {
         public ElevationsTestModule(ElevationsEntityFrameworkModule abpProjectNameEntityFrameworkModule)
         {
             abpProjectNameEntityFrameworkModule.SkipDbContextRegistration = true;
             abpProjectNameEntityFrameworkModule.SkipDbSeed = true;
+        }
+
+        public override void Initialize()
+        {
+            ServiceCollectionRegistrar.Register(IocManager);
         }
 
         public override void PreInitialize()
@@ -45,18 +50,11 @@ namespace Elevations.Tests
             Configuration.ReplaceService<IEmailSender, NullEmailSender>(DependencyLifeStyle.Transient);
         }
 
-        public override void Initialize()
-        {
-            ServiceCollectionRegistrar.Register(IocManager);
-        }
-
-        private void RegisterFakeService<TService>() where TService : class
+        private void RegisterFakeService<TService>()
+            where TService : class
         {
             IocManager.IocContainer.Register(
-                Component.For<TService>()
-                    .UsingFactoryMethod(() => Substitute.For<TService>())
-                    .LifestyleSingleton()
-            );
+                Component.For<TService>().UsingFactoryMethod(() => Substitute.For<TService>()).LifestyleSingleton());
         }
     }
 }

@@ -1,155 +1,65 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace Elevations.Migrations
+﻿namespace Elevations.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class updatedb : Migration
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "Description2",
-                table: "Dashboard");
-
-            migrationBuilder.AddColumn<long>(
-                name: "Bath",
-                table: "Rooms",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Bed",
-                table: "Rooms",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Length",
-                table: "Rooms",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Bath",
-                table: "Dishes",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Bed",
-                table: "Dishes",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Length",
-                table: "Dishes",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Bath",
-                table: "Dashboard",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Bed",
-                table: "Dashboard",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Length",
-                table: "Dashboard",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Bath",
-                table: "Apartments",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Bed",
-                table: "Apartments",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-
-            migrationBuilder.AddColumn<long>(
-                name: "Length",
-                table: "Apartments",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
-        }
-
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Bath",
-                table: "Rooms");
+            migrationBuilder.DropColumn("Bath", "Rooms");
 
-            migrationBuilder.DropColumn(
-                name: "Bed",
-                table: "Rooms");
+            migrationBuilder.DropColumn("Bed", "Rooms");
 
-            migrationBuilder.DropColumn(
-                name: "Length",
-                table: "Rooms");
+            migrationBuilder.DropColumn("Length", "Rooms");
 
-            migrationBuilder.DropColumn(
-                name: "Bath",
-                table: "Dishes");
+            migrationBuilder.DropColumn("Bath", "Dishes");
 
-            migrationBuilder.DropColumn(
-                name: "Bed",
-                table: "Dishes");
+            migrationBuilder.DropColumn("Bed", "Dishes");
 
-            migrationBuilder.DropColumn(
-                name: "Length",
-                table: "Dishes");
+            migrationBuilder.DropColumn("Length", "Dishes");
 
-            migrationBuilder.DropColumn(
-                name: "Bath",
-                table: "Dashboard");
+            migrationBuilder.DropColumn("Bath", "Dashboard");
 
-            migrationBuilder.DropColumn(
-                name: "Bed",
-                table: "Dashboard");
+            migrationBuilder.DropColumn("Bed", "Dashboard");
 
-            migrationBuilder.DropColumn(
-                name: "Length",
-                table: "Dashboard");
+            migrationBuilder.DropColumn("Length", "Dashboard");
 
-            migrationBuilder.DropColumn(
-                name: "Bath",
-                table: "Apartments");
+            migrationBuilder.DropColumn("Bath", "Apartments");
 
-            migrationBuilder.DropColumn(
-                name: "Bed",
-                table: "Apartments");
+            migrationBuilder.DropColumn("Bed", "Apartments");
 
-            migrationBuilder.DropColumn(
-                name: "Length",
-                table: "Apartments");
+            migrationBuilder.DropColumn("Length", "Apartments");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Description2",
-                table: "Dashboard",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.AddColumn<string>("Description2", "Dashboard", "nvarchar(max)", nullable: true);
+        }
+
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn("Description2", "Dashboard");
+
+            migrationBuilder.AddColumn<long>("Bath", "Rooms", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Bed", "Rooms", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Length", "Rooms", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Bath", "Dishes", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Bed", "Dishes", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Length", "Dishes", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Bath", "Dashboard", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Bed", "Dashboard", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Length", "Dashboard", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Bath", "Apartments", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Bed", "Apartments", "bigint", nullable: false, defaultValue: 0L);
+
+            migrationBuilder.AddColumn<long>("Length", "Apartments", "bigint", nullable: false, defaultValue: 0L);
         }
     }
 }

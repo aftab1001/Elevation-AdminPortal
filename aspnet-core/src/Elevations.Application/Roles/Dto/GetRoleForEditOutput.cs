@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-
-namespace Elevations.Roles.Dto
+﻿namespace Elevations.Roles.Dto
 {
+    using System.Collections.Generic;
+
     public class GetRoleForEditOutput
     {
-        public RoleEditDto Role { get; set; }
+        public List<string> GrantedPermissionNames { get; set; }
 
         public List<FlatPermissionDto> Permissions { get; set; }
 
-        public List<string> GrantedPermissionNames { get; set; }
+        public RoleEditDto Role { get; set; }
     }
 }

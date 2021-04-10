@@ -1,12 +1,12 @@
-﻿using Abp.Application.Services.Dto;
-using System;
-
-namespace Elevations.Users.Dto
+﻿namespace Elevations.Users.Dto
 {
+    using Abp.Application.Services.Dto;
+
     //custom PagedResultRequestDto
     public class PagedUserResultRequestDto : PagedResultRequestDto
     {
-        public string Keyword { get; set; }
         public bool? IsActive { get; set; }
+
+        public string Keyword { get; set; }
     }
 }

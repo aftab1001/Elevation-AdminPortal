@@ -1,9 +1,9 @@
-﻿using Abp.Authorization;
-using Abp.Localization;
-using Abp.MultiTenancy;
-
-namespace Elevations.Authorization
+﻿namespace Elevations.Authorization
 {
+    using Abp.Authorization;
+    using Abp.Localization;
+    using Abp.MultiTenancy;
+
     public class ElevationsAuthorizationProvider : AuthorizationProvider
     {
         public override void SetPermissions(IPermissionDefinitionContext context)
@@ -11,7 +11,10 @@ namespace Elevations.Authorization
             context.CreatePermission(PermissionNames.Pages_Users, L("Users"));
             context.CreatePermission(PermissionNames.Pages_Users_Activation, L("UsersActivation"));
             context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
-            context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
+            context.CreatePermission(
+                PermissionNames.Pages_Tenants,
+                L("Tenants"),
+                multiTenancySides: MultiTenancySides.Host);
             context.CreatePermission(PermissionNames.Pages_Rooms, L("Rooms"));
             context.CreatePermission(PermissionNames.Pages_Apartments, L("Apartments"));
             context.CreatePermission(PermissionNames.Pages_News, L("News"));

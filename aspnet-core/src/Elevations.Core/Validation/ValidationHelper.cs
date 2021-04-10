@@ -1,8 +1,9 @@
-﻿using System.Text.RegularExpressions;
-using Abp.Extensions;
-
-namespace Elevations.Validation
+﻿namespace Elevations.Validation
 {
+    using System.Text.RegularExpressions;
+
+    using Abp.Extensions;
+
     public static class ValidationHelper
     {
         public const string EmailRegex = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
@@ -14,7 +15,7 @@ namespace Elevations.Validation
                 return false;
             }
 
-            var regex = new Regex(EmailRegex);
+            Regex regex = new Regex(EmailRegex);
             return regex.IsMatch(value);
         }
     }

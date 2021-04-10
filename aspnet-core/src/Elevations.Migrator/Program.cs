@@ -1,12 +1,14 @@
-﻿using System;
-using Castle.Facilities.Logging;
-using Abp;
-using Abp.Castle.Logging.Log4Net;
-using Abp.Collections.Extensions;
-using Abp.Dependency;
-
-namespace Elevations.Migrator
+﻿namespace Elevations.Migrator
 {
+    using System;
+
+    using Abp;
+    using Abp.Castle.Logging.Log4Net;
+    using Abp.Collections.Extensions;
+    using Abp.Dependency;
+
+    using Castle.Facilities.Logging;
+
     public class Program
     {
         private static bool _quietMode;
@@ -15,23 +17,22 @@ namespace Elevations.Migrator
         {
             ParseArgs(args);
 
-            using (var bootstrapper = AbpBootstrapper.Create<ElevationsMigratorModule>())
+            using (AbpBootstrapper bootstrapper = AbpBootstrapper.Create<ElevationsMigratorModule>())
             {
-                bootstrapper.IocManager.IocContainer
-                    .AddFacility<LoggingFacility>(
-                        f => f.UseAbpLog4Net().WithConfig("log4net.config")
-                    );
+                bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(
+                    f => f.UseAbpLog4Net().WithConfig("log4net.config"));
 
                 bootstrapper.Initialize();
 
-                using (var migrateExecuter = bootstrapper.IocManager.ResolveAsDisposable<MultiTenantMigrateExecuter>())
+                using (IDisposableDependencyObjectWrapper<MultiTenantMigrateExecuter> migrateExecuter =
+                    bootstrapper.IocManager.ResolveAsDisposable<MultiTenantMigrateExecuter>())
                 {
-                    var migrationSucceeded = migrateExecuter.Object.Run(_quietMode);
-                    
+                    bool migrationSucceeded = migrateExecuter.Object.Run(_quietMode);
+
                     if (_quietMode)
                     {
                         // exit clean (with exit code 0) if migration is a success, otherwise exit with code 1
-                        var exitCode = Convert.ToInt32(!migrationSucceeded);
+                        int exitCode = Convert.ToInt32(!migrationSucceeded);
                         Environment.Exit(exitCode);
                     }
                     else
@@ -50,7 +51,7 @@ namespace Elevations.Migrator
                 return;
             }
 
-            foreach (var arg in args)
+            foreach (string arg in args)
             {
                 switch (arg)
                 {

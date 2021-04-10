@@ -1,22 +1,25 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Abp;
-using Abp.Authorization.Users;
-using Abp.Events.Bus;
-using Abp.Events.Bus.Entities;
-using Abp.MultiTenancy;
-using Abp.Runtime.Session;
-using Abp.TestBase;
-using Elevations.Authorization.Users;
-using Elevations.EntityFrameworkCore;
-using Elevations.EntityFrameworkCore.Seed.Host;
-using Elevations.EntityFrameworkCore.Seed.Tenants;
-using Elevations.MultiTenancy;
-
-namespace Elevations.Tests
+﻿namespace Elevations.Tests
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Abp;
+    using Abp.Authorization.Users;
+    using Abp.Events.Bus;
+    using Abp.Events.Bus.Entities;
+    using Abp.MultiTenancy;
+    using Abp.Runtime.Session;
+    using Abp.TestBase;
+
+    using Elevations.Authorization.Users;
+    using Elevations.EntityFrameworkCore;
+    using Elevations.EntityFrameworkCore.Seed.Host;
+    using Elevations.EntityFrameworkCore.Seed.Tenants;
+    using Elevations.MultiTenancy;
+
+    using Microsoft.EntityFrameworkCore;
+
     public abstract class ElevationsTestBase : AbpIntegratedTestBase<ElevationsTestModule>
     {
         protected ElevationsTestBase()
@@ -30,29 +33,51 @@ namespace Elevations.Tests
 
             // Seed initial data for host
             AbpSession.TenantId = null;
-            UsingDbContext(context =>
-            {
-                NormalizeDbContext(context);
-                new InitialHostDbBuilder(context).Create();
-                new DefaultTenantBuilder(context).Create();
-            });
+            UsingDbContext(
+                context =>
+                    {
+                        NormalizeDbContext(context);
+                        new InitialHostDbBuilder(context).Create();
+                        new DefaultTenantBuilder(context).Create();
+                    });
 
             // Seed initial data for default tenant
             AbpSession.TenantId = 1;
-            UsingDbContext(context =>
-            {
-                NormalizeDbContext(context);
-                new TenantRoleAndUserBuilder(context, 1).Create();
-            });
+            UsingDbContext(
+                context =>
+                    {
+                        NormalizeDbContext(context);
+                        new TenantRoleAndUserBuilder(context, 1).Create();
+                    });
 
             LoginAsDefaultTenantAdmin();
+        }
+
+        /// <summary>
+        ///     Gets current tenant if <see cref="IAbpSession.TenantId" /> is not null.
+        ///     Throws exception if there is no current tenant.
+        /// </summary>
+        protected async Task<Tenant> GetCurrentTenantAsync()
+        {
+            int tenantId = AbpSession.GetTenantId();
+            return await UsingDbContext(context => context.Tenants.SingleAsync(t => t.Id == tenantId));
+        }
+
+        /// <summary>
+        ///     Gets current user if <see cref="IAbpSession.UserId" /> is not null.
+        ///     Throws exception if it's null.
+        /// </summary>
+        protected async Task<User> GetCurrentUserAsync()
+        {
+            long userId = AbpSession.GetUserId();
+            return await UsingDbContext(context => context.Users.SingleAsync(u => u.Id == userId));
         }
 
         #region UsingDbContext
 
         protected IDisposable UsingTenantId(int? tenantId)
         {
-            var previousTenantId = AbpSession.TenantId;
+            int? previousTenantId = AbpSession.TenantId;
             AbpSession.TenantId = tenantId;
             return new DisposeAction(() => AbpSession.TenantId = previousTenantId);
         }
@@ -81,7 +106,7 @@ namespace Elevations.Tests
         {
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<ElevationsDbContext>())
+                using (ElevationsDbContext context = LocalIocManager.Resolve<ElevationsDbContext>())
                 {
                     action(context);
                     context.SaveChanges();
@@ -93,7 +118,7 @@ namespace Elevations.Tests
         {
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<ElevationsDbContext>())
+                using (ElevationsDbContext context = LocalIocManager.Resolve<ElevationsDbContext>())
                 {
                     await action(context);
                     await context.SaveChangesAsync();
@@ -107,7 +132,7 @@ namespace Elevations.Tests
 
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<ElevationsDbContext>())
+                using (ElevationsDbContext context = LocalIocManager.Resolve<ElevationsDbContext>())
                 {
                     result = func(context);
                     context.SaveChanges();
@@ -123,7 +148,7 @@ namespace Elevations.Tests
 
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<ElevationsDbContext>())
+                using (ElevationsDbContext context = LocalIocManager.Resolve<ElevationsDbContext>())
                 {
                     result = await func(context);
                     await context.SaveChangesAsync();
@@ -151,10 +176,9 @@ namespace Elevations.Tests
         {
             AbpSession.TenantId = null;
 
-            var user =
-                UsingDbContext(
-                    context =>
-                        context.Users.FirstOrDefault(u => u.TenantId == AbpSession.TenantId && u.UserName == userName));
+            User? user = UsingDbContext(
+                context => context.Users.FirstOrDefault(
+                    u => u.TenantId == AbpSession.TenantId && u.UserName == userName));
             if (user == null)
             {
                 throw new Exception("There is no user: " + userName + " for host.");
@@ -165,7 +189,8 @@ namespace Elevations.Tests
 
         protected void LoginAsTenant(string tenancyName, string userName)
         {
-            var tenant = UsingDbContext(context => context.Tenants.FirstOrDefault(t => t.TenancyName == tenancyName));
+            Tenant? tenant =
+                UsingDbContext(context => context.Tenants.FirstOrDefault(t => t.TenancyName == tenancyName));
             if (tenant == null)
             {
                 throw new Exception("There is no tenant: " + tenancyName);
@@ -173,10 +198,9 @@ namespace Elevations.Tests
 
             AbpSession.TenantId = tenant.Id;
 
-            var user =
-                UsingDbContext(
-                    context =>
-                        context.Users.FirstOrDefault(u => u.TenantId == AbpSession.TenantId && u.UserName == userName));
+            User? user = UsingDbContext(
+                context => context.Users.FirstOrDefault(
+                    u => u.TenantId == AbpSession.TenantId && u.UserName == userName));
             if (user == null)
             {
                 throw new Exception("There is no user: " + userName + " for tenant: " + tenancyName);
@@ -186,25 +210,5 @@ namespace Elevations.Tests
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets current user if <see cref="IAbpSession.UserId"/> is not null.
-        /// Throws exception if it's null.
-        /// </summary>
-        protected async Task<User> GetCurrentUserAsync()
-        {
-            var userId = AbpSession.GetUserId();
-            return await UsingDbContext(context => context.Users.SingleAsync(u => u.Id == userId));
-        }
-
-        /// <summary>
-        /// Gets current tenant if <see cref="IAbpSession.TenantId"/> is not null.
-        /// Throws exception if there is no current tenant.
-        /// </summary>
-        protected async Task<Tenant> GetCurrentTenantAsync()
-        {
-            var tenantId = AbpSession.GetTenantId();
-            return await UsingDbContext(context => context.Tenants.SingleAsync(t => t.Id == tenantId));
-        }
     }
 }

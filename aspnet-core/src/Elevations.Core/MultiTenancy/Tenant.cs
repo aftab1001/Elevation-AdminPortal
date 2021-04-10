@@ -1,12 +1,13 @@
-﻿using Abp.MultiTenancy;
-using Elevations.Authorization.Users;
-
-namespace Elevations.MultiTenancy
+﻿namespace Elevations.MultiTenancy
 {
+    using Abp.MultiTenancy;
+
+    using Elevations.Authorization.Users;
+
     public class Tenant : AbpTenant<User>
     {
         public Tenant()
-        {            
+        {
         }
 
         public Tenant(string tenancyName, string name)

@@ -1,8 +1,8 @@
-﻿using Abp.MultiTenancy;
-using Abp.Zero.Configuration;
-
-namespace Elevations.Authorization.Roles
+﻿namespace Elevations.Authorization.Roles
 {
+    using Abp.MultiTenancy;
+    using Abp.Zero.Configuration;
+
     public static class AppRoleConfig
     {
         public static void Configure(IRoleManagementConfig roleManagementConfig)
@@ -10,20 +10,12 @@ namespace Elevations.Authorization.Roles
             // Static host roles
 
             roleManagementConfig.StaticRoles.Add(
-                new StaticRoleDefinition(
-                    StaticRoleNames.Host.Admin,
-                    MultiTenancySides.Host
-                )
-            );
+                new StaticRoleDefinition(StaticRoleNames.Host.Admin, MultiTenancySides.Host));
 
             // Static tenant roles
 
             roleManagementConfig.StaticRoles.Add(
-                new StaticRoleDefinition(
-                    StaticRoleNames.Tenants.Admin,
-                    MultiTenancySides.Tenant
-                )
-            );
+                new StaticRoleDefinition(StaticRoleNames.Tenants.Admin, MultiTenancySides.Tenant));
         }
     }
 }

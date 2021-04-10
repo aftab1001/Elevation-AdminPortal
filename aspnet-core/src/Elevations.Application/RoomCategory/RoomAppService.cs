@@ -1,5 +1,6 @@
 ﻿namespace Elevations.RoomCategory
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -29,13 +30,22 @@
 
         public override async Task<RoomDto> CreateAsync(UpdateRoomDto input)
         {
-            CheckCreatePermission();
+            CheckUpdatePermission();
 
-            Rooms room = ObjectMapper.Map<Rooms>(input);
+            Rooms rooms = new()
+                              {
+                                  Category = input.Category, Image1 = input.Image1, Image2 = input.Image2,
+                                  Image3 = input.Image3, Image4 = input.Image4, Image5 = input.Image5,
+                                  Name = input.Name, Bath = input.Bath, Bed = input.Bed, Description = input.Description
+                              };
+            rooms.Name = input.Name;
+            rooms.ImageSequence = input.ImageSequence;
+            rooms.Length = input.Length;
+            rooms.Price = input.Price;
 
-            await roomsRepository.InsertAsync(room);
+            await roomsRepository.InsertAsync(rooms);
 
-            return MapToEntityDto(room);
+            return MapToEntityDto(rooms);
         }
 
         [AbpAllowAnonymous]
@@ -53,19 +63,17 @@
 
             Rooms rooms = new()
                               {
-                                  Category = input.Category, Image1 = input.Image1, 
-                                  Image2 =  input.Image2,
-                                  Image3 =  input.Image3,
-                                  Image4 = input.Image4,
-                                  Image5 = input.Image5,
-                                  Name = input.Name,
-                                  Bath = input.Bath, Bed = input.Bed, Description = input.Description
+                                  Category = input.Category, Image1 = input.Image1, Image2 = input.Image2,
+                                  Image3 = input.Image3, Image4 = input.Image4, Image5 = input.Image5,
+                                  Name = input.Name, Bath = input.Bath, Bed = input.Bed, Description = input.Description
                               };
+
             rooms.Name = input.Name;
             rooms.ImageSequence = input.ImageSequence;
             rooms.Length = input.Length;
             rooms.Price = input.Price;
             rooms.Id = input.Id;
+            rooms.Category = new RoomsCategory { Name = input.Category.Name, CreationTime = DateTime.Now };
 
             await roomsRepository.UpdateAsync(rooms);
 

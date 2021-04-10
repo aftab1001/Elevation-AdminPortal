@@ -1,11 +1,12 @@
-﻿using System;
-using Abp;
-using Abp.Authorization;
-using Abp.Dependency;
-using Abp.UI;
-
-namespace Elevations.Authorization
+﻿namespace Elevations.Authorization
 {
+    using System;
+
+    using Abp;
+    using Abp.Authorization;
+    using Abp.Dependency;
+    using Abp.UI;
+
     public class AbpLoginResultTypeHelper : AbpServiceBase, ITransientDependency
     {
         public AbpLoginResultTypeHelper()
@@ -13,7 +14,10 @@ namespace Elevations.Authorization
             LocalizationSourceName = ElevationsConsts.LocalizationSourceName;
         }
 
-        public Exception CreateExceptionForFailedLoginAttempt(AbpLoginResultType result, string usernameOrEmailAddress, string tenancyName)
+        public Exception CreateExceptionForFailedLoginAttempt(
+            AbpLoginResultType result,
+            string usernameOrEmailAddress,
+            string tenancyName)
         {
             switch (result)
             {
@@ -23,22 +27,30 @@ namespace Elevations.Authorization
                 case AbpLoginResultType.InvalidPassword:
                     return new UserFriendlyException(L("LoginFailed"), L("InvalidUserNameOrPassword"));
                 case AbpLoginResultType.InvalidTenancyName:
-                    return new UserFriendlyException(L("LoginFailed"), L("ThereIsNoTenantDefinedWithName{0}", tenancyName));
+                    return new UserFriendlyException(
+                        L("LoginFailed"),
+                        L("ThereIsNoTenantDefinedWithName{0}", tenancyName));
                 case AbpLoginResultType.TenantIsNotActive:
                     return new UserFriendlyException(L("LoginFailed"), L("TenantIsNotActive", tenancyName));
                 case AbpLoginResultType.UserIsNotActive:
-                    return new UserFriendlyException(L("LoginFailed"), L("UserIsNotActiveAndCanNotLogin", usernameOrEmailAddress));
+                    return new UserFriendlyException(
+                        L("LoginFailed"),
+                        L("UserIsNotActiveAndCanNotLogin", usernameOrEmailAddress));
                 case AbpLoginResultType.UserEmailIsNotConfirmed:
                     return new UserFriendlyException(L("LoginFailed"), L("UserEmailIsNotConfirmedAndCanNotLogin"));
                 case AbpLoginResultType.LockedOut:
                     return new UserFriendlyException(L("LoginFailed"), L("UserLockedOutMessage"));
-                default: // Can not fall to default actually. But other result types can be added in the future and we may forget to handle it
+                default
+                    : // Can not fall to default actually. But other result types can be added in the future and we may forget to handle it
                     Logger.Warn("Unhandled login fail reason: " + result);
                     return new UserFriendlyException(L("LoginFailed"));
             }
         }
 
-        public string CreateLocalizedMessageForFailedLoginAttempt(AbpLoginResultType result, string usernameOrEmailAddress, string tenancyName)
+        public string CreateLocalizedMessageForFailedLoginAttempt(
+            AbpLoginResultType result,
+            string usernameOrEmailAddress,
+            string tenancyName)
         {
             switch (result)
             {
@@ -55,7 +67,8 @@ namespace Elevations.Authorization
                     return L("UserIsNotActiveAndCanNotLogin", usernameOrEmailAddress);
                 case AbpLoginResultType.UserEmailIsNotConfirmed:
                     return L("UserEmailIsNotConfirmedAndCanNotLogin");
-                default: // Can not fall to default actually. But other result types can be added in the future and we may forget to handle it
+                default
+                    : // Can not fall to default actually. But other result types can be added in the future and we may forget to handle it
                     Logger.Warn("Unhandled login fail reason: " + result);
                     return L("LoginFailed");
             }

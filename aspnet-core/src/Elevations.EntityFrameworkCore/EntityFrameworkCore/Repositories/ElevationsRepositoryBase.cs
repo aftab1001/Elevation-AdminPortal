@@ -1,16 +1,17 @@
-﻿using Abp.Domain.Entities;
-using Abp.Domain.Repositories;
-using Abp.EntityFrameworkCore;
-using Abp.EntityFrameworkCore.Repositories;
-
-namespace Elevations.EntityFrameworkCore.Repositories
+﻿namespace Elevations.EntityFrameworkCore.Repositories
 {
+    using Abp.Domain.Entities;
+    using Abp.Domain.Repositories;
+    using Abp.EntityFrameworkCore;
+    using Abp.EntityFrameworkCore.Repositories;
+
     /// <summary>
-    /// Base class for custom repositories of the application.
+    ///     Base class for custom repositories of the application.
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
-    public abstract class ElevationsRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepositoryBase<ElevationsDbContext, TEntity, TPrimaryKey>
+    public abstract class
+        ElevationsRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepositoryBase<ElevationsDbContext, TEntity, TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>
     {
         protected ElevationsRepositoryBase(IDbContextProvider<ElevationsDbContext> dbContextProvider)
@@ -22,11 +23,13 @@ namespace Elevations.EntityFrameworkCore.Repositories
     }
 
     /// <summary>
-    /// Base class for custom repositories of the application.
-    /// This is a shortcut of <see cref="ElevationsRepositoryBase{TEntity,TPrimaryKey}"/> for <see cref="int"/> primary key.
+    ///     Base class for custom repositories of the application.
+    ///     This is a shortcut of <see cref="ElevationsRepositoryBase{TEntity,TPrimaryKey}" /> for <see cref="int" /> primary
+    ///     key.
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
-    public abstract class ElevationsRepositoryBase<TEntity> : ElevationsRepositoryBase<TEntity, int>, IRepository<TEntity>
+    public abstract class ElevationsRepositoryBase<TEntity> : ElevationsRepositoryBase<TEntity, int>,
+                                                              IRepository<TEntity>
         where TEntity : class, IEntity<int>
     {
         protected ElevationsRepositoryBase(IDbContextProvider<ElevationsDbContext> dbContextProvider)

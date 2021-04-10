@@ -1,25 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using Abp.Data;
-using Abp.Dependency;
-using Abp.Domain.Repositories;
-using Abp.Domain.Uow;
-using Abp.Extensions;
-using Abp.MultiTenancy;
-using Abp.Runtime.Security;
-using Elevations.EntityFrameworkCore;
-using Elevations.EntityFrameworkCore.Seed;
-using Elevations.MultiTenancy;
-
 namespace Elevations.Migrator
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Common;
+
+    using Abp.Data;
+    using Abp.Dependency;
+    using Abp.Domain.Repositories;
+    using Abp.Domain.Uow;
+    using Abp.Extensions;
+    using Abp.MultiTenancy;
+    using Abp.Runtime.Security;
+
+    using Elevations.EntityFrameworkCore;
+    using Elevations.EntityFrameworkCore.Seed;
+    using Elevations.MultiTenancy;
+
     public class MultiTenantMigrateExecuter : ITransientDependency
     {
-        private readonly Log _log;
-        private readonly AbpZeroDbMigrator _migrator;
-        private readonly IRepository<Tenant> _tenantRepository;
         private readonly IDbPerTenantConnectionStringResolver _connectionStringResolver;
+
+        private readonly Log _log;
+
+        private readonly AbpZeroDbMigrator _migrator;
+
+        private readonly IRepository<Tenant> _tenantRepository;
 
         public MultiTenantMigrateExecuter(
             AbpZeroDbMigrator migrator,
@@ -36,7 +41,9 @@ namespace Elevations.Migrator
 
         public bool Run(bool skipConnVerification)
         {
-            var hostConnStr = CensorConnectionString(_connectionStringResolver.GetNameOrConnectionString(new ConnectionStringResolveArgs(MultiTenancySides.Host)));
+            string hostConnStr = CensorConnectionString(
+                _connectionStringResolver.GetNameOrConnectionString(
+                    new ConnectionStringResolveArgs(MultiTenancySides.Host)));
             if (hostConnStr.IsNullOrWhiteSpace())
             {
                 _log.Write("Configuration file should contain a connection string named 'Default'");
@@ -47,7 +54,7 @@ namespace Elevations.Migrator
             if (!skipConnVerification)
             {
                 _log.Write("Continue to migration for this host database and all tenants..? (Y/N): ");
-                var command = Console.ReadLine();
+                string? command = Console.ReadLine();
                 if (!command.IsIn("Y", "y"))
                 {
                     _log.Write("Migration canceled.");
@@ -72,12 +79,13 @@ namespace Elevations.Migrator
             _log.Write("HOST database migration completed.");
             _log.Write("--------------------------------------------------------");
 
-            var migratedDatabases = new HashSet<string>();
-            var tenants = _tenantRepository.GetAllList(t => t.ConnectionString != null && t.ConnectionString != "");
-            for (var i = 0; i < tenants.Count; i++)
+            HashSet<string> migratedDatabases = new HashSet<string>();
+            List<Tenant> tenants =
+                _tenantRepository.GetAllList(t => t.ConnectionString != null && t.ConnectionString != "");
+            for (int i = 0; i < tenants.Count; i++)
             {
-                var tenant = tenants[i];
-                _log.Write(string.Format("Tenant database migration started... ({0} / {1})", (i + 1), tenants.Count));
+                Tenant tenant = tenants[i];
+                _log.Write(string.Format("Tenant database migration started... ({0} / {1})", i + 1, tenants.Count));
                 _log.Write("Name              : " + tenant.Name);
                 _log.Write("TenancyName       : " + tenant.TenancyName);
                 _log.Write("Tenant Id         : " + tenant.Id);
@@ -100,10 +108,11 @@ namespace Elevations.Migrator
                 }
                 else
                 {
-                    _log.Write("This database has already migrated before (you have more than one tenant in same database). Skipping it....");
+                    _log.Write(
+                        "This database has already migrated before (you have more than one tenant in same database). Skipping it....");
                 }
 
-                _log.Write(string.Format("Tenant database migration completed. ({0} / {1})", (i + 1), tenants.Count));
+                _log.Write(string.Format("Tenant database migration completed. ({0} / {1})", i + 1, tenants.Count));
                 _log.Write("--------------------------------------------------------");
             }
 
@@ -114,10 +123,10 @@ namespace Elevations.Migrator
 
         private static string CensorConnectionString(string connectionString)
         {
-            var builder = new DbConnectionStringBuilder { ConnectionString = connectionString };
-            var keysToMask = new[] { "password", "pwd", "user id", "uid" };
+            DbConnectionStringBuilder builder = new DbConnectionStringBuilder { ConnectionString = connectionString };
+            string[] keysToMask = new[] { "password", "pwd", "user id", "uid" };
 
-            foreach (var key in keysToMask)
+            foreach (string key in keysToMask)
             {
                 if (builder.ContainsKey(key))
                 {

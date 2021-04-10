@@ -34,8 +34,8 @@
         {
             return new()
                        {
-                           new RoomsCategory() { CreationTime = DateTime.Now, Name = "Guest House" },
-                           new RoomsCategory() { Name = "Meeting Room", CreationTime = DateTime.Now }
+                           new RoomsCategory { CreationTime = DateTime.Now, Name = "Guest House" },
+                           new RoomsCategory { Name = "Meeting Room", CreationTime = DateTime.Now }
                        };
         }
 

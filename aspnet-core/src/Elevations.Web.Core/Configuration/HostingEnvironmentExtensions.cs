@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-
-namespace Elevations.Configuration
+﻿namespace Elevations.Configuration
 {
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Hosting;
+
     public static class HostingEnvironmentExtensions
     {
         public static IConfigurationRoot GetAppConfiguration(this IWebHostEnvironment env)

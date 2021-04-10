@@ -1,11 +1,14 @@
-using System.Linq;
-using AutoMapper;
-using Abp.Authorization;
-using Abp.Authorization.Roles;
-using Elevations.Authorization.Roles;
-
 namespace Elevations.Roles.Dto
 {
+    using System.Linq;
+
+    using Abp.Authorization;
+    using Abp.Authorization.Roles;
+
+    using AutoMapper;
+
+    using Elevations.Authorization.Roles;
+
     public class RoleMapProfile : Profile
     {
         public RoleMapProfile()
@@ -18,7 +21,8 @@ namespace Elevations.Roles.Dto
 
             CreateMap<RoleDto, Role>();
 
-            CreateMap<Role, RoleDto>().ForMember(x => x.GrantedPermissions,
+            CreateMap<Role, RoleDto>().ForMember(
+                x => x.GrantedPermissions,
                 opt => opt.MapFrom(x => x.Permissions.Where(p => p.IsGranted)));
 
             CreateMap<Role, RoleListDto>();
