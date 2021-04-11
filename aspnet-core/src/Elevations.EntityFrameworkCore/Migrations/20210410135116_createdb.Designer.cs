@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elevations.Migrations
 {
     [DbContext(typeof(ElevationsDbContext))]
-    [Migration("20210403094048_apartments")]
-    partial class apartments
+    [Migration("20210410135116_createdb")]
+    partial class createdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

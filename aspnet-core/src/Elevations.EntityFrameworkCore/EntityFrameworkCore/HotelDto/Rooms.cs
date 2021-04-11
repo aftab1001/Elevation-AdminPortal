@@ -21,6 +21,10 @@
         [ForeignKey(nameof(RoomsCategory))]
         public RoomsCategory Category { get; set; }
 
+        public string CategoryName { get; set; }
+
+        public long CategoryId { get; set; }
+
         [Required]
         public string Description { get; set; }
 

@@ -12,7 +12,6 @@
         public Apartments()
         {
             CreationTime = DateTime.Now;
-            Category = new ApartmentCategory();
         }
 
         [Required]
@@ -23,6 +22,10 @@
 
         [ForeignKey(nameof(ApartmentCategory))]
         public ApartmentCategory Category { get; set; }
+
+        public long CategoryId { get; set; }
+
+        public string CategoryName { get; set; }
 
         [Required]
         public string Description { get; set; }

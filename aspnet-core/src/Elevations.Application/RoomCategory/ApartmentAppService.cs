@@ -12,6 +12,7 @@
     using Elevations.EntityFrameworkCore.HotelDto;
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
+    using Microsoft.EntityFrameworkCore;
 
     //[AbpAuthorize(PermissionNames.Pages_Apartments)]
     [AbpAllowAnonymous]
@@ -57,7 +58,7 @@
         [AbpAllowAnonymous]
         public Task<ListResultDto<ApartmentDto>> GetAllApartment()
         {
-            IQueryable<Apartments> roomsList = apartmentRepository.GetAll();
+            IQueryable<Apartments> roomsList = apartmentRepository.GetAllIncluding(x => x.Category);
 
             return Task.FromResult(
                 new ListResultDto<ApartmentDto>(
@@ -89,6 +90,17 @@
             await apartmentRepository.UpdateAsync(apartments);
 
             return MapToEntityDto(apartments);
+        }
+
+        protected override async Task<Apartments> GetEntityByIdAsync(int id)
+        {
+
+            Apartments filteredApartments = await apartmentRepository.GetAllIncluding(x => x.Category)
+                                                .FirstOrDefaultAsync(x => x.Id == id);
+           
+            filteredApartments.CategoryName = filteredApartments.Category.Name;
+            filteredApartments.CategoryId = filteredApartments.Category.Id;
+            return filteredApartments;
         }
     }
 }

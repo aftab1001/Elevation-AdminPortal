@@ -13,6 +13,8 @@
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
 
+    using Microsoft.EntityFrameworkCore;
+
     //  [AbpAuthorize(PermissionNames.Pages_Rooms)]
     [AbpAllowAnonymous]
     public class RoomAppService :
@@ -46,15 +48,15 @@
             rooms.Length = input.Length;
             rooms.Price = input.Price;
 
-      var insertedId =   await roomsRepository.InsertAndGetIdAsync(rooms);
-      rooms.Id = insertedId;
+            int insertedId = await roomsRepository.InsertAndGetIdAsync(rooms);
+            rooms.Id = insertedId;
             return MapToEntityDto(rooms);
         }
 
         [AbpAllowAnonymous]
         public Task<ListResultDto<RoomDto>> GetAllRooms()
         {
-            IQueryable<Rooms> roomsList = roomsRepository.GetAll();
+            IQueryable<Rooms> roomsList = roomsRepository.GetAllIncluding(x => x.Category);
 
             return Task.FromResult(
                 new ListResultDto<RoomDto>(ObjectMapper.Map<List<RoomDto>>(roomsList).OrderBy(p => p.Name).ToList()));
@@ -78,9 +80,18 @@
             rooms.Price = input.Price;
             rooms.Id = input.Id;
 
-         await roomsRepository.UpdateAsync(rooms);
-       
+            await roomsRepository.UpdateAsync(rooms);
+
             return MapToEntityDto(rooms);
+        }
+
+        protected override async Task<Rooms> GetEntityByIdAsync(int id)
+        {
+            Rooms filteredRoom =
+                await roomsRepository.GetAllIncluding(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
+            filteredRoom.CategoryName = filteredRoom.Category.Name;
+            filteredRoom.CategoryId = filteredRoom.Category.Id;
+            return filteredRoom;
         }
     }
 }

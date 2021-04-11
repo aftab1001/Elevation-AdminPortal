@@ -8,6 +8,8 @@
     [AutoMapFrom(typeof(Rooms))]
     public class RoomDto : EntityDto<int>
     {
+        public RoomsCategory Category { get; set; }
+
         public long Bath { get; set; }
 
         public long Bed { get; set; }
