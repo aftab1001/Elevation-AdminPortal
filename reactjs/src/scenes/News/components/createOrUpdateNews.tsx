@@ -33,10 +33,21 @@ class CreateOrUpdateNews extends React.Component<
     const image1 = this.props.formRef.current?.getFieldValue('image1');
     const image2 = this.props.formRef.current?.getFieldValue('image2');
     const image3 = this.props.formRef.current?.getFieldValue('image3');
-
-    this.setState({ fileList: [{ uid: -1, url: image1 }] });
-    this.setState({ fileList2: [{ uid: -1, url: image2 }] });
-    this.setState({ fileList3: [{ uid: -1, url: image3 }] });
+    if (image1 && image1 !== '') {
+      this.setState({ fileList: [{ uid: -1, url: image1 }] });
+    } else {
+      this.setState({ fileList: [] });
+    }
+    if (image2 && image2 !== '') {
+      this.setState({ fileList2: [{ uid: -1, url: image2 }] });
+    } else {
+      this.setState({ fileList2: [] });
+    }
+    if (image3 && image3 !== '') {
+      this.setState({ fileList3: [{ uid: -1, url: image3 }] });
+    } else {
+      this.setState({ fileList3: [] });
+    }
   };
 
   onChange = (fieldName: string, info: any) => {
@@ -131,7 +142,7 @@ class CreateOrUpdateNews extends React.Component<
         style={{ top: 50 }}
       >
         <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
-        <Form.Item label={L('Name')} name={'name'} rules={rules.name} {...formItemLayout}>
+          <Form.Item label={L('Name')} name={'name'} rules={rules.name} {...formItemLayout}>
             <Input />
           </Form.Item>
           <Form.Item label={L('Title')} name={'title'} rules={rules.title} {...formItemLayout}>

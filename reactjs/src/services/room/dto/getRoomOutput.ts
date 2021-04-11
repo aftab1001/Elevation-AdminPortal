@@ -6,10 +6,11 @@ export default class GetRoomOutput {
   image5!: string;
   name!: string;
   description!: string;
-  bed!: number;  
-  length!: number;  
-  bath!: number;   
+  bed!: number;
+  length!: number;
+  bath!: number;
   imageSequence!: number;
   price!: string;
   id!: number;
+  categoryName!: string;
 }

@@ -33,6 +33,7 @@ class ApartmentStore {
       bath: 0,  
       imageSequence: 0,
       price: '',
+      categoryName:''
     };
   }
 

@@ -79,10 +79,11 @@ class New extends AppComponentBase<INewProps, INewState> {
         this.formRef.current?.setFieldsValue({
           ...this.props.newsStore.newsModel,
         });
-        this.formRef.current?.submit();
+        
       } else {
         this.formRef.current?.resetFields();
       }
+      this.formRef.current?.submit();
     }, 100);
   }
 

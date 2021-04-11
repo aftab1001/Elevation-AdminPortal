@@ -12,6 +12,7 @@ class RoomModel {
   imageSequence!: number;
   price!: string;
   id!: number;
+  categoryName!:string;
 }
 
 export default RoomModel;

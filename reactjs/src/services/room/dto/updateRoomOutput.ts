@@ -12,4 +12,5 @@ export default interface UpdateRoomOutput {
   imageSequence: number;
   price: string;
   id: number;
+  categoryName:string;
 }

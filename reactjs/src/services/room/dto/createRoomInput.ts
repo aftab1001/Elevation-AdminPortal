@@ -11,4 +11,5 @@ export default class CreateRoomInput {
   bath!: number;  
   imageSequence!: number;
   price!: string;
+  categoryName!:string;
 }

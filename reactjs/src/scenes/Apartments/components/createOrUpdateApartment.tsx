@@ -28,11 +28,14 @@ class CreateOrUpdateApartment extends React.Component<
   }
   onFieldsChange = (changedFields: any, allFields: any) => {
     const image = this.props.formRef.current?.getFieldValue('image1');
-    this.setState({ fileList: [{ uid: -1, url: image }] });
+    if (image && image !== '') {
+      this.setState({ fileList: [{ uid: -1, url: image }] });
+    } else {
+      this.setState({ fileList: [] });
+    }
   };
 
   onChange = (info: any) => {
-    
     info.fileList.forEach(function (file: any, index: number) {
       let reader = new FileReader();
       reader.onload = (e: any) => {
@@ -62,7 +65,6 @@ class CreateOrUpdateApartment extends React.Component<
     imgWindow.document.write(image.outerHTML);
   };
 
-  
   render() {
     const formItemLayout = {
       labelCol: {
@@ -163,7 +165,7 @@ class CreateOrUpdateApartment extends React.Component<
           >
             <Input />
           </Form.Item>
-          
+
           <Form.Item label={L('Image')} {...formItemLayout}>
             <Upload
               action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
