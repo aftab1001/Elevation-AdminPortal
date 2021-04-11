@@ -1,5 +1,5 @@
 import LoadableComponent from './../Loadable/index';
-import { HomeOutlined, UserOutlined, WalletOutlined, AppstoreOutlined,TagsOutlined,LogoutOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, WalletOutlined, TagsOutlined,LogoutOutlined } from '@ant-design/icons';
 
 //@import '~antd/dist/antd.css';
 export const userRouter: any = [
@@ -85,15 +85,7 @@ export const appRouters: any = [
     showInMenu: true,
     component: LoadableComponent(() => import('../../scenes/News')),
   },
-  {
-    path: '/tenants',
-    permission: 'Pages.Tenants',
-    title: 'Tenants',
-    name: 'tenant',
-    icon: AppstoreOutlined,
-    showInMenu: true,
-    component: LoadableComponent(() => import('../../scenes/Tenants')),
-  },
+  
   {
     path: '/logout',
     permission: '',

@@ -131,9 +131,9 @@ class CreateOrUpdateRooms extends React.Component<
             rules={rules.categoryName}
             {...formItemLayout}
           >
-            <Select placeholder="Please Select Category" defaultValue="GuestHouse">
-              <Select.Option value="GuestHouse">Guest Home</Select.Option>
-              <Select.Option value="MeetingRoom">Meeting Room</Select.Option>
+            <Select placeholder="Please Select Category" defaultValue="Guest House">
+              <Select.Option value="Guest House">Guest Home</Select.Option>
+              <Select.Option value="Meeting Room">Meeting Room</Select.Option>
             </Select>
           </Form.Item>
 
