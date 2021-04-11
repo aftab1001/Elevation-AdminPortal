@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Form, Input, Modal, Upload } from 'antd';
+import { Form, Input, Modal, Upload, Select } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
 import rules from './createOrUpdateApartment.validation';
@@ -45,7 +45,7 @@ class CreateOrUpdateApartment extends React.Component<
     });
     //console.log('new file list', info.fileList);
     this.props.formRef.current?.setFieldsValue({
-      image: info.fileList[0]?.url,
+      image1: info.fileList[0]?.url,
     });
     this.setState({ fileList: info.fileList });
   };
@@ -128,6 +128,17 @@ class CreateOrUpdateApartment extends React.Component<
             hidden={true}
           >
             <Input />
+          </Form.Item>
+          <Form.Item
+            label={L('Apartment Category')}
+            name={'categoryName'}
+            rules={rules.categoryName}
+            {...formItemLayout}
+          >
+            <Select placeholder="Please Select Category" defaultValue="Guest House">
+              <Select.Option value="Guest House">Guest Home</Select.Option>
+              <Select.Option value="Meeting Room">Meeting Room</Select.Option>
+            </Select>
           </Form.Item>
           <Form.Item
             label={L('Image 2')}

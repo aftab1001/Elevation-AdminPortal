@@ -38,12 +38,15 @@
             CheckCreatePermission();
 
             Apartments apartments = new()
-                                        {
-                                            Category = apartmentCategoryRepository.GetAll()
+            {
+                Category = apartmentCategoryRepository.GetAll()
                                                 .FirstOrDefault(x => x.Name == input.CategoryName),
-                                            Image1 = input.Image, Name = input.Name, Bath = input.Bath, Bed = input.Bed,
-                                            Description = input.Description
-                                        };
+                Image1 = string.IsNullOrEmpty(input.Image1) ? "" : input.Image1,
+                Name = input.Name,
+                Bath = input.Bath,
+                Bed = input.Bed,
+                Description = string.IsNullOrEmpty(input.Description) ? "create appartment " : input.Description
+            };
 
             apartments.Name = input.Name;
             apartments.ImageSequence = input.ImageSequence;
@@ -70,12 +73,15 @@
             CheckUpdatePermission();
 
             Apartments apartments = new()
-                                        {
-                                            Category = apartmentCategoryRepository.GetAll()
+            {
+                Category = apartmentCategoryRepository.GetAll()
                                                 .FirstOrDefault(x => x.Name == input.CategoryName),
-                                            Image1 = input.Image1, Name = input.Name, Bath = input.Bath,
-                                            Bed = input.Bed, Description = input.Description
-                                        };
+                Image1 = input.Image1,
+                Name = input.Name,
+                Bath = input.Bath,
+                Bed = input.Bed,
+                Description = input.Description
+            };
             apartments.Name = input.Name;
             apartments.Image2 = input.Image2;
             apartments.Image2 = input.Image3;
@@ -97,7 +103,7 @@
 
             Apartments filteredApartments = await apartmentRepository.GetAllIncluding(x => x.Category)
                                                 .FirstOrDefaultAsync(x => x.Id == id);
-           
+
             filteredApartments.CategoryName = filteredApartments.Category.Name;
             filteredApartments.CategoryId = filteredApartments.Category.Id;
             return filteredApartments;

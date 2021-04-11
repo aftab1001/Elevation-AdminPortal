@@ -41,7 +41,8 @@
                                   Category = roomsCategory.GetAll().FirstOrDefault(x => x.Name == input.CategoryName),
                                   Image1 = input.Image1, Image2 = input.Image2, Image3 = input.Image3,
                                   Image4 = input.Image4, Image5 = input.Image5, Name = input.Name, Bath = input.Bath,
-                                  Bed = input.Bed, Description = input.Description
+                                  Bed = input.Bed, 
+                                  Description = string.IsNullOrEmpty(input.Description)?"create Room":input.Description
                               };
             rooms.Name = input.Name;
             rooms.ImageSequence = input.ImageSequence;
