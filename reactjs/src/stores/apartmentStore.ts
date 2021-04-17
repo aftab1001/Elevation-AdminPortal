@@ -33,7 +33,18 @@ class ApartmentStore {
       bath: 0,  
       imageSequence: 0,
       price: '',
-      categoryName:''
+      categoryName:'',
+      location:'',
+      features:'',
+      facilities:'',
+      nightlyPlan:'',
+      weekendPlan:'',
+      weeklyPlan:'',
+      monthlyPlan:'',
+      cleaningFee:'',
+      cityFee:'',
+      maxNumberOfDays:'',
+      minNumberOfDays:'',
     };
   }
 

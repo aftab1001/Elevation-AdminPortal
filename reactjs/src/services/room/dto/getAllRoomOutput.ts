@@ -13,4 +13,15 @@ export interface GetAllRoomOutput {
   price: string;
   id: number;
   categoryName:string;
+  location:string;
+  features:string;
+  facilities:string;
+  nightlyPlan:string;
+  weekendPlan:string;
+  weeklyPlan:string;
+  monthlyPlan:string;
+  cleaningFee:string;
+  cityFee:string;
+  maxNumberOfDays:string;
+  minNumberOfDays:string;
 }

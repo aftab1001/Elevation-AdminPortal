@@ -8,6 +8,17 @@ const rules = {
   bath: [{ required: true, message: L('ThisFieldIsRequired') }],
   length: [{ required: true, message: L('ThisFieldIsRequired') }],
   description: [{}],
+  location: [{}],
+  features: [{}],
+  facilities: [{}],
+  nightlyPlan: [{}],
+  weekendPlan: [{}],
+  weeklyPlan: [{}],
+  monthlyPlan: [{}],
+  cleaningFee: [{}],
+  cityFee: [{}],
+  maxNumberOfDays: [{}],
+  minNumberOfDays: [{}],
   image: [{}],
 };
 

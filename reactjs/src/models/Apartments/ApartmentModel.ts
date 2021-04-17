@@ -6,13 +6,24 @@ class ApartmentModel {
   image5!: string;
   name!: string;
   description!: string;
-  bed!: number;  
-  length!: number;  
-  bath!: number;  
+  bed!: number;
+  length!: number;
+  bath!: number;
   imageSequence!: number;
   price!: string;
   id!: number;
-  categoryName!:string;
+  categoryName!: string;
+  location!: string;
+  features!: string;
+  facilities!: string;
+  nightlyPlan!: string;
+  weekendPlan!: string;
+  weeklyPlan!: string;
+  monthlyPlan!: string;
+  cleaningFee!: string;
+  cityFee!: string;
+  maxNumberOfDays!: string;
+  minNumberOfDays!: string;
 }
 
 export default ApartmentModel;

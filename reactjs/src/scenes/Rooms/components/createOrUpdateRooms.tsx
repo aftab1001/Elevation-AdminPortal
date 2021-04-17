@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Form, Input, Modal, Upload, Select } from 'antd';
+import { Form, Input, Modal, Upload, Select, Row, Col } from 'antd';
 
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
@@ -89,102 +89,206 @@ class CreateOrUpdateRooms extends React.Component<
     const { visible, onCancel, onCreate, formRef } = this.props;
 
     return (
-      <Modal visible={visible} onCancel={onCancel} onOk={onCreate} title={L('Rooms')} width={550}>
+      <Modal
+        visible={visible}
+        onCancel={onCancel}
+        onOk={onCreate}
+        title={L('Rooms')}
+        width={1050}
+        style={{ top: 50 }}
+      >
         <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
-          <Form.Item label={L('Name')} name={'name'} rules={rules.name} {...formItemLayout}>
-            <Input />
-          </Form.Item>
-          <Form.Item label={L('Price')} name={'price'} rules={rules.price} {...formItemLayout}>
-            <Input />
-          </Form.Item>
-          <Form.Item label={L('Bed')} name={'bed'} rules={rules.bed} {...formItemLayout}>
-            <Input />
-          </Form.Item>
-          <Form.Item label={L('Bath')} name={'bath'} rules={rules.bath} {...formItemLayout}>
-            <Input />
-          </Form.Item>
-          <Form.Item label={L('length')} name={'length'} rules={rules.length} {...formItemLayout}>
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label={L('Description')}
-            name={'description'}
-            rules={rules.description}
-            {...formItemLayout}
-            hidden={true}
-          >
-            <Input />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item label={L('Name')} name={'name'} rules={rules.name} {...formItemLayout}>
+                <Input />
+              </Form.Item>
+              <Form.Item label={L('Price')} name={'price'} rules={rules.price} {...formItemLayout}>
+                <Input />
+              </Form.Item>
+              <Form.Item label={L('Bed')} name={'bed'} rules={rules.bed} {...formItemLayout}>
+                <Input />
+              </Form.Item>
+              <Form.Item label={L('Bath')} name={'bath'} rules={rules.bath} {...formItemLayout}>
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('length')}
+                name={'length'}
+                rules={rules.length}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('Room Category')}
+                name={'categoryName'}
+                rules={rules.categoryName}
+                {...formItemLayout}
+              >
+                <Select placeholder="Please Select Category" defaultValue="Guest House">
+                  <Select.Option value="Guest House">Guest Home</Select.Option>
+                  <Select.Option value="Meeting Room">Meeting Room</Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label={L('Description')}
+                name={'description'}
+                rules={rules.description}
+                {...formItemLayout}
+              >
+                <Input.TextArea />
+              </Form.Item>
 
-          <Form.Item
-            label={L('Image')}
-            name={'image1'}
-            rules={rules.image}
-            {...formItemLayout}
-            hidden={true}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label={L('Room Category')}
-            name={'categoryName'}
-            rules={rules.categoryName}
-            {...formItemLayout}
-          >
-            <Select placeholder="Please Select Category" defaultValue="Guest House">
-              <Select.Option value="Guest House">Guest Home</Select.Option>
-              <Select.Option value="Meeting Room">Meeting Room</Select.Option>
-            </Select>
-          </Form.Item>
+              <Form.Item label={L('Image')} {...formItemLayout}>
+                <Upload
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  listType="picture-card"
+                  fileList={this.state.fileList}
+                  onChange={this.onChange}
+                  onPreview={this.onPreview}
+                >
+                  {this.state.fileList.length < 1 && '+ Upload'}
+                </Upload>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label={L('Location')}
+                name={'location'}
+                rules={rules.location}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('Features')}
+                name={'features'}
+                rules={rules.features}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('Facilities')}
+                name={'facilities'}
+                rules={rules.facilities}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('NightlyPlan')}
+                name={'nightlyPlan'}
+                rules={rules.nightlyPlan}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('WeekendPlan')}
+                name={'weekendPlan'}
+                rules={rules.weekendPlan}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('WeeklyPlan')}
+                name={'weeklyPlan'}
+                rules={rules.weeklyPlan}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('MonthlyPlan')}
+                name={'monthlyPlan'}
+                rules={rules.monthlyPlan}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('CleaningFee')}
+                name={'cleaningFee'}
+                rules={rules.cleaningFee}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('cityFee')}
+                name={'cityFee'}
+                rules={rules.cityFee}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('MaxNumberOfDays')}
+                name={'maxNumberOfDays'}
+                rules={rules.maxNumberOfDays}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('MinNumberOfDays')}
+                name={'minNumberOfDays'}
+                rules={rules.minNumberOfDays}
+                {...formItemLayout}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('Image')}
+                name={'image1'}
+                rules={rules.image}
+                {...formItemLayout}
+                hidden={true}
+              >
+                <Input />
+              </Form.Item>
 
-          <Form.Item
-            label={L('Image')}
-            name={'image2'}
-            rules={rules.image}
-            {...formItemLayout}
-            hidden={true}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label={L('Image')}
-            name={'image3'}
-            rules={rules.image}
-            {...formItemLayout}
-            hidden={true}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label={L('Image')}
-            name={'image4'}
-            rules={rules.image}
-            {...formItemLayout}
-            hidden={true}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label={L('Image')}
-            name={'image5'}
-            rules={rules.image}
-            {...formItemLayout}
-            hidden={true}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item label={L('Image')} {...formItemLayout}>
-            <Upload
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              listType="picture-card"
-              fileList={this.state.fileList}
-              onChange={this.onChange}
-              onPreview={this.onPreview}
-            >
-              {this.state.fileList.length < 1 && '+ Upload'}
-            </Upload>
-          </Form.Item>
+              <Form.Item
+                label={L('Image')}
+                name={'image2'}
+                rules={rules.image}
+                {...formItemLayout}
+                hidden={true}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('Image')}
+                name={'image3'}
+                rules={rules.image}
+                {...formItemLayout}
+                hidden={true}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('Image')}
+                name={'image4'}
+                rules={rules.image}
+                {...formItemLayout}
+                hidden={true}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label={L('Image')}
+                name={'image5'}
+                rules={rules.image}
+                {...formItemLayout}
+                hidden={true}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </Modal>
     );
