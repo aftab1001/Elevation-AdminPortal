@@ -140,7 +140,7 @@ class CreateOrUpdateRooms extends React.Component<
                 <Input.TextArea />
               </Form.Item>
 
-              <Form.Item label={L('Image')} {...formItemLayout}>
+              <Form.Item label={L('MainImage')} {...formItemLayout}>
                 <Upload
                   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                   listType="picture-card"
@@ -218,7 +218,7 @@ class CreateOrUpdateRooms extends React.Component<
                 <Input />
               </Form.Item>
               <Form.Item
-                label={L('cityFee')}
+                label={L('CityFee')}
                 name={'cityFee'}
                 rules={rules.cityFee}
                 {...formItemLayout}
