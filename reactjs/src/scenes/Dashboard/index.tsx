@@ -26,12 +26,12 @@ export class Dashboard extends React.Component<any> {
             xxl={{ offset: 0, span: 6 }}
           >
             <Card
-              className={'dasboardCard-task'}
-              bodyStyle={{ padding: 10 }}
+              className={'dasboardCard-ticket'}
+              bodyStyle={{ padding: 50 }}
               loading={cardLoading}
               bordered={false}
             >
-              dummy data
+              Welcome to elevation hotel admin portal
             </Card>
           </Col>
         </Row>
