@@ -12,6 +12,7 @@
     using Elevations.EntityFrameworkCore.HotelDto;
     using Elevations.Roles.Dto;
     using Elevations.RoomCategory.Dto;
+
     using Microsoft.EntityFrameworkCore;
 
     //[AbpAuthorize(PermissionNames.Pages_Apartments)]
@@ -38,20 +39,33 @@
             CheckCreatePermission();
 
             Apartments apartments = new()
-            {
-                Category = apartmentCategoryRepository.GetAll()
+                                        {
+                                            Category = apartmentCategoryRepository.GetAll()
                                                 .FirstOrDefault(x => x.Name == input.CategoryName),
-                Image1 = string.IsNullOrEmpty(input.Image1) ? "" : input.Image1,
-                Name = input.Name,
-                Bath = input.Bath,
-                Bed = input.Bed,
-                Description = string.IsNullOrEmpty(input.Description) ? "create appartment " : input.Description
-            };
+                                            Image1 = string.IsNullOrEmpty(input.Image1) ? "" : input.Image1,
+                                            Name = input.Name, Bath = input.Bath, Bed = input.Bed,
+                                            Description =
+                                                string.IsNullOrEmpty(input.Description)
+                                                    ? "create apartment "
+                                                    : input.Description
+                                        };
 
             apartments.Name = input.Name;
             apartments.ImageSequence = input.ImageSequence;
             apartments.Length = input.Length;
             apartments.Price = input.Price;
+            apartments.Description = input.Description;
+
+            apartments.Features = input.Features;
+            apartments.Facilities = input.Facilities;
+            apartments.Facilities = input.Facilities;
+            apartments.WeekendPlan = input.WeekendPlan;
+            apartments.WeeklyPlan = input.WeeklyPlan;
+            apartments.MonthlyPlan = input.MonthlyPlan;
+            apartments.CleaningFee = input.CleaningFee;
+            apartments.CityFee = input.CityFee;
+            apartments.MaxNumberOfDays = input.MaxNumberOfDays;
+            apartments.MinNumberOfDays = input.MinNumberOfDays;
 
             int insertedId = await apartmentRepository.InsertAndGetIdAsync(apartments);
             apartments.Id = insertedId;
@@ -73,15 +87,12 @@
             CheckUpdatePermission();
 
             Apartments apartments = new()
-            {
-                Category = apartmentCategoryRepository.GetAll()
+                                        {
+                                            Category = apartmentCategoryRepository.GetAll()
                                                 .FirstOrDefault(x => x.Name == input.CategoryName),
-                Image1 = input.Image1,
-                Name = input.Name,
-                Bath = input.Bath,
-                Bed = input.Bed,
-                Description = input.Description
-            };
+                                            Image1 = input.Image1, Name = input.Name, Bath = input.Bath,
+                                            Bed = input.Bed, Description = input.Description
+                                        };
             apartments.Name = input.Name;
             apartments.Image2 = input.Image2;
             apartments.Image2 = input.Image3;
@@ -92,6 +103,18 @@
             apartments.Length = input.Length;
             apartments.Price = input.Price;
             apartments.Id = input.Id;
+            apartments.Description = input.Description;
+
+            apartments.Features = input.Features;
+            apartments.Facilities = input.Facilities;
+            apartments.Facilities = input.Facilities;
+            apartments.WeekendPlan = input.WeekendPlan;
+            apartments.WeeklyPlan = input.WeeklyPlan;
+            apartments.MonthlyPlan = input.MonthlyPlan;
+            apartments.CleaningFee = input.CleaningFee;
+            apartments.CityFee = input.CityFee;
+            apartments.MaxNumberOfDays = input.MaxNumberOfDays;
+            apartments.MinNumberOfDays = input.MinNumberOfDays;
 
             await apartmentRepository.UpdateAsync(apartments);
 
@@ -100,7 +123,6 @@
 
         protected override async Task<Apartments> GetEntityByIdAsync(int id)
         {
-
             Apartments filteredApartments = await apartmentRepository.GetAllIncluding(x => x.Category)
                                                 .FirstOrDefaultAsync(x => x.Id == id);
 

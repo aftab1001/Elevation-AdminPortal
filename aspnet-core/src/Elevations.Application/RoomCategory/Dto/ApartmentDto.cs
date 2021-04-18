@@ -14,7 +14,15 @@
 
         public string CategoryName { get; set; }
 
+        public string CityFee { get; set; }
+
+        public string CleaningFee { get; set; }
+
         public string Description { get; set; }
+
+        public string Facilities { get; set; }
+
+        public string Features { get; set; }
 
         public string Image1 { get; set; }
 
@@ -30,8 +38,22 @@
 
         public long Length { get; set; }
 
+        public string Location { get; set; }
+
+        public string MaxNumberOfDays { get; set; }
+
+        public string MinNumberOfDays { get; set; }
+
+        public string MonthlyPlan { get; set; }
+
         public string Name { get; set; }
 
+        public string NightlyPlan { get; set; }
+
         public string Price { get; set; }
+
+        public string WeekendPlan { get; set; }
+
+        public string WeeklyPlan { get; set; }
     }
 }

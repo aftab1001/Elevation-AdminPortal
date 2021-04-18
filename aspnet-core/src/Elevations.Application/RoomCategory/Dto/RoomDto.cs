@@ -35,5 +35,17 @@
         public string Name { get; set; }
 
         public string Price { get; set; }
+
+        public string Location { get; set; }
+        public string Features { get; set; }
+        public string Facilities { get; set; }
+        public string NightlyPlan { get; set; }
+        public string WeekendPlan { get; set; }
+        public string WeeklyPlan { get; set; }
+        public string MonthlyPlan { get; set; }
+        public string CleaningFee { get; set; }
+        public string CityFee { get; set; }
+        public string MaxNumberOfDays { get; set; }
+        public string MinNumberOfDays { get; set; }
     }
 }

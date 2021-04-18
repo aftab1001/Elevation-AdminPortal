@@ -1561,6 +1561,12 @@ namespace Elevations.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CityFee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CleaningFee")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -1569,6 +1575,12 @@ namespace Elevations.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Facilities")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Features")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image1")
@@ -1599,12 +1611,33 @@ namespace Elevations.Migrations
                     b.Property<long>("Length")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaxNumberOfDays")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MinNumberOfDays")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MonthlyPlan")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NightlyPlan")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Price")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WeekendPlan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WeeklyPlan")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1879,6 +1912,12 @@ namespace Elevations.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CityFee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CleaningFee")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -1887,6 +1926,12 @@ namespace Elevations.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Facilities")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Features")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image1")
@@ -1917,8 +1962,23 @@ namespace Elevations.Migrations
                     b.Property<long>("Length")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaxNumberOfDays")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MinNumberOfDays")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MonthlyPlan")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NightlyPlan")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Price")
@@ -1927,6 +1987,12 @@ namespace Elevations.Migrations
 
                     b.Property<int?>("RoomsCategory")
                         .HasColumnType("int");
+
+                    b.Property<string>("WeekendPlan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WeeklyPlan")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

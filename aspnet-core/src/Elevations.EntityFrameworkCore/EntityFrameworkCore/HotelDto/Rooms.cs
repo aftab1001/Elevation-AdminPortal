@@ -21,12 +21,20 @@
         [ForeignKey(nameof(RoomsCategory))]
         public RoomsCategory Category { get; set; }
 
+        public long CategoryId { get; set; }
+
         public string CategoryName { get; set; }
 
-        public long CategoryId { get; set; }
+        public string CityFee { get; set; }
+
+        public string CleaningFee { get; set; }
 
         [Required]
         public string Description { get; set; }
+
+        public string Facilities { get; set; }
+
+        public string Features { get; set; }
 
         [Required]
         public string Image1 { get; set; }
@@ -44,10 +52,24 @@
 
         public long Length { get; set; }
 
+        public string Location { get; set; }
+
+        public string MaxNumberOfDays { get; set; }
+
+        public string MinNumberOfDays { get; set; }
+
+        public string MonthlyPlan { get; set; }
+
         [Required]
         public string Name { get; set; }
 
+        public string NightlyPlan { get; set; }
+
         [Required]
         public string Price { get; set; }
+
+        public string WeekendPlan { get; set; }
+
+        public string WeeklyPlan { get; set; }
     }
 }
