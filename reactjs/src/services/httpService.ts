@@ -9,7 +9,7 @@ declare var abp: any;
 
 const http = axios.create({
   baseURL: AppConsts.remoteServiceBaseUrl,
-  timeout: 30000,
+  timeout: 90000,
   paramsSerializer: function(params) {
     return qs.stringify(params, {
       encode: false,
