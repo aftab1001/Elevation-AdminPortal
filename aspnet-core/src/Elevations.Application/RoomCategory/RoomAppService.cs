@@ -76,8 +76,8 @@
             foreach (Rooms rooms in roomsList)
             {
                 rooms.CategoryName = rooms.Category.Name;
-
             }
+
             return Task.FromResult(
                 new ListResultDto<RoomDto>(ObjectMapper.Map<List<RoomDto>>(roomsList).OrderBy(p => p.Name).ToList()));
         }
