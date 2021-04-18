@@ -75,11 +75,16 @@
         [AbpAllowAnonymous]
         public Task<ListResultDto<ApartmentDto>> GetAllApartment()
         {
-            IQueryable<Apartments> roomsList = apartmentRepository.GetAllIncluding(x => x.Category);
+            IQueryable<Apartments> apartments = apartmentRepository.GetAllIncluding(x => x.Category);
+            
+            foreach (Apartments apartment in apartments)
+            {
+                apartment.CategoryName = apartment.Category.Name;
 
+            }
             return Task.FromResult(
                 new ListResultDto<ApartmentDto>(
-                    ObjectMapper.Map<List<ApartmentDto>>(roomsList).OrderBy(p => p.Name).ToList()));
+                    ObjectMapper.Map<List<ApartmentDto>>(apartments).OrderBy(p => p.Name).ToList()));
         }
 
         public override async Task<ApartmentDto> UpdateAsync(ApartmentDto input)
