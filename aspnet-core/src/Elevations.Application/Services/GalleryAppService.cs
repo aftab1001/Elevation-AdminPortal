@@ -78,7 +78,7 @@ namespace Elevations.Services
             return await Task.FromResult(GetGalleryImages());
         }
 
-        public PagedResultDto<GalleryDto> GetGalleryImages()
+        private PagedResultDto<GalleryDto> GetGalleryImages()
         {
             var galleryList = _galleryRepository.GetAll();
 
@@ -91,7 +91,7 @@ namespace Elevations.Services
                 new ReadOnlyCollection<GalleryDto>(galleryImages.ToList()));
         }
 
-        public PagedResultDto<GalleryDto> GetImageDetail()
+        private PagedResultDto<GalleryDto> GetImageDetail()
         {
             var roomsList = _roomsRepository.GetAll().ToList();
             var apartmentList = _apartmentRepository.GetAll();

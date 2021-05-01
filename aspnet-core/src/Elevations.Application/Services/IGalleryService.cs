@@ -10,7 +10,7 @@ namespace Elevations.Services
     public interface IGalleryService: IAsyncCrudAppService<GalleryDto, int, PagedResultRequestDto,
         UpdateGalleryDto, GalleryDto>
     {
-        Task<PagedResultDto<GalleryDto>> GetAllGalleryImages();
+       public Task<PagedResultDto<GalleryDto>> GetAllGalleryImages();
     }
     
 }
