@@ -1,5 +1,5 @@
 import LoadableComponent from './../Loadable/index';
-import { HomeOutlined, UserOutlined, WalletOutlined, TagsOutlined,LogoutOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, WalletOutlined, TagsOutlined,LogoutOutlined,FileImageOutlined } from '@ant-design/icons';
 
 //@import '~antd/dist/antd.css';
 export const userRouter: any = [
@@ -84,6 +84,15 @@ export const appRouters: any = [
     icon: WalletOutlined,
     showInMenu: true,
     component: LoadableComponent(() => import('../../scenes/News')),
+  },
+  {
+    path: '/gallery',
+    permission: 'Pages.News',
+    title: 'Gallery',
+    name: 'gallery',
+    icon: FileImageOutlined,
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/Gallery')),
   },
   
   {

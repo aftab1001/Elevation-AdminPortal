@@ -7,6 +7,7 @@ import AccountStore from './accountStore';
 import RoomStore from './roomStore';
 import NewsStore from './newsStore';
 import ApartmentStore from './apartmentStore';
+import GalleryStore from './galleryStore';
 
 export default function initializeStores() {
   return {
@@ -19,6 +20,7 @@ export default function initializeStores() {
     roomStore: new RoomStore(),
     newsStore: new NewsStore(),
     apartmentStore: new ApartmentStore(),
+    galleryStore: new GalleryStore(),
 
   };
 }
