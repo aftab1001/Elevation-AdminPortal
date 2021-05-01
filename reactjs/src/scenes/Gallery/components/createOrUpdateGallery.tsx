@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Form, Input, Modal, Upload, Select, Row } from 'antd';
+import { Form, Input, Modal, Upload, Select } from 'antd';
 
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
@@ -46,7 +46,7 @@ class CreateOrUpdateGallerys extends React.Component<
     });
 
     this.props.formRef.current?.setFieldsValue({
-      image1: info.fileList[0]?.url,
+      image: info.fileList[0]?.url,
     });
     this.setState({ fileList: info.fileList });
   };
@@ -94,11 +94,11 @@ class CreateOrUpdateGallerys extends React.Component<
         onCancel={onCancel}
         onOk={onCreate}
         title={L('Gallery')}
-        width={750}
+        width={650}
         style={{ top: 50 }}
       >
         <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
-          <Row gutter={16}>
+          
             
               <Form.Item label={L('Title')} name={'imageTitle'} rules={rules.imageTitle} {...formItemLayout}>
                 <Input />
@@ -106,7 +106,7 @@ class CreateOrUpdateGallerys extends React.Component<
               
               <Form.Item
                 label={L('Gallery Category')}
-                name={'categoryName'}
+                name={'type'}
                 rules={rules.type}
                 {...formItemLayout}
               >
@@ -129,8 +129,16 @@ class CreateOrUpdateGallerys extends React.Component<
                   {this.state.fileList.length < 1 && '+ Upload'}
                 </Upload>
               </Form.Item>
-            
-             </Row>
+              <Form.Item
+                label={L('Image')}
+                name={'image'}
+                rules={rules.image}
+                {...formItemLayout}
+                hidden={true}
+              >
+                <Input />
+              </Form.Item>
+             
         </Form>
       </Modal>
     );
