@@ -8,56 +8,94 @@ using Abp.Domain.Repositories;
 using Elevations.EntityFrameworkCore.HotelDto;
 using Elevations.Services.Dto;
 using Elevations.Services.Enum;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Elevations.Services
 {
-    public class GalleryAppService : AsyncCrudAppService<Gallery, GalleryDto, int, PagedResultRequestDto, Gallery,
-        GalleryDto>
+    public class GalleryAppService : AsyncCrudAppService<Gallery, GalleryDto, int, PagedResultRequestDto,
+            UpdateGalleryDto, GalleryDto>,
+        IGalleryService
     {
-        private readonly IRepository<Apartments> apartmentRepository;
-        private readonly IRepository<Gallery> galleryRepository;
+        private readonly IRepository<Apartments> _apartmentRepository;
+        private readonly IRepository<Gallery> _galleryRepository;
 
-        private readonly IRepository<Rooms> roomsRepository;
+        private readonly IRepository<Rooms> _roomsRepository;
 
         public GalleryAppService(IRepository<Gallery, int> repository, IRepository<Gallery> galleryRepository,
             IRepository<Rooms> roomsRepository, IRepository<Apartments> apartmentRepository)
             : base(repository)
         {
-            this.galleryRepository = galleryRepository;
-            this.roomsRepository = roomsRepository;
-            this.apartmentRepository = apartmentRepository;
+            _galleryRepository = galleryRepository;
+            _roomsRepository = roomsRepository;
+            _apartmentRepository = apartmentRepository;
         }
 
-        public override async Task<GalleryDto> CreateAsync(Gallery input)
+        public override async Task<GalleryDto> CreateAsync(UpdateGalleryDto input)
+        {
+            CheckUpdatePermission();
+            Gallery gallery = new()
+            {
+                Image = input.Image,
+                ImageTitle = input.ImageTitle,
+                ImageType = input.Type
+            };
+            var insertedId = await _galleryRepository.InsertAndGetIdAsync(gallery);
+            input.Id = insertedId;
+            return MapToEntityDto(gallery);
+        }
+
+        [AllowAnonymous]
+        public override Task<PagedResultDto<GalleryDto>> GetAllAsync(PagedResultRequestDto input)
+        {
+            return Task.FromResult(GetImageDetail());
+        }
+
+
+        public override async Task<GalleryDto> UpdateAsync(GalleryDto input)
         {
             CheckUpdatePermission();
 
+            Gallery gallery = new()
+            {
+                Image = input.Image,
+                ImageTitle = input.ImageTitle,
+                ImageType = input.Type
+            };
 
-            var insertedId = await galleryRepository.InsertAndGetIdAsync(input);
-            input.Id = insertedId;
-            return MapToEntityDto(input);
+
+            await _galleryRepository.UpdateAsync(gallery);
+
+            return MapToEntityDto(gallery);
         }
 
-        public override Task<PagedResultDto<GalleryDto>> GetAllAsync(PagedResultRequestDto input)
+        [AllowAnonymous]
+        public async Task<PagedResultDto<GalleryDto>> GetAllGalleryImages()
         {
-            return Task.FromResult(GetAllGalleryImages());
-        }
-
-        public Task<ListResultDto<GalleryDto>> GetAllGalleryImages(PagedResultRequestDto input)
-        {
-            var apartments = apartmentRepository.GetAllIncluding(x => x.Category);
+            var apartments = _apartmentRepository.GetAllIncluding(x => x.Category);
 
             foreach (var apartment in apartments) apartment.CategoryName = apartment.Category.Name;
-            return Task.FromResult(
-                new ListResultDto<GalleryDto>(
-                    ObjectMapper.Map<List<GalleryDto>>(apartments).OrderBy(p => p.Type).ToList()));
+
+            return await Task.FromResult(GetGalleryImages());
         }
 
-        private PagedResultDto<GalleryDto> GetAllGalleryImages()
+        public PagedResultDto<GalleryDto> GetGalleryImages()
         {
-            var roomsList = roomsRepository.GetAll().ToList();
-            var apartmentList = apartmentRepository.GetAll();
-            var galleryList = galleryRepository.GetAll();
+            var galleryList = _galleryRepository.GetAll();
+
+            var galleryImages = new List<GalleryDto>();
+
+
+            foreach (var gallery in galleryList) AddGalleryImages(gallery, galleryImages);
+
+            return new PagedResultDto<GalleryDto>(galleryImages.Count,
+                new ReadOnlyCollection<GalleryDto>(galleryImages.ToList()));
+        }
+
+        public PagedResultDto<GalleryDto> GetImageDetail()
+        {
+            var roomsList = _roomsRepository.GetAll().ToList();
+            var apartmentList = _apartmentRepository.GetAll();
+            var galleryList = _galleryRepository.GetAll();
 
             var galleryImages = new List<GalleryDto>();
 

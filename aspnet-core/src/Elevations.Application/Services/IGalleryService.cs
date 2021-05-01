@@ -7,9 +7,10 @@ using Elevations.Services.Dto;
 
 namespace Elevations.Services
 {
-    public interface IGalleryService: IAsyncCrudAppService<GalleryDto, int, PagedResultRequestDto, Gallery,
-        GalleryDto>
+    public interface IGalleryService: IAsyncCrudAppService<GalleryDto, int, PagedResultRequestDto,
+        UpdateGalleryDto, GalleryDto>
     {
-        Task<ListResultDto<GalleryDto>> GetAllGalleryImages(PagedResultRequestDto input);
+        Task<PagedResultDto<GalleryDto>> GetAllGalleryImages();
     }
+    
 }
