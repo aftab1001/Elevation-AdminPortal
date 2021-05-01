@@ -105,12 +105,12 @@ class CreateOrUpdateGallerys extends React.Component<
               </Form.Item>
               
               <Form.Item
-                label={L('Gallery Category')}
+                label={L('Type')}
                 name={'type'}
                 rules={rules.type}
                 {...formItemLayout}
               >
-                <Select placeholder="Please Select Type" defaultValue="Gym">
+                <Select placeholder="Please Select Type" >
                   <Select.Option value="gym">Gym</Select.Option>
                   <Select.Option value="firstAid">First Aid</Select.Option>
                   <Select.Option value="boutique">Boutique</Select.Option>
