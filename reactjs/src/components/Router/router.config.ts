@@ -87,7 +87,7 @@ export const appRouters: any = [
   },
   {
     path: '/gallery',
-    permission: 'Pages.News',
+    permission: 'Pages.Gallery',
     title: 'Gallery',
     name: 'gallery',
     icon: FileImageOutlined,

@@ -135,8 +135,8 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
       },
       {
         title: L('Image'),
-        dataIndex: 'image1',
-        key: 'image1',
+        dataIndex: 'image',
+        key: 'image',
         width: 150,
         render: (text: string) => <img alt="example" src={text} style={{ width: 150 }} />,
       },
