@@ -28,6 +28,13 @@
 		<text name="Surname" value="Surname" />
 		<text name="EmailAddress" value="Email address" />
 		<text name="Tenants" value="Tenants" />
+		<text name="Rooms" value="Rooms" />
+		<text name="Apartments" value="Apartments" />
+		<text name="News" value="News" />
+		<text name="Dashboard" value="Dashboard" />
+		<text name="Restaurant" value="Restaurant" />
+		<text name="Gallery" value="Gallery" />
+		<text name="Donation" value="Donation" />
 		<text name="SavedSuccessfully" value="Saved successfully" />
 		<text name="CreateNewTenant" value="Create new tenant" />
 		<text name="AdminEmailAddress" value="Admin email address" />

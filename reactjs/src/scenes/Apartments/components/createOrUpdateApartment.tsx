@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as React from 'react';
 
 import { Form, Input, Modal, Upload, Select, Col, Row } from 'antd';
@@ -45,7 +46,7 @@ class CreateOrUpdateApartment extends React.Component<
     });
     //console.log('new file list', info.fileList);
     this.props.formRef.current?.setFieldsValue({
-      image1: info.fileList[0]?.url,
+      image1: info.fileList[0]?.url
     });
     this.setState({ fileList: info.fileList });
   };
@@ -295,3 +296,4 @@ class CreateOrUpdateApartment extends React.Component<
 }
 
 export default CreateOrUpdateApartment;
+/* eslint-enable */

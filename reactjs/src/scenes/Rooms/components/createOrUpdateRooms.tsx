@@ -14,7 +14,7 @@ export interface ICreateOrUpdateRoomsProps {
   formRef: React.RefObject<FormInstance>;
 }
 export interface ICreateOrUpdateRoomsState {
-  fileList: any;
+  fileList: any
 }
 
 class CreateOrUpdateRooms extends React.Component<
@@ -42,14 +42,13 @@ class CreateOrUpdateRooms extends React.Component<
       reader.onload = (e: any) => {
         file.url = e.target.result;
       };
-      reader.readAsDataURL(info.file.originFileObj);
-    });
-
+      reader.readAsDataURL(info.file.originFileObj)
+    })
     this.props.formRef.current?.setFieldsValue({
-      image1: info.fileList[0]?.url,
+      'image1': info.fileList?.[0]?.url
     });
     this.setState({ fileList: info.fileList });
-  };
+  }
 
   onPreview = async (file: any) => {
     let src = file.url;

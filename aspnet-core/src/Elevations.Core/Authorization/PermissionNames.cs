@@ -12,6 +12,10 @@
 
         public const string Pages_Restaurant = "Pages.Restaurant";
 
+        public const string Pages_Gallery = "Pages.Gallery";
+
+        public const string Pages_Donation = "Pages.Donation";
+
         public const string Pages_Roles = "Pages.Roles";
 
         public const string Pages_Rooms = "Pages.Rooms";

@@ -21,6 +21,8 @@
             context.CreatePermission(PermissionNames.Pages_Dashboard, L("Dashboard"));
             context.CreatePermission(PermissionNames.Pages_Reservation, L("Reservation"));
             context.CreatePermission(PermissionNames.Pages_Restaurant, L("Restaurant"));
+            context.CreatePermission(PermissionNames.Pages_Gallery, L("Gallery"));
+            context.CreatePermission(PermissionNames.Pages_Donation, L("Donation"));
         }
 
         private static ILocalizableString L(string name)

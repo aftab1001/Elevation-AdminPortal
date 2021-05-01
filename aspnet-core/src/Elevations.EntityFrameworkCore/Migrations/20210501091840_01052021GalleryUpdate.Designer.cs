@@ -4,14 +4,16 @@ using Elevations.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Elevations.Migrations
 {
     [DbContext(typeof(ElevationsDbContext))]
-    partial class ElevationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210501091840_01052021GalleryUpdate")]
+    partial class _01052021GalleryUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1792,8 +1794,8 @@ namespace Elevations.Migrations
                     b.Property<string>("ImageTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageType")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ImageType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
@@ -1803,7 +1805,36 @@ namespace Elevations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ImageType");
+
                     b.ToTable("Gallery");
+                });
+
+            modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.ImageType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ImageType");
                 });
 
             modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.News", b =>
@@ -2341,6 +2372,15 @@ namespace Elevations.Migrations
                         .HasForeignKey("ApartmentCategory");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.Gallery", b =>
+                {
+                    b.HasOne("Elevations.EntityFrameworkCore.HotelDto.ImageType", "Type")
+                        .WithMany()
+                        .HasForeignKey("ImageType");
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.Rooms", b =>
