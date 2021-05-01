@@ -6,6 +6,7 @@ import AuthenticationStore from './authenticationStore';
 import AccountStore from './accountStore';
 import RoomStore from './roomStore';
 import NewsStore from './newsStore';
+import GalleryStore from './galleryStore';
 import ApartmentStore from './apartmentStore';
 
 export default function initializeStores() {
@@ -18,7 +19,7 @@ export default function initializeStores() {
     accountStore: new AccountStore(),
     roomStore: new RoomStore(),
     newsStore: new NewsStore(),
+    galleryStore: new GalleryStore(),
     apartmentStore: new ApartmentStore(),
-
   };
 }
