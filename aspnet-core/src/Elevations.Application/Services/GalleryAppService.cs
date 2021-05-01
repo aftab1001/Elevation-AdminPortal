@@ -43,6 +43,16 @@ namespace Elevations.Services
             return Task.FromResult(GetAllGalleryImages());
         }
 
+        public Task<ListResultDto<GalleryDto>> GetAllGalleryImages(PagedResultRequestDto input)
+        {
+            var apartments = apartmentRepository.GetAllIncluding(x => x.Category);
+
+            foreach (var apartment in apartments) apartment.CategoryName = apartment.Category.Name;
+            return Task.FromResult(
+                new ListResultDto<GalleryDto>(
+                    ObjectMapper.Map<List<GalleryDto>>(apartments).OrderBy(p => p.Type).ToList()));
+        }
+
         private PagedResultDto<GalleryDto> GetAllGalleryImages()
         {
             var roomsList = roomsRepository.GetAll().ToList();
