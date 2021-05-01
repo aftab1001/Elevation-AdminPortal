@@ -26,7 +26,7 @@ class GalleryService {
   }
 
   public async getAll(pagedFilterAndSortedRequest: PagedGalleryResultRequestDto): Promise<PagedResultDto<GetAllGalleryOutput>> {
-    let result = await http.get('api/services/app/Gallery/GetAll', { params: pagedFilterAndSortedRequest });
+    let result = await http.get('api/services/app/Gallery/GetAllGalleryImages', { params: pagedFilterAndSortedRequest });
     return result.data.result;
   }
 

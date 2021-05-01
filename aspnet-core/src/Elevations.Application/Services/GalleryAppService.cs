@@ -117,7 +117,8 @@ namespace Elevations.Services
                 {
                     Image = gallery.Image,
                     ImageTitle = gallery.ImageTitle,
-                    Type = gallery.ImageType
+                    Type = gallery.ImageType,
+                    Id = gallery.Id
                 };
 
                 galleryList.Add(item);
