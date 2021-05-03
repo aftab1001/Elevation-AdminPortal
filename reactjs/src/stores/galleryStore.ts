@@ -23,7 +23,7 @@ class GalleryStore {
       id: 0,
       image: '',
       imageTitle: '',
-      type: '',
+      imageType: '',
       
     };
   }

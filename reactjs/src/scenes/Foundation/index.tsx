@@ -5,38 +5,38 @@ import { FormInstance } from 'antd/lib/form';
 import { inject, observer } from 'mobx-react';
 
 import AppComponentBase from '../../components/AppComponentBase';
-import CreateOrUpdateGallery from './components/createOrUpdateGallery';
+import CreateOrUpdateFoundation from './components/createOrUpdateFoundation';
 import { EntityDto } from '../../services/dto/entityDto';
 import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
-import GalleryStore from '../../stores/galleryStore';
+import FoundationStore from '../../stores/foundationStore';
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
 
-export interface IGalleryProps {
-  galleryStore: GalleryStore;
+export interface IFoundationProps {
+  foundationStore: FoundationStore;
 }
 
-export interface IGalleryState {
+export interface IFoundationState {
   modalVisible: boolean;
   maxResultCount: number;
   skipCount: number;
-  galleryId: number;
+  foundationId: number;
   filter: string;
 }
 
 const confirm = Modal.confirm;
 const Search = Input.Search;
 
-@inject(Stores.GalleryStore)
+@inject(Stores.FoundationStore)
 @observer
-class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
+class Foundation extends AppComponentBase<IFoundationProps, IFoundationState> {
   formRef = React.createRef<FormInstance>();
 
   state = {
     modalVisible: false,
     maxResultCount: 10,
     skipCount: 0,
-    galleryId: 0,
+    foundationId: 0,
     filter: '',
   };
 
@@ -45,7 +45,7 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
   }
 
   async getAll() {
-    await this.props.galleryStore.getAll({
+    await this.props.foundationStore.getAll({
       maxResultCount: this.state.maxResultCount,
       skipCount: this.state.skipCount,
       keyword: this.state.filter,
@@ -67,19 +67,19 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
 
   async createOrUpdateModalOpen(entityDto: EntityDto) {
     if (entityDto.id === 0) {
-      this.props.galleryStore.createGallery();
+      this.props.foundationStore.createFoundation();
     } else {
-      await this.props.galleryStore.get(entityDto);
+      await this.props.foundationStore.get(entityDto);
     }
 
-    this.setState({ galleryId: entityDto.id });
+    this.setState({ foundationId: entityDto.id });
     this.Modal();
 
     setTimeout(() => {
       if (entityDto.id !== 0) {
-        console.log("gallery props",this.props.galleryStore.galleryModel);
+        console.log("foundation props",this.props.foundationStore.foundationModel);
         this.formRef.current?.setFieldsValue({
-          ...this.props.galleryStore.galleryModel,
+          ...this.props.foundationStore.foundationModel,
         });
       } else {
         this.formRef.current?.resetFields();
@@ -91,9 +91,9 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
   delete(input: EntityDto) {
     const self = this;
     confirm({
-      title: 'Do you Want to delete gallerys?',
+      title: 'Do you Want to delete foundations?',
       onOk() {
-        self.props.galleryStore.delete(input);
+        self.props.foundationStore.delete(input);
       },
       onCancel() {},
     });
@@ -101,10 +101,10 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
 
   handleCreate = async () => {
     this.formRef.current?.validateFields().then(async (values: any) => {
-      if (this.state.galleryId === 0) {
-        await this.props.galleryStore.create(values);
+      if (this.state.foundationId === 0) {
+        await this.props.foundationStore.create(values);
       } else {
-        await this.props.galleryStore.update({ id: this.state.galleryId, ...values });
+        await this.props.foundationStore.update({ id: this.state.foundationId, ...values });
       }
 
       await this.getAll();
@@ -118,7 +118,7 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
   };
 
   public render() {
-    const { gallerys } = this.props.galleryStore;
+    const { foundations } = this.props.foundationStore;
     const columns = [
       {
         title: L('Title'),
@@ -129,8 +129,8 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
       },
       {
         title: L('Type'),
-        dataIndex: 'imageType',
-        key: 'imageType',
+        dataIndex: 'type',
+        key: 'type',
         width: 50,
         render: (text: string) => <div>{text}</div>,
       },
@@ -178,7 +178,7 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
             xl={{ span: 2, offset: 0 }}
             xxl={{ span: 2, offset: 0 }}
           >
-            <h2>{L('Gallerys')}</h2>
+            <h2>{L('Foundations')}</h2>
           </Col>
           <Col
             xs={{ span: 14, offset: 0 }}
@@ -215,17 +215,17 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
               bordered={true}
               pagination={{
                 pageSize: this.state.maxResultCount,
-                total: gallerys === undefined ? 0 : gallerys.totalCount,
+                total: foundations === undefined ? 0 : foundations.totalCount,
                 defaultCurrent: 1,
               }}
               columns={columns}
-              loading={gallerys === undefined ? true : false}
-              dataSource={gallerys === undefined ? [] : gallerys.items}
+              loading={foundations === undefined ? true : false}
+              dataSource={foundations === undefined ? [] : foundations.items}
               onChange={this.handleTableChange}
             />
           </Col>
         </Row>
-        <CreateOrUpdateGallery
+        <CreateOrUpdateFoundation
           formRef={this.formRef}
           visible={this.state.modalVisible}
           onCancel={() =>
@@ -233,7 +233,7 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
               modalVisible: false,
             })
           }
-          modalType={this.state.galleryId === 0 ? 'edit' : 'create'}
+          modalType={this.state.foundationId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}
         />
       </Card>
@@ -241,4 +241,4 @@ class Gallery extends AppComponentBase<IGalleryProps, IGalleryState> {
   }
 }
 
-export default Gallery;
+export default Foundation;

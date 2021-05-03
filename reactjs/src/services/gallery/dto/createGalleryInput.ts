@@ -1,6 +1,6 @@
 export default class CreateGalleryInput {
   image!: string;
-  type!: string;
+  imageType!: string;
   imageTitle!: string;
   id!:number;
 }

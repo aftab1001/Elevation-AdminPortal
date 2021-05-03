@@ -9,6 +9,7 @@ using Elevations.EntityFrameworkCore.HotelDto;
 using Elevations.Services.Dto;
 using Elevations.Services.Enum;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Elevations.Services
 {
@@ -59,7 +60,8 @@ namespace Elevations.Services
             {
                 Image = input.Image,
                 ImageTitle = input.ImageTitle,
-                ImageType = input.Type
+                ImageType = input.ImageType,
+                Id=input.Id
             };
 
 
@@ -117,7 +119,7 @@ namespace Elevations.Services
                 {
                     Image = gallery.Image,
                     ImageTitle = gallery.ImageTitle,
-                    Type = gallery.ImageType,
+                    ImageType = gallery.ImageType,
                     Id = gallery.Id
                 };
 
@@ -131,7 +133,7 @@ namespace Elevations.Services
             {
                 var item = new GalleryDto
                 {
-                    Image = apartment.Image1, ImageTitle = apartment.Name, Type = ImageType.Apartments.ToString()
+                    Image = apartment.Image1, ImageTitle = apartment.Name, ImageType = ImageType.Apartments.ToString()
                 };
 
                 galleryImages.Add(item);
@@ -141,7 +143,7 @@ namespace Elevations.Services
             {
                 var item = new GalleryDto
                 {
-                    Image = apartment.Image2, ImageTitle = apartment.Name, Type = ImageType.Apartments.ToString()
+                    Image = apartment.Image2, ImageTitle = apartment.Name, ImageType = ImageType.Apartments.ToString()
                 };
 
                 galleryImages.Add(item);
@@ -151,7 +153,7 @@ namespace Elevations.Services
             {
                 var item = new GalleryDto
                 {
-                    Image = apartment.Image3, ImageTitle = apartment.Name, Type = ImageType.Apartments.ToString()
+                    Image = apartment.Image3, ImageTitle = apartment.Name, ImageType = ImageType.Apartments.ToString()
                 };
 
                 galleryImages.Add(item);
@@ -161,7 +163,7 @@ namespace Elevations.Services
             {
                 var item = new GalleryDto
                 {
-                    Image = apartment.Image4, ImageTitle = apartment.Name, Type = ImageType.Apartments.ToString()
+                    Image = apartment.Image4, ImageTitle = apartment.Name, ImageType = ImageType.Apartments.ToString()
                 };
 
                 galleryImages.Add(item);
@@ -171,7 +173,7 @@ namespace Elevations.Services
             {
                 var item = new GalleryDto
                 {
-                    Image = apartment.Image5, ImageTitle = apartment.Name, Type = ImageType.Apartments.ToString()
+                    Image = apartment.Image5, ImageTitle = apartment.Name, ImageType = ImageType.Apartments.ToString()
                 };
 
                 galleryImages.Add(item);
@@ -184,7 +186,7 @@ namespace Elevations.Services
             {
                 var item = new GalleryDto
                 {
-                    Image = room.Image1, ImageTitle = room.Name, Type = ImageType.Rooms.ToString()
+                    Image = room.Image1, ImageTitle = room.Name, ImageType = ImageType.Rooms.ToString()
                 };
 
                 galleryImages.Add(item);
@@ -194,7 +196,7 @@ namespace Elevations.Services
             {
                 var item = new GalleryDto
                 {
-                    Image = room.Image2, ImageTitle = room.Name, Type = ImageType.Rooms.ToString()
+                    Image = room.Image2, ImageTitle = room.Name, ImageType = ImageType.Rooms.ToString()
                 };
 
                 galleryImages.Add(item);
@@ -204,7 +206,7 @@ namespace Elevations.Services
             {
                 var item = new GalleryDto
                 {
-                    Image = room.Image3, ImageTitle = room.Name, Type = ImageType.Rooms.ToString()
+                    Image = room.Image3, ImageTitle = room.Name, ImageType = ImageType.Rooms.ToString()
                 };
 
                 galleryImages.Add(item);
@@ -214,7 +216,7 @@ namespace Elevations.Services
             {
                 var item = new GalleryDto
                 {
-                    Image = room.Image4, ImageTitle = room.Name, Type = ImageType.Rooms.ToString()
+                    Image = room.Image4, ImageTitle = room.Name, ImageType = ImageType.Rooms.ToString()
                 };
 
                 galleryImages.Add(item);
@@ -224,11 +226,15 @@ namespace Elevations.Services
             {
                 var item = new GalleryDto
                 {
-                    Image = room.Image5, ImageTitle = room.Name, Type = ImageType.Rooms.ToString()
+                    Image = room.Image5, ImageTitle = room.Name, ImageType = ImageType.Rooms.ToString()
                 };
 
                 galleryImages.Add(item);
             }
+        }
+        protected override async Task<Gallery> GetEntityByIdAsync(int id)
+        {
+            return await _galleryRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

@@ -10,8 +10,7 @@ namespace Elevations.EntityFrameworkCore.HotelDto
     {
         [Required] public string Image { get; set; }
 
-        public string ImageTitle { get; set; }
-
+        public string ImageTitle { get; set; }        
 
         public string ImageType { get; set; }
     }

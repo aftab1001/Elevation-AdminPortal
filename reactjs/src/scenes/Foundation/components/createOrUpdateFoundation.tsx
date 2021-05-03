@@ -4,22 +4,22 @@ import { Form, Input, Modal, Upload, Select } from 'antd';
 
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
-import rules from './createOrUpdateGallery.validation';
+import rules from './createOrUpdateFoundation.validation';
 
-export interface ICreateOrUpdateGallerysProps {
+export interface ICreateOrUpdateFoundationsProps {
   visible: boolean;
   modalType: string;
   onCreate: () => Promise<void>;
   onCancel: () => void;
   formRef: React.RefObject<FormInstance>;
 }
-export interface ICreateOrUpdateGallerysState {
+export interface ICreateOrUpdateFoundationsState {
   fileList: any;
 }
 
-class CreateOrUpdateGallerys extends React.Component<
-  ICreateOrUpdateGallerysProps,
-  ICreateOrUpdateGallerysState
+class CreateOrUpdateFoundations extends React.Component<
+  ICreateOrUpdateFoundationsProps,
+  ICreateOrUpdateFoundationsState
 > {
   constructor(props: any) {
     super(props);
@@ -93,27 +93,32 @@ class CreateOrUpdateGallerys extends React.Component<
         visible={visible}
         onCancel={onCancel}
         onOk={onCreate}
-        title={L('Gallery')}
+        title={L('Foundation')}
         width={650}
         style={{ top: 50 }}
       >
         <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
           
             
-              <Form.Item label={L('Title')} name={'imageTitle'} rules={rules.imageTitle} {...formItemLayout}>
-                <Input />
+              <Form.Item label={L('UpperText')} name={'upperText'} rules={rules.upperText} {...formItemLayout}>
+                <Input.TextArea />
               </Form.Item>
+              <Form.Item label={L('HeadingText')} name={'headingText'} rules={rules.headingText} {...formItemLayout}>
+                <Input.TextArea />
+              </Form.Item>
+              <Form.Item label={L('Description')} name={'description'} rules={rules.description} {...formItemLayout}>
+                <Input.TextArea />
+              </Form.Item>             
               
               <Form.Item
                 label={L('Type')}
-                name={'imageType'}
-                rules={rules.imageType}
+                name={'type'}
+                rules={rules.type}
                 {...formItemLayout}
               >
-                <Select placeholder="Please Select Type" defaultActiveFirstOption={true}>
-                  <Select.Option value="gym">Gym</Select.Option>
-                  <Select.Option value="firstAid">First Aid</Select.Option>
-                  <Select.Option value="boutique">Boutique</Select.Option>
+                <Select placeholder="Please Select Type" defaultValue="banner">
+                  <Select.Option value="projects">Projects</Select.Option>
+                  <Select.Option value="banner">Banner</Select.Option>                  
                 </Select>
               </Form.Item>
               
@@ -145,4 +150,4 @@ class CreateOrUpdateGallerys extends React.Component<
   }
 }
 
-export default CreateOrUpdateGallerys;
+export default CreateOrUpdateFoundations;

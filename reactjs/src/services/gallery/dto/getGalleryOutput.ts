@@ -1,6 +1,6 @@
 export default class GetGalleryOutput {
   image!: string;
-  type!: string;
+  imageType!: string;
   imageTitle!: string;
   id!:number;
 }

@@ -1,6 +1,6 @@
 export interface GetAllGalleryOutput {
   image: string;
-  type: string;
+  imageType: string;
   imageTitle: string;
   id:number;
 }

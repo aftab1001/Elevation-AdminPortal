@@ -94,6 +94,15 @@ export const appRouters: any = [
     showInMenu: true,
     component: LoadableComponent(() => import('../../scenes/Gallery')),
   },
+  {
+    path: '/foundation',
+    permission: 'Pages.Donation',
+    title: 'Donation',
+    name: 'donation',
+    icon: FileImageOutlined,
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/Foundation')),
+  },
   
   {
     path: '/logout',

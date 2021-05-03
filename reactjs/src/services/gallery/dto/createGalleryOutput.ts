@@ -1,6 +1,6 @@
 export default interface CreateGalleryOutput {
   image: string;
-  type: string;
+  imageType: string;
   imageTitle: string;
   id:number;
 }

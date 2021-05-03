@@ -9,4 +9,5 @@ export default class Stores {
   static SessionStore: string = 'sessionStore';
   static AccountStore: string = 'accountStore';
   static GalleryStore: string = 'galleryStore';
+  static FoundationStore: string = 'foundationStore';
 }

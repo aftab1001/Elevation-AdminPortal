@@ -1,7 +1,7 @@
 class GalleryModel {
   image!: string;
   imageTitle!: string;
-  type!: string;
+  imageType!: string;
   id!: number;  
   
 }
