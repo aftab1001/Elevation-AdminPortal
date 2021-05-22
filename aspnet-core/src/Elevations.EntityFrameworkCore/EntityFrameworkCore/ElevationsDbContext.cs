@@ -20,6 +20,8 @@ namespace Elevations.EntityFrameworkCore
 
         public DbSet<Dashboard> Dashboard { get; set; }
 
+        public DbSet<Foundation> Foundation { get; set; }
+
         public DbSet<Dishes> Dishes { get; set; }
 
         public DbSet<Gallery> Gallery { get; set; }
