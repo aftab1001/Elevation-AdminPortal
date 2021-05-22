@@ -118,7 +118,7 @@ class CreateOrUpdateFoundations extends React.Component<
               >
                 <Select placeholder="Please Select Type" defaultValue="banner">
                   <Select.Option value="projects">Projects</Select.Option>
-                  <Select.Option value="banner">Banner</Select.Option>                  
+                  <Select.Option value="slider">Slider</Select.Option>                  
                 </Select>
               </Form.Item>
               

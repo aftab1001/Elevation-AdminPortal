@@ -121,9 +121,9 @@ class Foundation extends AppComponentBase<IFoundationProps, IFoundationState> {
     const { foundations } = this.props.foundationStore;
     const columns = [
       {
-        title: L('Title'),
-        dataIndex: 'imageTitle',
-        key: 'imageTitle',
+        title: L('Heading'),
+        dataIndex: 'headingText',
+        key: 'headingText',
         width: 150,
         render: (text: string) => <div>{text}</div>,
       },
