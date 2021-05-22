@@ -20,6 +20,7 @@
             new DefaultApartmentCategoryBuilder(_context).Create();
             new Apartment(_context).Create();
             new RestaurantBuilder(_context).Create();
+            new FoundationCreator(_context).Create();
             new NewsBuilder(_context).Create();
 
             _context.SaveChanges();
