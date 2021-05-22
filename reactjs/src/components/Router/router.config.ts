@@ -97,8 +97,8 @@ export const appRouters: any = [
   {
     path: '/foundation',
     permission: 'Pages.Donation',
-    title: 'Donation',
-    name: 'donation',
+    title: 'Foundation',
+    name: 'foundation',
     icon: FileImageOutlined,
     showInMenu: true,
     component: LoadableComponent(() => import('../../scenes/Foundation')),
