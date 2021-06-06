@@ -2,6 +2,8 @@
 {
     public static class PermissionNames
     {
+        public const string Pages_Booking = "Pages.Booking";
+
         public const string Pages_Apartments = "Pages.Apartments";
 
         public const string Pages_Dashboard = "Pages.Dashboard";

@@ -23,6 +23,7 @@
             context.CreatePermission(PermissionNames.Pages_Restaurant, L("Restaurant"));
             context.CreatePermission(PermissionNames.Pages_Gallery, L("Gallery"));
             context.CreatePermission(PermissionNames.Pages_Donation, L("Donation"));
+            context.CreatePermission(PermissionNames.Pages_Booking, L("Booking"));
         }
 
         private static ILocalizableString L(string name)

@@ -35,6 +35,7 @@
 		<text name="Restaurant" value="Restaurant" />
 		<text name="Gallery" value="Gallery" />
 		<text name="Donation" value="Donation" />
+		<text name="Booking" value="Booking" />
 		<text name="SavedSuccessfully" value="Saved successfully" />
 		<text name="CreateNewTenant" value="Create new tenant" />
 		<text name="AdminEmailAddress" value="Admin email address" />

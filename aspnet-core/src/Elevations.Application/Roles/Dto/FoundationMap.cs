@@ -9,8 +9,6 @@
     {
         public FoundationMap()
         {
-            // Role and permission
-
             CreateMap<Foundation, FoundationDto>();
         }
     }
