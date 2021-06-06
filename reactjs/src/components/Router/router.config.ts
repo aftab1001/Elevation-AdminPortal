@@ -1,5 +1,5 @@
 import LoadableComponent from './../Loadable/index';
-import { HomeOutlined, UserOutlined, WalletOutlined, TagsOutlined,LogoutOutlined,FileImageOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, WalletOutlined, TagsOutlined,LogoutOutlined,FileImageOutlined,CalendarOutlined  } from '@ant-design/icons';
 
 //@import '~antd/dist/antd.css';
 export const userRouter: any = [
@@ -39,6 +39,15 @@ export const appRouters: any = [
     icon: HomeOutlined,
     showInMenu: true,
     component: LoadableComponent(() => import('../../scenes/Dashboard')),
+  },  
+  {
+    path: '/booking',
+    name: 'booking',
+    permission: '',
+    title: 'Booking',
+    icon: CalendarOutlined,
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/Bookings')),
   },
   {
     path: '/users',
