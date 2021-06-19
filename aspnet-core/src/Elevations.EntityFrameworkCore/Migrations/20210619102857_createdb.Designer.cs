@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elevations.Migrations
 {
     [DbContext(typeof(ElevationsDbContext))]
-    [Migration("20210501111610_01052021GalleryUpdate1")]
-    partial class _01052021GalleryUpdate1
+    [Migration("20210619102857_createdb")]
+    partial class createdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1649,6 +1649,72 @@ namespace Elevations.Migrations
                     b.ToTable("Apartments");
                 });
 
+            modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.Booking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("AdminComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BookingStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookingType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ContactNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ItemId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("RoomName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpecialRequest")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ToDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Booking");
+                });
+
             modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.Dashboard", b =>
                 {
                     b.Property<int>("Id")
@@ -1772,6 +1838,45 @@ namespace Elevations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Dishes");
+                });
+
+            modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.Foundation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HeadingText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpperText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Foundation");
                 });
 
             modelBuilder.Entity("Elevations.EntityFrameworkCore.HotelDto.Gallery", b =>

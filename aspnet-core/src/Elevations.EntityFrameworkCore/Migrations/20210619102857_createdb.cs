@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Elevations.Migrations
 {
-    public partial class createDb : Migration
+    public partial class createdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -458,6 +458,35 @@ namespace Elevations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Booking",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AdminComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookingStatus = table.Column<int>(type: "int", nullable: false),
+                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ItemId = table.Column<long>(type: "bigint", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    RoomName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookingType = table.Column<int>(type: "int", nullable: false),
+                    SpecialRequest = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Booking", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Dashboard",
                 columns: table => new
                 {
@@ -511,6 +540,46 @@ namespace Elevations.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Dishes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Foundation",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpperText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HeadingText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Foundation", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Gallery",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gallery", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1552,10 +1621,19 @@ namespace Elevations.Migrations
                 name: "Apartments");
 
             migrationBuilder.DropTable(
+                name: "Booking");
+
+            migrationBuilder.DropTable(
                 name: "Dashboard");
 
             migrationBuilder.DropTable(
                 name: "Dishes");
+
+            migrationBuilder.DropTable(
+                name: "Foundation");
+
+            migrationBuilder.DropTable(
+                name: "Gallery");
 
             migrationBuilder.DropTable(
                 name: "News");

@@ -8,6 +8,8 @@ namespace Elevations.Roles.Dto
     using AutoMapper;
 
     using Elevations.Authorization.Roles;
+    using Elevations.EntityFrameworkCore.HotelDto;
+    using Elevations.Services.Dto;
 
     public class RoleMapProfile : Profile
     {
@@ -27,6 +29,12 @@ namespace Elevations.Roles.Dto
 
             CreateMap<Role, RoleListDto>();
             CreateMap<Role, RoleEditDto>();
+
+            CreateMap<Role, RoleEditDto>();
+            CreateMap<UpdateBookingDto, BookingDto>();
+
+            CreateMap<Booking, BookingDto>();
+            
             CreateMap<Permission, FlatPermissionDto>();
         }
     }
