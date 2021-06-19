@@ -64,7 +64,12 @@
                                       ItemId = input.ItemId,
                                       BookingType = input.BookingType,
                                       Price = input.Price,
-                                      ItemType = input.ItemType
+                                      ItemType = input.ItemType,
+                                      AdminComments = input.AdminComments,
+                                      BookingStatus = input.BookingStatus,
+                                      RoomName = input.RoomName
+                                      
+
             };
             int insertedId = await Repository.InsertAndGetIdAsync(Booking);
             input.Id = insertedId;
@@ -91,7 +96,10 @@
                                       BookingType = input.BookingType,
                                       Price = input.Price,
                                       Id = input.Id,
-                                      ItemType =  input.ItemType
+                                      ItemType =  input.ItemType,
+                                      AdminComments = input.AdminComments,
+                                      BookingStatus = input.BookingStatus,
+                                      RoomName = input.RoomName
             };
 
             await Repository.UpdateAsync(Booking);
@@ -156,7 +164,8 @@
                     BookingStatus = item.BookingStatus,
                     ItemId = item.ItemId,
                     Id = item.Id,
-                    ItemType = item.ItemType
+                    ItemType = item.ItemType,
+                    AdminComments = item.AdminComments
                 };
 
                 bookingDtoList.Add(bookingDto);
