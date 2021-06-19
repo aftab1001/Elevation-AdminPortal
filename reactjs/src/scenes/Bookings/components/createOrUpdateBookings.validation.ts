@@ -7,6 +7,7 @@ const rules = {
   firstName: [{ required: true, message: L('ThisFieldIsRequired') }],
   lastName: [{ required: true, message: L('ThisFieldIsRequired') }],
   contact: [{ required: true, message: L('ThisFieldIsRequired') }],
+  roomType:[{}],
   email: [{}],
   specialRequest: [{}],
   pricePaid: [{}],

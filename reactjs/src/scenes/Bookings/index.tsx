@@ -6,7 +6,7 @@ import { inject, observer } from 'mobx-react';
 
 import AppComponentBase from '../../components/AppComponentBase';
 import CreateOrUpdateBooking from './components/createOrUpdateBookings';
-import RevokeBooking from './components/revokeBookings';
+
 import { EntityDto } from '../../services/dto/entityDto';
 import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
@@ -87,27 +87,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
       this.formRef.current?.submit();
     }, 100);
   }
-  async revokedModalOpen(entityDto: EntityDto) {
-    if (entityDto.id === 0) {
-      this.props.bookingStore.createBooking();
-    } else {
-      await this.props.bookingStore.get(entityDto);
-    }
-
-    this.setState({ bookingId: entityDto.id });
-    this.Modal();
-
-    setTimeout(() => {
-      if (entityDto.id !== 0) {
-        this.formRef.current?.setFieldsValue({
-          ...this.props.bookingStore.bookingModel,
-        });
-      } else {
-        this.formRef.current?.resetFields();
-      }
-      this.formRef.current?.submit();
-    }, 100);
-  }
+  
 
   delete(input: EntityDto) {
     const self = this;
@@ -243,7 +223,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
                   <Menu.Item onClick={() => this.createOrUpdateModalOpen({ id: item.id })}>
                     {L('Edit Bookings')}
                   </Menu.Item>
-                  <Menu.Item onClick={() => this.revokedModalOpen({ id: item.id })}>{L('Revoke')}</Menu.Item>
+                  
                   <Menu.Item onClick={() => this.delete({ id: item.id })}>{L('Delete')}</Menu.Item>
                 </Menu>
               }
@@ -327,17 +307,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
           modalType={this.state.bookingId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}
         />
-        <RevokeBooking
-          formRef={this.formRef}
-          visible={this.state.modalVisible}
-          onCancel={() =>
-            this.setState({
-              modalVisible: false,
-            })
-          }
-          modalType={this.state.bookingId === 0 ? 'edit' : 'create'}
-          onCreate={this.handleCreate}
-        />
+        
       </Card>
     );
   }
