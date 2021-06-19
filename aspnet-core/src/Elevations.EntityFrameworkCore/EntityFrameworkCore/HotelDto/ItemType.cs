@@ -1,9 +1,8 @@
 ﻿namespace Elevations.EntityFrameworkCore.HotelDto
 {
-    public enum BookingType
+    public enum ItemType
     {
-        Room,
-
-        Apartment
+        Rooms,
+            Apartment
     }
 }

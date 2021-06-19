@@ -16,6 +16,8 @@
 
         public string Email { get; set; }
 
+        public ItemType ItemType { get; set; }
+
         public string FirstName { get; set; }
 
         public DateTime FromDate { get; set; }

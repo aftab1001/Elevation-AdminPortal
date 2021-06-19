@@ -35,6 +35,9 @@
 
         public BookingType BookingType { get; set; }
 
+        public ItemType ItemType { get; set; }
+        
+
         public string SpecialRequest { get; set; }
 
         [Required]
