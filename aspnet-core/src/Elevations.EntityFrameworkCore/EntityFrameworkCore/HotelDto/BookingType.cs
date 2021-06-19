@@ -2,8 +2,8 @@
 {
     public enum BookingType
     {
-        Room,
+        Customer,
 
-        Apartment
+        Service
     }
 }

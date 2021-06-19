@@ -32,8 +32,6 @@
 
         public double Price { get; set; }
 
-        public string RoomName { get; set; }
-
         public string SpecialRequest { get; set; }
 
         public DateTime ToDate { get; set; }
