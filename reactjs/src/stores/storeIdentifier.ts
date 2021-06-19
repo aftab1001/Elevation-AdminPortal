@@ -4,6 +4,7 @@ export default class Stores {
   static TenantStore: string = 'tenantStore';
   static ApartmentStore: string = 'apartmentStore';
   static RoomStore: string = 'roomStore';
+  static BookingStore: string = 'bookingStore';
   static NewsStore: string = 'newsStore';
   static UserStore: string = 'userStore';
   static SessionStore: string = 'sessionStore';

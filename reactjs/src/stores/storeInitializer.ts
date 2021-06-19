@@ -8,7 +8,8 @@ import RoomStore from './roomStore';
 import NewsStore from './newsStore';
 import ApartmentStore from './apartmentStore';
 import GalleryStore from './galleryStore';
-import FoundationStore from "./foundationStore";
+import FoundationStore from './foundationStore';
+import BookingStore from './bookingStore';
 
 export default function initializeStores() {
   return {
@@ -22,7 +23,7 @@ export default function initializeStores() {
     newsStore: new NewsStore(),
     apartmentStore: new ApartmentStore(),
     galleryStore: new GalleryStore(),
-    foundationStore:new FoundationStore()
-
+    foundationStore: new FoundationStore(),
+    bookingStore: new BookingStore(),
   };
 }
