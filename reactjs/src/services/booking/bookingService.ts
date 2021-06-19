@@ -26,7 +26,7 @@ class BookingService {
   }
 
   public async getAll(pagedFilterAndSortedRequest: PagedBookingResultRequestDto): Promise<PagedResultDto<GetAllBookingOutput>> {
-    let result = await http.get('api/services/app/Booking/GetAll', { params: pagedFilterAndSortedRequest });
+    let result = await http.get('api/services/app/Booking/GetAllBookings', { params: pagedFilterAndSortedRequest });
     return result.data.result;
   }
 

@@ -131,7 +131,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
         dataIndex: 'itemType',
         key: 'itemType',
         width: 50,
-        render: (text: string) => <div>{text}</div>,
+        render: (text: number) => <div>{text===0?"Room":"Apartment"}</div>,
       },
       {
         title: L('FromDate'),
@@ -156,15 +156,15 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
       },
       {
         title: L('GuestContact'),
-        dataIndex: 'guestContact',
-        key: 'guestContact',
+        dataIndex: 'contactNumber',
+        key: 'contactNumber',
         width: 50,
         render: (text: string) => <div>{text}</div>,
       },
       {
         title: L('GuestEmail'),
-        dataIndex: 'guestEmail',
-        key: 'guestEmail',
+        dataIndex: 'email',
+        key: 'email',
         width: 50,
         render: (text: string) => <div>{text}</div>,
       },
@@ -177,8 +177,8 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
       },
       {
         title: L('PricePaid'),
-        dataIndex: 'pricePaid',
-        key: 'pricePaid',
+        dataIndex: 'price',
+        key: 'price',
         width: 50,
         render: (text: string) => <div>{text}</div>,
       },
@@ -187,7 +187,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
         dataIndex: 'bookingType',
         key: 'bookingType',
         width: 50,
-        render: (text: string) => <div>{text}</div>,
+        render: (text: number) => <div>{text==0?"Customer":"Service"}</div>,
       },
       {
         title: L('BookingStatus'),

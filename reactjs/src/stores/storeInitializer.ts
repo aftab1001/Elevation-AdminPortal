@@ -24,6 +24,6 @@ export default function initializeStores() {
     apartmentStore: new ApartmentStore(),
     galleryStore: new GalleryStore(),
     foundationStore: new FoundationStore(),
-    BookingStore: new BookingStore(),
+    bookingStore: new BookingStore(),
   };
 }
