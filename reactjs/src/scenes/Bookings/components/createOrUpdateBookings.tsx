@@ -4,7 +4,7 @@ import { Form, Input, Modal, Upload, Select, Row, Col } from 'antd';
 
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
-import rules from './createOrUpdateBookings.validation';
+import rules from './revokeBookings.validation';
 
 export interface ICreateOrUpdateBookingsProps {
   visible: boolean;

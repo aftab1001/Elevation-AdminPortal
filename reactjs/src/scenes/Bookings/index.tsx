@@ -1,11 +1,12 @@
 import * as React from 'react';
 
-import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table,Tag } from 'antd';
+import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, Tag } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { inject, observer } from 'mobx-react';
 
 import AppComponentBase from '../../components/AppComponentBase';
 import CreateOrUpdateBooking from './components/createOrUpdateBookings';
+import RevokeBooking from './components/revokeBookings';
 import { EntityDto } from '../../services/dto/entityDto';
 import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
@@ -86,6 +87,27 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
       this.formRef.current?.submit();
     }, 100);
   }
+  async revokedModalOpen(entityDto: EntityDto) {
+    if (entityDto.id === 0) {
+      this.props.bookingStore.createBooking();
+    } else {
+      await this.props.bookingStore.get(entityDto);
+    }
+
+    this.setState({ bookingId: entityDto.id });
+    this.Modal();
+
+    setTimeout(() => {
+      if (entityDto.id !== 0) {
+        this.formRef.current?.setFieldsValue({
+          ...this.props.bookingStore.bookingModel,
+        });
+      } else {
+        this.formRef.current?.resetFields();
+      }
+      this.formRef.current?.submit();
+    }, 100);
+  }
 
   delete(input: EntityDto) {
     const self = this;
@@ -120,32 +142,32 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
     const { bookings } = this.props.bookingStore;
     const columns = [
       {
-        title: L('RoomName'),
+        title: L('ItemName'),
         dataIndex: 'roomName',
         key: 'roomName',
         width: 100,
         render: (text: string) => <div>{text}</div>,
       },
       {
-        title: L('RoomType'),
+        title: L('ItemType'),
         dataIndex: 'itemType',
         key: 'itemType',
         width: 50,
-        render: (text: number) => <div>{text===0?"Room":"Apartment"}</div>,
+        render: (text: number) => <div>{text === 0 ? 'Room' : 'Apartment'}</div>,
       },
       {
         title: L('FromDate'),
         dataIndex: 'fromDate',
         key: 'fromDate',
         width: 50,
-        render: (text: string) => <div>{text}</div>,
+        render: (text: string) => <div>{new Date(text).toLocaleDateString()}</div>,
       },
       {
         title: L('ToDate'),
         dataIndex: 'toDate',
         key: 'toDate',
         width: 50,
-        render: (text: string) => <div>{text}</div>,
+        render: (text: string) => <div>{new Date(text).toLocaleDateString()}</div>,
       },
       {
         title: L('GuestName'),
@@ -187,14 +209,20 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
         dataIndex: 'bookingType',
         key: 'bookingType',
         width: 50,
-        render: (text: number) => <div>{text==0?"Customer":"Service"}</div>,
+        render: (text: number) => <div>{text === 0 ? 'Customer' : 'Service'}</div>,
       },
       {
         title: L('BookingStatus'),
         dataIndex: 'bookingStatus',
         key: 'bookingStatus',
         width: 50,
-        render: (text: string) =><Tag color={text ==='Active'?"green":"loser"}>{text}</Tag>
+        render: (status: number) => {
+          if (status === 0) {
+            return <Tag color="green">Active</Tag>;
+          } else {
+            return <Tag color="red">Revoked</Tag>;
+          }
+        },
       },
       {
         title: L('AdminComments'),
@@ -202,7 +230,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
         key: 'adminComments',
         width: 100,
         render: (text: string) => <div>{text}</div>,
-      } ,
+      },
       {
         title: L('Actions'),
         width: 100,
@@ -213,8 +241,9 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
               overlay={
                 <Menu>
                   <Menu.Item onClick={() => this.createOrUpdateModalOpen({ id: item.id })}>
-                    {L('Edit')}
+                    {L('Edit Bookings')}
                   </Menu.Item>
+                  <Menu.Item onClick={() => this.revokedModalOpen({ id: item.id })}>{L('Revoke')}</Menu.Item>
                   <Menu.Item onClick={() => this.delete({ id: item.id })}>{L('Delete')}</Menu.Item>
                 </Menu>
               }
@@ -288,6 +317,17 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
           </Col>
         </Row>
         <CreateOrUpdateBooking
+          formRef={this.formRef}
+          visible={this.state.modalVisible}
+          onCancel={() =>
+            this.setState({
+              modalVisible: false,
+            })
+          }
+          modalType={this.state.bookingId === 0 ? 'edit' : 'create'}
+          onCreate={this.handleCreate}
+        />
+        <RevokeBooking
           formRef={this.formRef}
           visible={this.state.modalVisible}
           onCancel={() =>
