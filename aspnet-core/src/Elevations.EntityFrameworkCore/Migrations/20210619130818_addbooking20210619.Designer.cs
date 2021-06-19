@@ -4,14 +4,16 @@ using Elevations.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Elevations.Migrations
 {
     [DbContext(typeof(ElevationsDbContext))]
-    partial class ElevationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210619130818_addbooking20210619")]
+    partial class addbooking20210619
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

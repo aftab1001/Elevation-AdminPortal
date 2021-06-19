@@ -63,8 +63,9 @@
                                       SpecialRequest = input.SpecialRequest,
                                       ItemId = input.ItemId,
                                       BookingType = input.BookingType,
-                                      Price = input.Price
-                                  };
+                                      Price = input.Price,
+                                      ItemType = input.ItemType
+            };
             int insertedId = await Repository.InsertAndGetIdAsync(Booking);
             input.Id = insertedId;
             return MapToEntityDto(Booking);
@@ -89,8 +90,9 @@
                                       ItemId = input.ItemId,
                                       BookingType = input.BookingType,
                                       Price = input.Price,
-                                      Id = input.Id
-                                  };
+                                      Id = input.Id,
+                                      ItemType =  input.ItemType
+            };
 
             await Repository.UpdateAsync(Booking);
 
@@ -153,7 +155,8 @@
                     Price = item.Price,
                     BookingStatus = item.BookingStatus,
                     ItemId = item.ItemId,
-                    Id = item.Id
+                    Id = item.Id,
+                    ItemType = item.ItemType
                 };
 
                 bookingDtoList.Add(bookingDto);
