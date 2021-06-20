@@ -12,6 +12,8 @@ import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
 import BookingStore from '../../stores/bookingStore';
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import "./booking.css";
+
 
 export interface IBookingProps {
   bookingStore: BookingStore;
@@ -46,6 +48,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
   }
 
   async getAll() {
+    console.log(this.props);
     await this.props.bookingStore.getAll({
       maxResultCount: this.state.maxResultCount,
       skipCount: this.state.skipCount,
@@ -306,6 +309,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
           }
           modalType={this.state.bookingId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}
+          {...this.props}
         />
         
       </Card>

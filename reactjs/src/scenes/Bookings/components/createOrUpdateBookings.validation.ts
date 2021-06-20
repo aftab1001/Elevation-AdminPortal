@@ -6,13 +6,14 @@ const rules = {
   toDate: [{ required: true, message: L('ThisFieldIsRequired') }],
   firstName: [{ required: true, message: L('ThisFieldIsRequired') }],
   lastName: [{ required: true, message: L('ThisFieldIsRequired') }],
-  contact: [{ required: true, message: L('ThisFieldIsRequired') }],
+  contactNumber: [{ required: true, message: L('ThisFieldIsRequired') }],
   roomType:[{}],
   email: [{}],
   specialRequest: [{}],
   pricePaid: [{}],
   bookingType: [{}],
-  adminComments: [{}]  
+  adminComments: [{}]  ,
+  bookingStatus:[{}]
 };
 
 export default rules;
