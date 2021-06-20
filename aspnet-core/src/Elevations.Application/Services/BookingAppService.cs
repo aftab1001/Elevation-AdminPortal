@@ -16,6 +16,8 @@
 
     using Microsoft.EntityFrameworkCore;
 
+    using Stripe;
+
     public class BookingAppService :
         AsyncCrudAppService<Booking, BookingDto, int, PagedResultRequestDto, UpdateBookingDto, BookingDto>,
         IBookingService
@@ -85,9 +87,31 @@
             return await Task.FromResult(GetBookingDetail());
         }
 
-        public async Task<Booking> GetBookingByType(BookingType bookingType)
+        public async Task<List<BookingDetailsDto>> GetBookingByType(ItemType bookingType)
         {
-            return await bookingRepository.GetAll().FirstOrDefaultAsync(x => x.BookingType == bookingType);
+            List<BookingDetailsDto> bookingDetailList = new();
+            if (bookingType == ItemType.Rooms)
+            {
+                List<Rooms> roomsDetail = await roomsRepository.GetAllListAsync();
+
+                foreach (Rooms item in roomsDetail)
+                {
+                    BookingDetailsDto bookingDetail = ObjectMapper.Map<BookingDetailsDto>(item);
+                    bookingDetailList.Add(bookingDetail);
+                }
+            }
+
+            if (bookingType == ItemType.Apartment)
+            {
+                List<Apartments> apartmentDetail = await apartmentRepository.GetAllListAsync();
+                foreach (Apartments item in apartmentDetail)
+                {
+                    BookingDetailsDto bookingDetail = ObjectMapper.Map<BookingDetailsDto>(item);
+                    bookingDetailList.Add(bookingDetail);
+                }
+            }
+
+            return bookingDetailList;
         }
 
         public async Task<string> GetBookingStatus(
@@ -100,6 +124,47 @@
                                         x => x.ItemId == itemId && x.BookingType == bookingType
                                                                 && x.FromDate == fromDate && x.ToDate == toDate);
             return bookingDetail.BookingStatus.ToString();
+        }
+
+        public async Task<dynamic> ProcessBooking(PayModel payModel)
+        {
+            try
+            {
+                StripeConfiguration.ApiKey = "your secret key";
+
+                TokenCreateOptions options = new TokenCreateOptions
+                                                 {
+                                                     Card = new TokenCardOptions
+                                                                {
+                                                                    Number = payModel.CardNumber,
+                                                                    ExpMonth = payModel.Month, ExpYear = payModel.Year,
+                                                                    Cvc = payModel.CVC
+                                                                }
+                                                 };
+
+                TokenService serviceToken = new TokenService();
+                Token stripeToken = await serviceToken.CreateAsync(options);
+
+                ChargeCreateOptions chargeOptions = new ChargeCreateOptions
+                                                        {
+                                                            Amount = payModel.Amount, Currency = "usd",
+                                                            Description = "Stripe Test Payment", Source = stripeToken.Id
+                                                        };
+
+                ChargeService chargeService = new ChargeService();
+                Charge charge = await chargeService.CreateAsync(chargeOptions);
+
+                if (charge.Paid)
+                {
+                    return "Success";
+                }
+
+                return "Failed";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public async Task<Booking> RevokeBooking(int Id, string comments)

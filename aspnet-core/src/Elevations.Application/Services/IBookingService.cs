@@ -1,6 +1,7 @@
 ﻿namespace Elevations.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Abp.Application.Services;
@@ -14,12 +15,12 @@
     {
         public Task<PagedResultDto<BookingDto>> GetAllBookings();
 
+        Task<List<BookingDetailsDto>> GetBookingByType(ItemType bookingType);
 
         Task<string> GetBookingStatus(int itemId, BookingType bookingType, DateTime fromDate, DateTime toDate);
 
-        Task<Booking> GetBookingByType(BookingType bookingType);
+        Task<dynamic> ProcessBooking(PayModel payModel);
 
         Task<Booking> RevokeBooking(int Id, string comments);
-
     }
 }

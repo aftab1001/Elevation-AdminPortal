@@ -1,5 +1,6 @@
 namespace Elevations.Roles.Dto
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using Abp.Authorization;
@@ -36,6 +37,16 @@ namespace Elevations.Roles.Dto
             CreateMap<Booking, BookingDto>();
             
             CreateMap<Permission, FlatPermissionDto>();
+
+            CreateMap<ItemType, BookingDetailsDto>();
+
+            CreateMap<Rooms,BookingDetailsDto>();
+
+            CreateMap<Apartments, BookingDetailsDto>();
+
+            CreateMap<List<Rooms>, List<BookingDetailsDto>>();
+
+            CreateMap<List<Apartments>, List<BookingDetailsDto>>();
         }
     }
 }
