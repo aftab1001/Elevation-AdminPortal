@@ -41,8 +41,8 @@ class BookingService {
     return result.data.result;
   }
 
-  public async getItemByType(EntityDtoByType: EntityDtoByType): Promise<GetBookingItemOutput> {
-    let result = await http.get('api/services/app/Booking/GetBookingByType', { params: EntityDtoByType });
+  public async getItemByType(entityDtoByType: EntityDtoByType): Promise<GetBookingItemOutput> {
+    let result = await http.get('api/services/app/Booking/GetBookingByType', { params: entityDtoByType });
     return result.data.result;
   }
 }

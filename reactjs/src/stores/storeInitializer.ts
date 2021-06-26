@@ -9,7 +9,8 @@ import NewsStore from './newsStore';
 import ApartmentStore from './apartmentStore';
 import GalleryStore from './galleryStore';
 import FoundationStore from './foundationStore';
-import BookingStore from './bookingStore';
+import BookingStore from './bookingItemStore';
+import BookingItemStore from './bookingItemStore';
 
 export default function initializeStores() {
   return {
@@ -25,5 +26,7 @@ export default function initializeStores() {
     galleryStore: new GalleryStore(),
     foundationStore: new FoundationStore(),
     bookingStore: new BookingStore(),
+    bookingItemStore:new BookingItemStore()
+
   };
 }

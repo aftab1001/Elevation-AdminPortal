@@ -10,13 +10,14 @@ import CreateOrUpdateBooking from './components/createOrUpdateBookings';
 import { EntityDto } from '../../services/dto/entityDto';
 import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
-import BookingStore from '../../stores/bookingStore';
+import BookingStore from './../../stores/bookingStore';
+import BookingItemStore from './../../stores/bookingItemStore';
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import "./booking.css";
 
-
 export interface IBookingProps {
   bookingStore: BookingStore;
+  
 }
 
 export interface IBookingState {
@@ -30,7 +31,7 @@ export interface IBookingState {
 const confirm = Modal.confirm;
 const Search = Input.Search;
 
-@inject(Stores.BookingStore)
+@inject(Stores.BookingStore,Stores.BookingItemStore)
 @observer
 class Booking extends AppComponentBase<IBookingProps, IBookingState> {
   formRef = React.createRef<FormInstance>();
@@ -309,7 +310,8 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
           }
           modalType={this.state.bookingId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}
-          {...this.props}
+          bookingStore={this.props.bookingStore}
+          bookingItemStore={this.props.BookingItemStore}
         />
         
       </Card>

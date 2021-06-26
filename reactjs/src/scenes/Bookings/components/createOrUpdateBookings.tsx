@@ -5,40 +5,40 @@ import { Form, Input, Modal, Select, Row, Col, InputNumber } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
 import rules from './createOrUpdateBookings.validation';
-import BookingStore from '../../stores/bookingStore';
+import BookingStore from './../../../stores/bookingStore';
+import BookingItemStore from './../../../stores/bookingItemStore';
+
 export interface ICreateOrUpdateBookingsProps {
   visible: boolean;
   modalType: string;
   onCreate: () => Promise<void>;
   onCancel: () => void;
   formRef: React.RefObject<FormInstance>;
-  bookingStore:BookingStore
-}
-export interface ICreateOrUpdateBookingsState {
-  
+  bookingStore:BookingStore,
+  bookingItemStore:BookingItemStore
 }
 
+
+
 class CreateOrUpdateBookings extends React.Component<
-  ICreateOrUpdateBookingsProps,
-  ICreateOrUpdateBookingsState
-> {
+  ICreateOrUpdateBookingsProps> {
   constructor(props: any) {
     super(props);
     console.log(props);
   }
 
   componentDidMount = () => {
-    console.log("store",this.props.bookingStore);
-    await this.getItems();
+    console.log("store",this.props.bookingItemStore);
+    //await this.getItems();
   };
 
   async getItems() {
     console.log("testing");
-    await this.props.bookingStore.getItemByType({
+    /*await this.props.bookingStore.getItemByType({
       maxResultCount: this.state.maxResultCount,
       skipCount: this.state.skipCount,
       keyword: this.state.filter,
-    });
+    });*/
   }
 
   render() {

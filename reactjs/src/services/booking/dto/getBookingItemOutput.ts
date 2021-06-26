@@ -1,5 +1,5 @@
 export default class GetBookingItemOutput {
-  itemId!: Id;
+  itemId!: number;
   Name!: string;
   Price!: number;  
 }
