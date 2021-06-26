@@ -50,7 +50,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
   }
 
   async getAll() {
-    console.log(this.props);
+    
     await this.props.bookingStore.getAll({
       maxResultCount: this.state.maxResultCount,
       skipCount: this.state.skipCount,

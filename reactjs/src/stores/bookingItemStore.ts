@@ -17,7 +17,7 @@ class BookingItemStore {
   }  
 
   @action
-  async get(entityDtoByType: EntityDtoByType) {
+  async getItems(entityDtoByType: EntityDtoByType) {
     let result = await bookingService.getItemByType(entityDtoByType);
     this.bookingItemModel = result;
   }
