@@ -9,7 +9,7 @@ import NewsStore from './newsStore';
 import ApartmentStore from './apartmentStore';
 import GalleryStore from './galleryStore';
 import FoundationStore from './foundationStore';
-import BookingStore from './bookingItemStore';
+import BookingStore from './bookingStore';
 import BookingItemStore from './bookingItemStore';
 
 export default function initializeStores() {

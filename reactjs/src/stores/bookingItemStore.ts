@@ -14,9 +14,7 @@ class BookingItemStore {
       Name: '',
       Price: 0
     };
-  }
-
-  
+  }  
 
   @action
   async get(entityDtoByType: EntityDtoByType) {

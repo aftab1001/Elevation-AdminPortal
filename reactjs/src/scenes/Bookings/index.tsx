@@ -124,7 +124,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
   };
 
   public render() {
-    const { bookings } = this.props.bookingStore;
+    const { bookings } = this.props.bookingStore;    
     const columns = [
       {
         title: L('ItemName'),
