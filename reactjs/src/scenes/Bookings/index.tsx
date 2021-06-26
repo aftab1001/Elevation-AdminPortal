@@ -17,6 +17,7 @@ import "./booking.css";
 
 export interface IBookingProps {
   bookingStore: BookingStore;
+  bookingItemStore:BookingItemStore;
   
 }
 
@@ -311,7 +312,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
           modalType={this.state.bookingId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}
           bookingStore={this.props.bookingStore}
-          bookingItemStore={this.props.BookingItemStore}
+          bookingItemStore={this.props.bookingItemStore}
         />
         
       </Card>
