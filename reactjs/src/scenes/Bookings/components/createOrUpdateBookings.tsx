@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Form, Input, Modal, Select, Row, Col, InputNumber } from 'antd';
+import { Form, Input, Modal, Select, Row, Col, InputNumber, DatePicker,ConfigProvider  } from 'antd';
 
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
@@ -8,6 +8,7 @@ import rules from './createOrUpdateBookings.validation';
 import BookingStore from './../../../stores/bookingStore';
 import BookingItemStore from './../../../stores/bookingItemStore';
 import BookingService from './../../../services/booking/bookingService';
+import locale from 'antd/lib/locale/en_US';
 
 export interface ICreateOrUpdateBookingsProps {
   visible: boolean;
@@ -22,16 +23,26 @@ export interface ICreateOrUpdateBookingsProps {
 class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProps> {
   constructor(props: any) {
     super(props);
-  } 
-
-  async componentDidMount(){
-    
-    const result =await BookingService.getItemByType({
-      type: "rooms"
-    });
-    console.log(result);
   }
+  state = {
+    items: [],
+  };
+  getItemTypes = async (itemType: number) => {
+    const result = await BookingService.getItemByType({
+      bookingType: itemType,
+    });
+    this.setState({ items: result });
+  };
 
+  async componentDidMount() {
+    this.getItemTypes(0);
+  }
+  onItemChange = (value: number) => {
+    this.getItemTypes(value);
+  };
+  onChange=(date:any, dateString:string)=>{
+    console.log(date, dateString);
+  }
   render() {
     const formItemLayout = {
       labelCol: {
@@ -53,7 +64,12 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
     };
 
     const { visible, onCancel, onCreate, formRef } = this.props;
+    const { items } = this.state;
 
+    let roomItems =
+      items.length === 0
+        ? [{ id: 0, name: 'please create rooms first', price: '123' }]
+        : [...items];
     return (
       <Modal
         visible={visible}
@@ -72,10 +88,14 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
                 rules={rules.fromDate}
                 {...formItemLayout}
               >
-                <Input />
+               <ConfigProvider locale={locale}>
+              <DatePicker onChange={this.onChange} format={"YYYY-MM-DD"}/>
+                </ConfigProvider> 
               </Form.Item>
               <Form.Item label={L('ToDate')} name="toDate" rules={rules.toDate} {...formItemLayout}>
-                <Input />
+              <ConfigProvider locale={locale}>
+              <DatePicker onChange={this.onChange} format={"YYYY-MM-DD"}/>
+                </ConfigProvider> 
               </Form.Item>
               <Form.Item
                 label={L('FirstName')}
@@ -120,8 +140,8 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
                 {...formItemLayout}
               >
                 <Select placeholder="Please Select" defaultValue="0">
-                  <Select.Option value="0">Customer</Select.Option>
-                  <Select.Option value="1">Service</Select.Option>
+                  <Select.Option value={0}>Customer</Select.Option>
+                  <Select.Option value={1}>Service</Select.Option>
                 </Select>
               </Form.Item>
 
@@ -131,9 +151,9 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
                 rules={rules.roomType}
                 {...formItemLayout}
               >
-                <Select placeholder="Please Select" defaultValue="0">
-                  <Select.Option value="0">Room</Select.Option>
-                  <Select.Option value="1">Apartment</Select.Option>
+                <Select placeholder="Please Select" defaultValue={0} onChange={this.onItemChange}>
+                  <Select.Option value={0}>Room</Select.Option>
+                  <Select.Option value={1}>Apartment</Select.Option>
                 </Select>
               </Form.Item>
               <Form.Item
@@ -146,11 +166,18 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label={L('Please Select Room')} name="item" {...formItemLayout}>
+              <Form.Item label={L('Please Select Items')} name="item" {...formItemLayout}>
                 <Select placeholder="Please Select">
-                  <Select.Option value="">a</Select.Option>
+                  {roomItems.map((item) => {
+                    return (
+                      <Select.Option value={item.id}>
+                        {item.name}--{item.price}
+                      </Select.Option>
+                    );
+                  })}
                 </Select>
               </Form.Item>
+
               <Form.Item
                 label={L('booking Status')}
                 name="bookingStatus"
@@ -158,19 +185,8 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
                 {...formItemLayout}
               >
                 <Select placeholder="Please Select" defaultValue="0">
-                  <Select.Option value="0">Active</Select.Option>
-                  <Select.Option value="1">Revoked</Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label={L('booking Type')}
-                name="bookingType"
-                rules={rules.bookingType}
-                {...formItemLayout}
-              >
-                <Select placeholder="Please Select" defaultValue="0">
-                  <Select.Option value="0">Customer</Select.Option>
-                  <Select.Option value="1">Service</Select.Option>
+                  <Select.Option value={0}>Active</Select.Option>
+                  <Select.Option value={1}>Revoked</Select.Option>
                 </Select>
               </Form.Item>
             </Col>

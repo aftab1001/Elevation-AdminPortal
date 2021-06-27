@@ -7,13 +7,13 @@ const rules = {
   firstName: [{ required: true, message: L('ThisFieldIsRequired') }],
   lastName: [{ required: true, message: L('ThisFieldIsRequired') }],
   contactNumber: [{ required: true, message: L('ThisFieldIsRequired') }],
-  roomType:[{}],
-  email: [{}],
-  specialRequest: [{}],
-  pricePaid: [{}],
-  bookingType: [{}],
-  adminComments: [{}]  ,
-  bookingStatus:[{}]
+  roomType:[],
+  email: [],
+  specialRequest: [],
+  pricePaid: [],
+  bookingType: [],
+  adminComments: []  ,
+  bookingStatus:[]
 };
 
 export default rules;

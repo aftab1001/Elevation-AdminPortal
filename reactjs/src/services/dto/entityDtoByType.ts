@@ -1,4 +1,4 @@
-export class EntityDtoByType<T = string> {
-    type!: T;
+export class EntityDtoByType<T = number> {
+  bookingType!: T;
   }
   
