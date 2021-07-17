@@ -1,6 +1,16 @@
 import * as React from 'react';
 
-import { Form, Input, Modal, Select, Row, Col, InputNumber, DatePicker,ConfigProvider  } from 'antd';
+import {
+  Form,
+  Input,
+  Modal,
+  Select,
+  Row,
+  Col,
+  InputNumber,
+  DatePicker,
+  ConfigProvider,
+} from 'antd';
 
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
@@ -40,9 +50,9 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
   onItemChange = (value: number) => {
     this.getItemTypes(value);
   };
-  onChange=(date:any, dateString:string)=>{
+  onChange = (date: any, dateString: string) => {
     console.log(date, dateString);
-  }
+  };
   render() {
     const formItemLayout = {
       labelCol: {
@@ -83,22 +93,27 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                label={L('FromDate')}
+                label={L('From Date')}
                 name="fromDate"
                 rules={rules.fromDate}
                 {...formItemLayout}
               >
-               <ConfigProvider locale={locale}>
-              <DatePicker onChange={this.onChange} format={"YYYY-MM-DD"}/>
-                </ConfigProvider> 
-              </Form.Item>
-              <Form.Item label={L('ToDate')} name="toDate" rules={rules.toDate} {...formItemLayout}>
-              <ConfigProvider locale={locale}>
-              <DatePicker onChange={this.onChange} format={"YYYY-MM-DD"}/>
-                </ConfigProvider> 
+                <ConfigProvider locale={locale}>
+                  <DatePicker onChange={this.onChange} format={'YYYY-MM-DD'} />
+                </ConfigProvider>
               </Form.Item>
               <Form.Item
-                label={L('FirstName')}
+                label={L('To Date')}
+                name="toDate"
+                rules={rules.toDate}
+                {...formItemLayout}
+              >
+                <ConfigProvider locale={locale}>
+                  <DatePicker onChange={this.onChange} format={'YYYY-MM-DD'} />
+                </ConfigProvider>
+              </Form.Item>
+              <Form.Item
+                label={L('First Name')}
                 name="firstName"
                 rules={rules.firstName}
                 {...formItemLayout}
@@ -106,7 +121,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
                 <Input />
               </Form.Item>
               <Form.Item
-                label={L('lastName')}
+                label={L('Last Name')}
                 name="lastName"
                 rules={rules.lastName}
                 {...formItemLayout}
@@ -126,7 +141,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
               </Form.Item>
 
               <Form.Item
-                label={L('specialRequest')}
+                label={L('Special Request')}
                 name="specialRequest"
                 rules={rules.specialRequest}
                 {...formItemLayout}
@@ -139,7 +154,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
                 rules={rules.bookingType}
                 {...formItemLayout}
               >
-                <Select placeholder="Please Select" defaultValue="0">
+                <Select placeholder="Please Select" defaultValue={0}>
                   <Select.Option value={0}>Customer</Select.Option>
                   <Select.Option value={1}>Service</Select.Option>
                 </Select>
@@ -157,7 +172,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
                 </Select>
               </Form.Item>
               <Form.Item
-                label={L('PaidPrice')}
+                label={L('Paid Price')}
                 name="price"
                 rules={rules.pricePaid}
                 {...formItemLayout}
@@ -179,15 +194,24 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
               </Form.Item>
 
               <Form.Item
-                label={L('booking Status')}
+                label={L('Booking Status')}
                 name="bookingStatus"
                 rules={rules.bookingStatus}
                 {...formItemLayout}
               >
-                <Select placeholder="Please Select" defaultValue="0">
+                <Select placeholder="Please Select" defaultValue={0}>
                   <Select.Option value={0}>Active</Select.Option>
                   <Select.Option value={1}>Revoked</Select.Option>
                 </Select>
+              </Form.Item>
+
+              <Form.Item
+                label={L('Admin Comments')}
+                name="adminComments"
+                rules={rules.adminComments}
+                {...formItemLayout}
+              >
+                <Input.TextArea />
               </Form.Item>
             </Col>
           </Row>
