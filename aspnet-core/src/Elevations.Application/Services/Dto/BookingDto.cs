@@ -37,5 +37,7 @@
         public DateTime ToDate { get; set; }
 
         public string GuestName { get; set; }
+
+        public string PaymentReferenceId { get; set; }
     }
 }

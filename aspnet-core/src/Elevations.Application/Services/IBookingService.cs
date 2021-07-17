@@ -19,7 +19,7 @@
 
         Task<string> GetBookingStatus(int itemId, BookingType bookingType, DateTime fromDate, DateTime toDate);
 
-        Task<dynamic> ProcessBooking(PayModel payModel);
+        Task<PayModelResponse> ProcessBooking(PayModel payModel);
 
         Task<Booking> RevokeBooking(int Id, string comments);
     }

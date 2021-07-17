@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
 
     using Abp.Application.Services;
@@ -26,18 +26,22 @@
 
         private readonly IRepository<Booking> bookingRepository;
 
+        private readonly IRepository<PaymentDetails> paymentDetailRepository;
+
         private readonly IRepository<Rooms> roomsRepository;
 
         public BookingAppService(
             IRepository<Booking> bookingRepository,
             IRepository<Booking, int> repository,
             IRepository<Rooms> roomsRepository,
-            IRepository<Apartments> apartmentRepository)
+            IRepository<Apartments> apartmentRepository,
+            IRepository<PaymentDetails> paymentDetailRepository)
             : base(repository)
         {
             this.bookingRepository = bookingRepository;
             this.roomsRepository = roomsRepository;
             this.apartmentRepository = apartmentRepository;
+            this.paymentDetailRepository = paymentDetailRepository;
         }
 
         public override async Task<BookingDto> CreateAsync(UpdateBookingDto input)
@@ -62,10 +66,13 @@
 
             CheckUpdatePermission();
 
+            PaymentDetails pDetails =
+                await paymentDetailRepository.FirstOrDefaultAsync(x => x.TransactionId == input.PaymentReferenceId);
+
             Booking Booking = new()
                                   {
-                                      FromDate = input.FromDate, ToDate = input.ToDate, FirstName = input.FirstName,
-                                      LastName = input.LastName, Email = input.Email,
+                                      PaymentReference = pDetails, FromDate = input.FromDate, ToDate = input.ToDate,
+                                      FirstName = input.FirstName, LastName = input.LastName, Email = input.Email,
                                       ContactNumber = input.ContactNumber, SpecialRequest = input.SpecialRequest,
                                       ItemId = input.ItemId, BookingType = input.BookingType, Price = input.Price,
                                       ItemType = input.ItemType, AdminComments = input.AdminComments,
@@ -126,13 +133,14 @@
             return bookingDetail.BookingStatus.ToString();
         }
 
-        public async Task<dynamic> ProcessBooking(PayModel payModel)
+        public async Task<PayModelResponse> ProcessBooking(PayModel payModel)
         {
             try
             {
-                StripeConfiguration.ApiKey = "your secret key";
+                StripeConfiguration.ApiKey =
+                    "sk_test_51JBrzFHAyQvkAbmkV80jtZ8ENDzIlSjEcM6p6FRYSek0VlYy7bl07fU05AzT4SGv0wbuczHHDmkcUviZOJUQu14700GvNv6Rpv";
 
-                TokenCreateOptions options = new TokenCreateOptions
+                TokenCreateOptions options = new()
                                                  {
                                                      Card = new TokenCardOptions
                                                                 {
@@ -142,29 +150,32 @@
                                                                 }
                                                  };
 
-                TokenService serviceToken = new TokenService();
+                TokenService serviceToken = new();
                 Token stripeToken = await serviceToken.CreateAsync(options);
 
-                ChargeCreateOptions chargeOptions = new ChargeCreateOptions
+                ChargeCreateOptions chargeOptions = new()
                                                         {
                                                             Amount = payModel.Amount, Currency = "usd",
                                                             Description = "Stripe Test Payment", Source = stripeToken.Id
                                                         };
 
-                ChargeService chargeService = new ChargeService();
+                ChargeService chargeService = new();
                 Charge charge = await chargeService.CreateAsync(chargeOptions);
 
                 if (charge.Paid)
                 {
-                    return "Success";
+                    return new PayModelResponse
+                               {
+                                   Code = HttpStatusCode.OK, Status = "Success", StripeReferenceId = charge.Id
+                               };
                 }
-
-                return "Failed";
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new PayModelResponse { Code = HttpStatusCode.InternalServerError, Status = ex.Message };
             }
+
+            return new PayModelResponse();
         }
 
         public async Task<Booking> RevokeBooking(int Id, string comments)
@@ -183,15 +194,18 @@
 
         public override async Task<BookingDto> UpdateAsync(BookingDto input)
         {
+            Task<PaymentDetails> paymentDetails =
+                paymentDetailRepository.FirstOrDefaultAsync(x => x.TransactionId == input.PaymentReferenceId);
             CheckUpdatePermission();
 
             Booking Booking = new()
                                   {
-                                      FromDate = input.FromDate, ToDate = input.ToDate, FirstName = input.FirstName,
-                                      LastName = input.LastName, Email = input.Email,
-                                      ContactNumber = input.ContactNumber, SpecialRequest = input.SpecialRequest,
-                                      ItemId = input.ItemId, BookingType = input.BookingType, Price = input.Price,
-                                      Id = input.Id, ItemType = input.ItemType, AdminComments = input.AdminComments,
+                                      PaymentReference = paymentDetails.Result, FromDate = input.FromDate,
+                                      ToDate = input.ToDate, FirstName = input.FirstName, LastName = input.LastName,
+                                      Email = input.Email, ContactNumber = input.ContactNumber,
+                                      SpecialRequest = input.SpecialRequest, ItemId = input.ItemId,
+                                      BookingType = input.BookingType, Price = input.Price, Id = input.Id,
+                                      ItemType = input.ItemType, AdminComments = input.AdminComments,
                                       BookingStatus = input.BookingStatus, RoomName = input.RoomName
                                   };
 

@@ -38,5 +38,7 @@
 
         /* Define a DbSet for each entity of the application */
         public DbSet<RoomsCategory> RoomsCategory { get; set; }
+
+        public DbSet<PaymentDetails> PaymentDetails { get; set; }
     }
 }

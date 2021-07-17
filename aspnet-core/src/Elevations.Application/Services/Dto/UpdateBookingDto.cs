@@ -35,5 +35,7 @@
         public string SpecialRequest { get; set; }
 
         public DateTime ToDate { get; set; }
+
+        public string PaymentReferenceId { get; set; }
     }
 }
