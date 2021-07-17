@@ -9,12 +9,14 @@
     using Abp.Application.Services.Dto;
     using Abp.Domain.Repositories;
 
+    using Elevations.EntityFrameworkCore;
     using Elevations.EntityFrameworkCore.HotelDto;
     using Elevations.Services.Dto;
     using Elevations.Services.Enum;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
 
     public class GalleryAppService : AsyncCrudAppService<Gallery, GalleryDto, int, PagedResultRequestDto,
                                          UpdateGalleryDto, GalleryDto>,
@@ -22,20 +24,23 @@
     {
         private readonly IRepository<Apartments> _apartmentRepository;
 
+        private ElevationsDbContext dbContext;
         private readonly IRepository<Gallery> _galleryRepository;
-
+        private readonly IConfiguration configuration;
         private readonly IRepository<Rooms> _roomsRepository;
 
         public GalleryAppService(
             IRepository<Gallery, int> repository,
             IRepository<Gallery> galleryRepository,
             IRepository<Rooms> roomsRepository,
+            IConfiguration configuration,
             IRepository<Apartments> apartmentRepository)
             : base(repository)
         {
             _galleryRepository = galleryRepository;
             _roomsRepository = roomsRepository;
             _apartmentRepository = apartmentRepository;
+            this.configuration = configuration;
         }
 
         public override async Task<GalleryDto> CreateAsync(UpdateGalleryDto input)
@@ -57,6 +62,8 @@
         [AllowAnonymous]
         public async Task<PagedResultDto<GalleryDto>> GetAllGalleryImages()
         {
+           
+
             IQueryable<Apartments> apartments = _apartmentRepository.GetAllIncluding(x => x.Category);
 
             foreach (Apartments apartment in apartments)
@@ -155,6 +162,11 @@
                                           ImageType = gallery.ImageType, Id = gallery.Id
                                       };
 
+                if (string.IsNullOrEmpty(item.ImageType))
+                {
+                    item.ImageType = ImageType.Gym.ToString();
+                }
+
                 galleryList.Add(item);
             }
         }
@@ -219,7 +231,17 @@
 
         private PagedResultDto<GalleryDto> GetGalleryImages()
         {
-            IQueryable<Gallery> galleryList = _galleryRepository.GetAll();
+            //ABP framework is taking too much time to load data.That's why doing some dirty stuff
+            //to manually create a dbcontext and getting data from that context.
+
+            var connectionString = configuration.GetConnectionString("Default");
+            var optionsBuilder = new DbContextOptionsBuilder<ElevationsDbContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+
+            dbContext = new ElevationsDbContext(optionsBuilder.Options);
+            dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
+            
+            List<Gallery> galleryList = dbContext.Gallery.ToList();
 
             List<GalleryDto> galleryImages = new List<GalleryDto>();
 
@@ -227,17 +249,18 @@
             {
                 AddGalleryImages(gallery, galleryImages);
             }
-
+            dbContext.Dispose();
             return new PagedResultDto<GalleryDto>(
                 galleryImages.Count,
                 new ReadOnlyCollection<GalleryDto>(galleryImages.ToList()));
+         
         }
 
-        private PagedResultDto<GalleryDto> GetImageDetail()
+        private  PagedResultDto<GalleryDto> GetImageDetail()
         {
-            List<Rooms> roomsList = _roomsRepository.GetAll().ToList();
-            IQueryable<Apartments> apartmentList = _apartmentRepository.GetAll();
-            IQueryable<Gallery> galleryList = _galleryRepository.GetAll();
+            List<Rooms> roomsList =  _roomsRepository.GetAllListAsync().Result.ToList();
+            List<Apartments> apartmentList = _apartmentRepository.GetAllListAsync().Result;
+            List<Gallery> galleryList = _galleryRepository.GetAllListAsync().Result;
 
             List<GalleryDto> galleryImages = new List<GalleryDto>();
 

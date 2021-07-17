@@ -41,7 +41,6 @@
                 using (IUnitOfWorkCompleteHandle uow = uowManager.Object.Begin(TransactionScopeOption.Suppress))
                 {
                     TDbContext context = uowManager.Object.Current.GetDbContext<TDbContext>(MultiTenancySides.Host);
-
                     contextAction(context);
 
                     uow.Complete();

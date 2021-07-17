@@ -41,6 +41,8 @@ namespace Elevations.Roles.Dto
             CreateMap<ItemType, BookingDetailsDto>();
 
             CreateMap<Rooms,BookingDetailsDto>();
+            CreateMap<ApartmentDto, Apartments>();
+            CreateMap<List<ApartmentDto>, List<Apartments>>();
 
             CreateMap<Apartments, BookingDetailsDto>();
 
