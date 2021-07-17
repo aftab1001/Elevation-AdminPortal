@@ -1,6 +1,7 @@
 ﻿namespace Elevations.Web.Host.Startup
 {
     using System;
+    using System.IO.Compression;
     using System.Linq;
     using System.Reflection;
 
@@ -19,6 +20,7 @@
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.ResponseCompression;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
@@ -41,6 +43,7 @@
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
+            app.UseResponseCompression();
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
@@ -52,6 +55,8 @@
             app.UseAuthentication();
 
             app.UseAbpRequestLocalization();
+
+           
 
             app.UseEndpoints(
                 endpoints =>
@@ -84,6 +89,20 @@
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //MVC
+            services.AddResponseCompression(options =>
+                {
+                    options.EnableForHttps = true;
+                    options.Providers.Add<GzipCompressionProvider>();
+                    options.MimeTypes =
+                        ResponseCompressionDefaults.MimeTypes.Concat(
+                            new[] { "image/svg+xml" });
+                  
+                });
+            services.Configure<GzipCompressionProviderOptions>(options =>
+                {
+                    options.Level = CompressionLevel.Fastest;
+                });
+
             services.AddControllersWithViews(
                 options => { options.Filters.Add(new AbpAutoValidateAntiforgeryTokenAttribute()); }).AddNewtonsoftJson(
                 options =>
@@ -99,7 +118,7 @@
             AuthConfigurer.Configure(services, _appConfiguration);
 
             services.AddSignalR();
-
+         
             // Configure CORS for angular2 UI
             services.AddCors(
                 options => options.AddPolicy(

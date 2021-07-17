@@ -10,19 +10,25 @@
     using Abp.Application.Services.Dto;
     using Abp.Domain.Repositories;
 
+    using Elevations.EntityFrameworkCore;
     using Elevations.EntityFrameworkCore.HotelDto;
     using Elevations.Services.Dto;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
 
     public class FoundationAppService :
         AsyncCrudAppService<Foundation, FoundationDto, int, PagedResultRequestDto, UpdateFoundationDto, FoundationDto>,
         IFoundationService
     {
-        public FoundationAppService(IRepository<Foundation, int> repository)
+        private ElevationsDbContext context;
+        private readonly IConfiguration configuration;
+        public FoundationAppService(IRepository<Foundation, int> repository,
+                                    IConfiguration configuration)
             : base(repository)
         {
+            this.configuration = configuration;
         }
 
         public override async Task<FoundationDto> CreateAsync(UpdateFoundationDto input)
@@ -73,8 +79,16 @@
         }
 
         private PagedResultDto<FoundationDto> GetFoundationImageDetail()
-        {
-            List<Foundation> foundationsList = Repository.GetAll().ToList();
+        { 
+            //ABP framework is taking too much time to load data.That's why doing some dirty stuff
+            //to manually create a dbcontext and getting data from that context.
+            var connectionString = configuration.GetConnectionString("Default");
+            var optionsBuilder = new DbContextOptionsBuilder<ElevationsDbContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+
+            context = new ElevationsDbContext(optionsBuilder.Options);
+            context.ChangeTracker.AutoDetectChangesEnabled = false;
+            List<Foundation> foundationsList = context.Foundation.ToList();
 
             List<FoundationDto> foundationDtoList = new();
 
@@ -90,7 +104,7 @@
 
                 foundationDtoList.Add(foundationDto);
             }
-
+            context.Dispose();
             return new PagedResultDto<FoundationDto>(
                 foundationsList.Count,
                 new ReadOnlyCollection<FoundationDto>(foundationDtoList));

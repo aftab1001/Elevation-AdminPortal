@@ -207,7 +207,7 @@
 
         private PagedResultDto<BookingDto> GetBookingDetail()
         {
-            List<Booking> BookingsList = bookingRepository.GetAll().ToList();
+            List<Booking> BookingsList = bookingRepository.GetAllListAsync().Result;
 
             List<BookingDto> bookingDtoList = new();
 
