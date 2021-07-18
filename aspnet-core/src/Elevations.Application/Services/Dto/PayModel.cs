@@ -33,5 +33,7 @@
 
         [Required]
         public int Amount { get; set; }
+
+        public PaymentData PaymentData { get; set; }
     }
 }
