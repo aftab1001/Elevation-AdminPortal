@@ -140,23 +140,23 @@
                 StripeConfiguration.ApiKey =
                     "sk_test_51JBrzFHAyQvkAbmkV80jtZ8ENDzIlSjEcM6p6FRYSek0VlYy7bl07fU05AzT4SGv0wbuczHHDmkcUviZOJUQu14700GvNv6Rpv";
 
-                TokenCreateOptions options = new()
-                                                 {
-                                                     Card = new TokenCardOptions
-                                                                {
-                                                                    Number = payModel.CardNumber,
-                                                                    ExpMonth = payModel.Month, ExpYear = payModel.Year,
-                                                                    Cvc = payModel.CVC
-                                                                }
-                                                 };
+                //TokenCreateOptions options = new()
+                //                                 {
+                //                                     Card = new TokenCardOptions
+                //                                                {
+                //                                                    Number = payModel.CardNumber,
+                //                                                    ExpMonth = payModel.Month, ExpYear = payModel.Year,
+                //                                                    Cvc = payModel.CVC
+                //                                                }
+                //                                 };
 
-                TokenService serviceToken = new();
-                Token stripeToken = await serviceToken.CreateAsync(options);
+                //TokenService serviceToken = new();
+                //Token stripeToken = await serviceToken.CreateAsync(options);
 
                 ChargeCreateOptions chargeOptions = new()
                                                         {
                                                             Amount = payModel.Amount, Currency = "usd",
-                                                            Description = "Stripe Test Payment", Source = stripeToken.Id
+                                                            Description = "Stripe Test Payment", Source = payModel.PaymentData.Token
                                                         };
 
                 ChargeService chargeService = new();
