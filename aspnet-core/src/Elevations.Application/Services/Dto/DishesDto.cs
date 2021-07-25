@@ -8,16 +8,23 @@
     [AutoMapFrom(typeof(Dishes))]
     public class DishesDto : EntityDto<int>
     {
+        public DishCategory Category { get; set; }
+
         public string Description { get; set; }
 
         public string Image { get; set; }
 
-        public bool IsPopular { get; set; }
-
-        public bool IsPoster { get; set; }
-
         public string Name { get; set; }
 
         public decimal Price { get; set; }
+    }
+
+    public enum DishCategory
+    {
+        Default,
+
+        Popular,
+
+        Poster
     }
 }
