@@ -12,4 +12,5 @@ export default class Stores {
   static AccountStore: string = 'accountStore';
   static GalleryStore: string = 'galleryStore';
   static FoundationStore: string = 'foundationStore';
+  static ResturantStore: string = 'resturantStore';
 }

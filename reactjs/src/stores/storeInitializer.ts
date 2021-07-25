@@ -11,6 +11,7 @@ import GalleryStore from './galleryStore';
 import FoundationStore from './foundationStore';
 import BookingStore from './bookingStore';
 import BookingItemStore from './bookingItemStore';
+import ResturantStore from './resturantStore';
 
 export default function initializeStores() {
   return {
@@ -26,7 +27,7 @@ export default function initializeStores() {
     galleryStore: new GalleryStore(),
     foundationStore: new FoundationStore(),
     bookingStore: new BookingStore(),
-    bookingItemStore:new BookingItemStore()
-
+    bookingItemStore: new BookingItemStore(),
+    resturantStore: new ResturantStore(),
   };
 }
