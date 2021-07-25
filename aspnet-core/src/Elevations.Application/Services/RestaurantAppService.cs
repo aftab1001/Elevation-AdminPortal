@@ -30,6 +30,7 @@
         {
             CheckUpdatePermission();
             Dishes dishes = ObjectMapper.Map<Dishes>(input);
+            dishes.Category = (int)input.Category;
             int insertedId = await Repository.InsertAndGetIdAsync(dishes);
             input.Id = insertedId;
             return input;
@@ -43,8 +44,9 @@
 
             foreach (var dish in dishes)
             {
-
-                dishesResponse.Add(ObjectMapper.Map<DishesDto>(dish));
+                var mappedDish = ObjectMapper.Map<DishesDto>(dish);
+                mappedDish.Category = (DishCategory)dish.Category;
+                dishesResponse.Add(mappedDish);
             }
 
             PagedResultDto<DishesDto> pagedResult = new PagedResultDto<DishesDto>(
@@ -59,6 +61,7 @@
             CheckUpdatePermission();
 
             Dishes recordToUpdate = ObjectMapper.Map<Dishes>(input);
+            recordToUpdate.Category = (int)input.Category;
             await Repository.UpdateAsync(recordToUpdate);
 
             return MapToEntityDto(recordToUpdate);

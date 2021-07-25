@@ -22,7 +22,7 @@
         AsyncCrudAppService<Booking, BookingDto, int, PagedResultRequestDto, UpdateBookingDto, BookingDto>,
         IBookingService
     {
-        private readonly string apiKey  = "pk_test_6pRNASCoBOKtIshFeQd4XMUh";
+        private readonly string apiKey  = "sk_test_51JBrzFHAyQvkAbmkV80jtZ8ENDzIlSjEcM6p6FRYSek0VlYy7bl07fU05AzT4SGv0wbuczHHDmkcUviZOJUQu14700GvNv6Rpv";
         private readonly IRepository<Apartments> apartmentRepository;
 
         private readonly IRepository<Booking> bookingRepository;
@@ -160,6 +160,11 @@
                                                             Description = "Hotel Payment", Source = payModel.PaymentData.Token
                                                         };
 
+
+                System.Enum.TryParse(payModel.ProductInfo.ItemType, out ItemType selectedItemType);
+                
+                
+
                 ChargeService chargeService = new();
                 Charge charge = await chargeService.CreateAsync(chargeOptions);
 
@@ -167,9 +172,27 @@
                 {
                     return new PayModelResponse
                                {
-                                   Code = HttpStatusCode.OK, Status = "Success", StripeReferenceId = charge.Id
+                                   Code = HttpStatusCode.OK, Status = "Success", StripeReferenceId = charge.BalanceTransactionId
                                };
                 }
+
+                UpdateBookingDto updateBookingDto = new UpdateBookingDto
+                                                        {
+                                                            AdminComments = string.Empty,
+                                                            BookingType = BookingType.Customer,
+                                                            BookingStatus = BookingStatus.Active,
+                                                            ContactNumber = payModel.Contact, Email = payModel.Email,
+                                                            FirstName = payModel.ProductInfo.FName,
+                                                            FromDate = payModel.ProductInfo.StartDate,
+                                                            ItemId = payModel.ProductInfo.ItemId,
+                                                            ItemType = selectedItemType,
+                                                            LastName = payModel.ProductInfo.LName,
+                                                            Price = payModel.Amount,
+                                                            SpecialRequest = payModel.ProductInfo.LastDate,
+                                                            PaymentReferenceId = charge.BalanceTransactionId
+                                                        };
+
+               await CreateAsync(updateBookingDto);
             }
             catch (Exception ex)
             {

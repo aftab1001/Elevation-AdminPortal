@@ -8,14 +8,12 @@
     [Table("Dishes")]
     public class Dishes : AuditedEntity
     {
+        public int Category { get; set; }
+
         public string Description { get; set; }
 
         [Required]
         public string Image { get; set; }
-
-        public bool IsPopular { get; set; }
-
-        public bool IsPoster { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -23,4 +21,6 @@
         [Required]
         public decimal Price { get; set; }
     }
+
+ 
 }
