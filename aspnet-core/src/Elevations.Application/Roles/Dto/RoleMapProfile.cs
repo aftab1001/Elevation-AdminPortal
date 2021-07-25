@@ -35,12 +35,12 @@ namespace Elevations.Roles.Dto
             CreateMap<UpdateBookingDto, BookingDto>();
 
             CreateMap<Booking, BookingDto>();
-            
+
             CreateMap<Permission, FlatPermissionDto>();
 
             CreateMap<ItemType, BookingDetailsDto>();
 
-            CreateMap<Rooms,BookingDetailsDto>();
+            CreateMap<Rooms, BookingDetailsDto>();
             CreateMap<ApartmentDto, Apartments>();
             CreateMap<List<ApartmentDto>, List<Apartments>>();
 
@@ -49,6 +49,14 @@ namespace Elevations.Roles.Dto
             CreateMap<List<Rooms>, List<BookingDetailsDto>>();
 
             CreateMap<List<Apartments>, List<BookingDetailsDto>>();
+
+            CreateMap<List<Dishes>, List<DishesDto>>();
+
+            CreateMap<List<DishesDto>, List<Dishes>>();
+
+            CreateMap<Dishes, DishesDto>();
+
+            CreateMap<DishesDto, Dishes>();
         }
     }
 }

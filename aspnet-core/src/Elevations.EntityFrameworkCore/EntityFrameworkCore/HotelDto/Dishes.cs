@@ -8,27 +8,14 @@
     [Table("Dishes")]
     public class Dishes : AuditedEntity
     {
-        public long Bath { get; set; }
-
-        public long Bed { get; set; }
-
         public string Description { get; set; }
 
         [Required]
-        public string Image1 { get; set; }
+        public string Image { get; set; }
 
-        public string Image2 { get; set; }
+        public bool IsPopular { get; set; }
 
-        public string Image3 { get; set; }
-
-        public string Image4 { get; set; }
-
-        public string Image5 { get; set; }
-
-        [Required]
-        public int ImageSequence { get; set; }
-
-        public long Length { get; set; }
+        public bool IsPoster { get; set; }
 
         [Required]
         public string Name { get; set; }

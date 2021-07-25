@@ -22,6 +22,7 @@
         AsyncCrudAppService<Booking, BookingDto, int, PagedResultRequestDto, UpdateBookingDto, BookingDto>,
         IBookingService
     {
+        private readonly string apiKey  = "pk_test_6pRNASCoBOKtIshFeQd4XMUh";
         private readonly IRepository<Apartments> apartmentRepository;
 
         private readonly IRepository<Booking> bookingRepository;
@@ -137,8 +138,8 @@
         {
             try
             {
-                StripeConfiguration.ApiKey =
-                    "sk_test_51JBrzFHAyQvkAbmkV80jtZ8ENDzIlSjEcM6p6FRYSek0VlYy7bl07fU05AzT4SGv0wbuczHHDmkcUviZOJUQu14700GvNv6Rpv";
+                StripeConfiguration.ApiKey = apiKey;
+
 
                 //TokenCreateOptions options = new()
                 //                                 {
@@ -156,7 +157,7 @@
                 ChargeCreateOptions chargeOptions = new()
                                                         {
                                                             Amount = payModel.Amount, Currency = "usd",
-                                                            Description = "Stripe Test Payment", Source = payModel.PaymentData.Token
+                                                            Description = "Hotel Payment", Source = payModel.PaymentData.Token
                                                         };
 
                 ChargeService chargeService = new();
