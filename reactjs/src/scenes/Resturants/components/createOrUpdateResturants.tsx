@@ -105,20 +105,20 @@ class CreateOrUpdateResturants extends React.Component<
               <Input />
             </Form.Item>
             <Form.Item
-              label={L('isPopular')}
-              name={'isPopular'}
+              label={L('Is Popular')}
+              
               rules={rules.IsPopular}
               {...formItemLayout}
-            >
-              <Checkbox  />
+              valuePropName="isPopular"            >
+              <Checkbox name='isPopularCheckbox' />
             </Form.Item>
             <Form.Item
-              label={L('isPoster')}
-              name={'isPoster'}
+              label={L('Is Poster')}            
               rules={rules.isPoster}
               {...formItemLayout}
+              valuePropName="isPoster"
             >
-              <Checkbox />
+              <Checkbox name={'isPosterCheckbox'}/>
             </Form.Item>
 
             <Form.Item

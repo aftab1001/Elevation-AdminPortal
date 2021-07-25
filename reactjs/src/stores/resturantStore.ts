@@ -24,8 +24,7 @@ class ResturantStore {
       image: '',
       name: '',
       description: '',
-      isPopular: false,
-      IsPoster: false,
+      category: 0,      
       price: ''
       
     };

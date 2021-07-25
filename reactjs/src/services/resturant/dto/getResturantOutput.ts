@@ -4,6 +4,5 @@ export default class GetResturantOutput {
   description!: string;
   price!: string;
   id!: number;
-  isPopular!: boolean;
-  IsPoster!: boolean;
+  category!: number;
 }

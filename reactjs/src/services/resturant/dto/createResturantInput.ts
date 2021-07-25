@@ -4,6 +4,5 @@ export default class CreateResturantInput {
   description!: string;
   price!: string;
   id!: number;
-  isPopular!: boolean;
-  IsPoster!: boolean;
+  category!: number;
 }

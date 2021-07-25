@@ -4,6 +4,5 @@ export interface GetAllResturantOutput {
   description: string;
   price: string;
   id: number;
-  isPopular: boolean;
-  IsPoster: boolean;
+  category: number;
 }

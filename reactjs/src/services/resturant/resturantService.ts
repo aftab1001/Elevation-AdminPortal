@@ -11,27 +11,27 @@ import http from '../httpService';
 
 class ResturantService {
   public async create(createResturantInput: CreateResturantInput): Promise<CreateResturantOutput> {
-    let result = await http.post('api/services/app/Resturant/Create', createResturantInput);
+    let result = await http.post('api/services/app/Restaurant/Create', createResturantInput);
     return result.data.result;
   }
 
   public async delete(entityDto: EntityDto) {
-    let result = await http.delete('api/services/app/Resturant/Delete', { params: entityDto });
+    let result = await http.delete('api/services/app/Restaurant/Delete', { params: entityDto });
     return result.data;
   }
 
   public async get(entityDto: EntityDto): Promise<GetResturantOutput> {
-    let result = await http.get('api/services/app/Resturant/Get', { params: entityDto });
+    let result = await http.get('api/services/app/Restaurant/Get', { params: entityDto });
     return result.data.result;
   }
 
   public async getAll(pagedFilterAndSortedRequest: PagedResturantResultRequestDto): Promise<PagedResultDto<GetAllResturantOutput>> {
-    let result = await http.get('api/services/app/Resturant/GetAll', { params: pagedFilterAndSortedRequest });
+    let result = await http.get('api/services/app/Restaurant/GetAll', { params: pagedFilterAndSortedRequest });
     return result.data.result;
   }
 
   public async update(updateResturantInput: UpdateResturantInput): Promise<UpdateResturantOutput> {
-    let result = await http.put('api/services/app/Resturant/Update', updateResturantInput);
+    let result = await http.put('api/services/app/Restaurant/Update', updateResturantInput);
     return result.data.result;
   }
 }

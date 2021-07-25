@@ -123,14 +123,14 @@ class Resturant extends AppComponentBase<IResturantProps, IResturantState> {
         title: L('Name'),
         dataIndex: 'name',
         key: 'name',
-        width: 150,
+        width: 100,
         render: (text: string) => <div>{text}</div>,
       },
       {
         title: L('Image'),
-        dataIndex: 'image1',
-        key: 'image1',
-        width: 150,
+        dataIndex: 'image',
+        key: 'image',
+        width: 100,
         render: (text: string) => <img alt="example" src={text} style={{ width: 150 }} />,
       },
       {
@@ -138,21 +138,35 @@ class Resturant extends AppComponentBase<IResturantProps, IResturantState> {
         dataIndex: 'price',
         key: 'price',
         width: 50,
-        render: (text: number) => <div>{text}</div>,
+        render: (text: number) => <div>{text}$</div>,
       },
       {
-        title: L('Is Popular'),
-        dataIndex: 'IsPopular ',
-        key: 'IsPopular ',
-        width: 50,
+        title: L('Description'),
+        dataIndex: 'description',
+        key: 'description',
+        width: 150,
         render: (text: string) => <div>{text}</div>,
+      },
+      {
+        title: L('Type'),
+        dataIndex: 'category',
+        key: 'category',
+        width: 50,
+        render: (type: number) => {
+          const text = type === 0 ? 'default' : type === 1 ? 'popular' : 'poster';
+          return <div>{text}</div>;
+        },
       },
       {
         title: L('Is Poster'),
-        dataIndex: 'IsPoster',
-        key: 'IsPoster ',
+        dataIndex: 'isPoster',
+        key: 'isPoster ',
         width: 50,
-        render: (text: string) => <div>{text}</div>,
+        render: (text: boolean) => (
+          <div>
+            <input type="checkbox" readOnly checked={text} />
+          </div>
+        ),
       },
       {
         title: L('Actions'),

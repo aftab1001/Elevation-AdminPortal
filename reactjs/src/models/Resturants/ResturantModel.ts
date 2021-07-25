@@ -4,8 +4,7 @@ class ResturantModel {
   description!: string;
   price!: string;
   id!: number;
-  isPopular!: boolean;
-  IsPoster!: boolean;
+  category!: number;  
 }
 
 export default ResturantModel;
