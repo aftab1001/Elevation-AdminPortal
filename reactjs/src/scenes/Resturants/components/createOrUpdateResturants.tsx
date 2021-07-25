@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Form, Input, Modal, Upload, Checkbox} from 'antd';
+import { Form, Input, Modal, Upload, Select} from 'antd';
 
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
@@ -104,21 +104,18 @@ class CreateOrUpdateResturants extends React.Component<
             <Form.Item label={L('Price')} name={'price'} rules={rules.price} {...formItemLayout}>
               <Input />
             </Form.Item>
+            
             <Form.Item
-              label={L('Is Popular')}
-              
-              rules={rules.IsPopular}
+              label={L('Food Type')}            
+              rules={rules.category}
               {...formItemLayout}
-              valuePropName="isPopular"            >
-              <Checkbox name='isPopularCheckbox' />
-            </Form.Item>
-            <Form.Item
-              label={L('Is Poster')}            
-              rules={rules.isPoster}
-              {...formItemLayout}
-              valuePropName="isPoster"
+              name={'category'}
             >
-              <Checkbox name={'isPosterCheckbox'}/>
+              <Select placeholder="Please Select Category" defaultValue={0}>
+                  <Select.Option value={0}>default</Select.Option>
+                  <Select.Option value={1}>Popular</Select.Option>
+                  <Select.Option value={2}>Poster</Select.Option>
+                </Select>
             </Form.Item>
 
             <Form.Item

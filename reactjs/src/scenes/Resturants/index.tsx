@@ -158,17 +158,6 @@ class Resturant extends AppComponentBase<IResturantProps, IResturantState> {
         },
       },
       {
-        title: L('Is Poster'),
-        dataIndex: 'isPoster',
-        key: 'isPoster ',
-        width: 50,
-        render: (text: boolean) => (
-          <div>
-            <input type="checkbox" readOnly checked={text} />
-          </div>
-        ),
-      },
-      {
         title: L('Actions'),
         width: 100,
         render: (text: string, item: any) => (
