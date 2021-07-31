@@ -58,6 +58,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
       elements[0].value = dateString;
     }*/
     let nodes: NodeListOf<HTMLInputElement> = document.querySelectorAll(`input#${id}`) as NodeListOf<HTMLInputElement>;
+    debugger;
     if(nodes.length>0)
     nodes[0].value=dateString;
 console.log(nodes);
@@ -102,14 +103,14 @@ console.log(nodes);
         <Form ref={formRef}>
           <Row gutter={16}>
             <Col span={12}>
-              <Form.Item
+              <Form.Item 
                 label={L('From Date')}
                 rules={rules.fromDate}
                 name={'fromDate'}
                 {...formItemLayout}
               >
                 <ConfigProvider locale={locale}>
-                  <DatePicker
+                  <DatePicker id="fromDate"
                     onChange={this.onChange.bind(undefined, 'fromDate')}
                     format={'YYYY-MM-DD'}
                   />
@@ -124,7 +125,7 @@ console.log(nodes);
                 {...formItemLayout}
               >
                 <ConfigProvider locale={locale}>
-                  <DatePicker
+                  <DatePicker id="toDate"
                     onChange={this.onChange.bind(undefined, 'toDate')}
                     format={'YYYY-MM-DD'}
                   />
