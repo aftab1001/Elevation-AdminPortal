@@ -107,10 +107,14 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
 
   handleCreate = async () => {
     this.formRef.current?.validateFields().then(async (values: any) => {
+      const updatedValues={...values};
+      const [startDate,endDate]=values.dateRange;
+      updatedValues.fromDate=startDate.format('YYYY-MM-DD');
+      updatedValues.toDate=endDate.format('YYYY-MM-DD');
       if (this.state.bookingId === 0) {
-        await this.props.bookingStore.create(values);
+        await this.props.bookingStore.create(updatedValues);
       } else {
-        await this.props.bookingStore.update({ id: this.state.bookingId, ...values });
+        await this.props.bookingStore.update({ id: this.state.bookingId, ...updatedValues });
       }
 
       await this.getAll();

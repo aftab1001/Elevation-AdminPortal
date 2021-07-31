@@ -1,16 +1,6 @@
 import * as React from 'react';
 
-import {
-  Form,
-  Input,
-  Modal,
-  Select,
-  Row,
-  Col,
-  InputNumber,
-  DatePicker,
-  ConfigProvider,
-} from 'antd';
+import { Form, Input, Modal, Select, Row, Col, InputNumber, DatePicker } from 'antd';
 
 import { FormInstance } from 'antd/lib/form';
 import { L } from '../../../lib/abpUtility';
@@ -18,7 +8,6 @@ import rules from './createOrUpdateBookings.validation';
 import BookingStore from './../../../stores/bookingStore';
 import BookingItemStore from './../../../stores/bookingItemStore';
 import BookingService from './../../../services/booking/bookingService';
-import locale from 'antd/lib/locale/en_US';
 
 export interface ICreateOrUpdateBookingsProps {
   visible: boolean;
@@ -50,19 +39,9 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
   onItemChange = (value: number) => {
     this.getItemTypes(value);
   };
-  onChange = (id: string, date: any, dateString: string) => {
-    this.props.formRef.current?.setFieldsValue({id, dateString});
-    /*let elements: NodeListOf<HTMLInputElement> = document.getElementsByName(id);
 
-    if (elements && elements.length > 0) {
-      elements[0].value = dateString;
-    }*/
-    let nodes: NodeListOf<HTMLInputElement> = document.querySelectorAll(`input#${id}`) as NodeListOf<HTMLInputElement>;
-    debugger;
-    if(nodes.length>0)
-    nodes[0].value=dateString;
-console.log(nodes);
-    
+  onRangeChange = (momentValues: any, dateRange: any) => {
+    console.log(dateRange);
   };
   render() {
     const formItemLayout = {
@@ -86,7 +65,7 @@ console.log(nodes);
 
     const { visible, onCancel, onCreate, formRef } = this.props;
     const { items } = this.state;
-
+    const { RangePicker } = DatePicker;
     let roomItems =
       items.length === 0
         ? [{ id: 0, name: 'please create rooms first', price: '123' }]
@@ -103,35 +82,20 @@ console.log(nodes);
         <Form ref={formRef}>
           <Row gutter={16}>
             <Col span={12}>
-              <Form.Item 
+              <Form.Item
                 label={L('From Date')}
                 rules={rules.fromDate}
-                name={'fromDate'}
+                name={'dateRange'}
                 {...formItemLayout}
               >
-                <ConfigProvider locale={locale}>
-                  <DatePicker id="fromDate"
-                    onChange={this.onChange.bind(undefined, 'fromDate')}
-                    format={'YYYY-MM-DD'}
-                  />
-                </ConfigProvider>
+                <RangePicker
+                  format={'YYYY-MM-DD'}
+                  onChange={this.onRangeChange}
+                  inputReadOnly={true}
+                  name={'range'}
+                />
               </Form.Item>
-             
 
-              <Form.Item
-                label={L('To Date')}
-                rules={rules.toDate}
-                name={'toDate'}
-                {...formItemLayout}
-              >
-                <ConfigProvider locale={locale}>
-                  <DatePicker id="toDate"
-                    onChange={this.onChange.bind(undefined, 'toDate')}
-                    format={'YYYY-MM-DD'}
-                  />
-                </ConfigProvider>
-              </Form.Item>
-             
               <Form.Item
                 label={L('First Name')}
                 name={'firstName'}
