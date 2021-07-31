@@ -16,7 +16,7 @@
 
         public string ItemType { get; set; }
 
-        public string LastDate { get; set; }
+        public DateTime LastDate { get; set; }
 
         public string LName { get; set; }
 

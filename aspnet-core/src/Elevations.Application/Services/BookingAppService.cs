@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Linq.Dynamic.Core;
     using System.Net;
     using System.Threading.Tasks;
 
@@ -22,8 +24,10 @@
         AsyncCrudAppService<Booking, BookingDto, int, PagedResultRequestDto, UpdateBookingDto, BookingDto>,
         IBookingService
     {
-        private readonly string apiKey  = "sk_test_51JBrzFHAyQvkAbmkV80jtZ8ENDzIlSjEcM6p6FRYSek0VlYy7bl07fU05AzT4SGv0wbuczHHDmkcUviZOJUQu14700GvNv6Rpv";
         private readonly IRepository<Apartments> apartmentRepository;
+
+        private readonly string apiKey =
+            "sk_test_51JBrzFHAyQvkAbmkV80jtZ8ENDzIlSjEcM6p6FRYSek0VlYy7bl07fU05AzT4SGv0wbuczHHDmkcUviZOJUQu14700GvNv6Rpv";
 
         private readonly IRepository<Booking> bookingRepository;
 
@@ -128,10 +132,19 @@
             DateTime fromDate,
             DateTime toDate)
         {
-            Booking bookingDetail = await bookingRepository.GetAll().FirstOrDefaultAsync(
-                                        x => x.ItemId == itemId && x.BookingType == bookingType
-                                                                && x.FromDate == fromDate && x.ToDate == toDate);
-            return bookingDetail.BookingStatus.ToString();
+            var bookingDetail = bookingRepository.GetAll().Where(
+                res => (res.FromDate < toDate || res.ToDate > fromDate) && res.ItemId == itemId
+                                                                        && res.BookingType == bookingType);
+
+                
+
+
+            if (bookingDetail.Any())
+            {
+                return "Active";
+            }
+          
+            return string.Empty;
         }
 
         public async Task<PayModelResponse> ProcessBooking(PayModel payModel)
@@ -139,44 +152,29 @@
             try
             {
                 StripeConfiguration.ApiKey = apiKey;
-
-
-                //TokenCreateOptions options = new()
-                //                                 {
-                //                                     Card = new TokenCardOptions
-                //                                                {
-                //                                                    Number = payModel.CardNumber,
-                //                                                    ExpMonth = payModel.Month, ExpYear = payModel.Year,
-                //                                                    Cvc = payModel.CVC
-                //                                                }
-                //                                 };
-
-                //TokenService serviceToken = new();
-                //Token stripeToken = await serviceToken.CreateAsync(options);
+                
 
                 ChargeCreateOptions chargeOptions = new()
                                                         {
                                                             Amount = payModel.Amount, Currency = "usd",
-                                                            Description = "Hotel Payment", Source = payModel.PaymentData.Token
+                                                            Description = "Hotel Payment",
+                                                            Source = payModel.PaymentData.Token
                                                         };
 
-
                 System.Enum.TryParse(payModel.ProductInfo.ItemType, out ItemType selectedItemType);
-                
-                
 
                 ChargeService chargeService = new();
                 Charge charge = await chargeService.CreateAsync(chargeOptions);
 
-                if (charge.Paid)
+                if (!charge.Paid)
                 {
                     return new PayModelResponse
                                {
-                                   Code = HttpStatusCode.OK, Status = "Success", StripeReferenceId = charge.BalanceTransactionId
+                                   Code = HttpStatusCode.BadRequest, Status = "Error", StripeReferenceId = null
                                };
                 }
 
-                UpdateBookingDto updateBookingDto = new UpdateBookingDto
+                UpdateBookingDto updateBookingDto = new()
                                                         {
                                                             AdminComments = string.Empty,
                                                             BookingType = BookingType.Customer,
@@ -184,16 +182,27 @@
                                                             ContactNumber = payModel.Contact, Email = payModel.Email,
                                                             FirstName = payModel.ProductInfo.FName,
                                                             FromDate = payModel.ProductInfo.StartDate,
+                                                            ToDate = payModel.ProductInfo.LastDate,
                                                             ItemId = payModel.ProductInfo.ItemId,
                                                             ItemType = selectedItemType,
                                                             LastName = payModel.ProductInfo.LName,
                                                             Price = payModel.Amount,
-                                                            SpecialRequest = payModel.ProductInfo.LastDate,
+                                                            SpecialRequest = payModel.ProductInfo.SpecialRequest,
                                                             PaymentReferenceId = charge.BalanceTransactionId
                                                         };
 
-               await CreateAsync(updateBookingDto);
-            }
+                await CreateAsync(updateBookingDto);
+                                                       
+                if (charge.Paid)
+                {
+                    return new PayModelResponse
+                               {
+                                   Code = HttpStatusCode.OK,
+                                   Status = "Success",
+                                   StripeReferenceId = charge.BalanceTransactionId
+                               };
+                }
+        }
             catch (Exception ex)
             {
                 return new PayModelResponse { Code = HttpStatusCode.InternalServerError, Status = ex.Message };
