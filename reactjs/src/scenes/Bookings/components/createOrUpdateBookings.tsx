@@ -50,8 +50,18 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
   onItemChange = (value: number) => {
     this.getItemTypes(value);
   };
-  onChange = (date: any, dateString: string) => {
-    console.log(date, dateString);
+  onChange = (id: string, date: any, dateString: string) => {
+    this.props.formRef.current?.setFieldsValue({id, dateString});
+    /*let elements: NodeListOf<HTMLInputElement> = document.getElementsByName(id);
+
+    if (elements && elements.length > 0) {
+      elements[0].value = dateString;
+    }*/
+    let nodes: NodeListOf<HTMLInputElement> = document.querySelectorAll(`input#${id}`) as NodeListOf<HTMLInputElement>;
+    if(nodes.length>0)
+    nodes[0].value=dateString;
+console.log(nodes);
+    
   };
   render() {
     const formItemLayout = {
@@ -94,27 +104,36 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
             <Col span={12}>
               <Form.Item
                 label={L('From Date')}
-                name="fromDate"
                 rules={rules.fromDate}
+                name={'fromDate'}
                 {...formItemLayout}
               >
                 <ConfigProvider locale={locale}>
-                  <DatePicker onChange={this.onChange} format={'YYYY-MM-DD'} />
+                  <DatePicker
+                    onChange={this.onChange.bind(undefined, 'fromDate')}
+                    format={'YYYY-MM-DD'}
+                  />
                 </ConfigProvider>
               </Form.Item>
+             
+
               <Form.Item
                 label={L('To Date')}
-                name="toDate"
                 rules={rules.toDate}
+                name={'toDate'}
                 {...formItemLayout}
               >
                 <ConfigProvider locale={locale}>
-                  <DatePicker onChange={this.onChange} format={'YYYY-MM-DD'} />
+                  <DatePicker
+                    onChange={this.onChange.bind(undefined, 'toDate')}
+                    format={'YYYY-MM-DD'}
+                  />
                 </ConfigProvider>
               </Form.Item>
+             
               <Form.Item
                 label={L('First Name')}
-                name="firstName"
+                name={'firstName'}
                 rules={rules.firstName}
                 {...formItemLayout}
               >
@@ -122,7 +141,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
               </Form.Item>
               <Form.Item
                 label={L('Last Name')}
-                name="lastName"
+                name={'lastName'}
                 rules={rules.lastName}
                 {...formItemLayout}
               >
@@ -133,7 +152,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
               </Form.Item>
               <Form.Item
                 label={L('Contact')}
-                name="contactNumber"
+                name={'contactNumber'}
                 rules={rules.contactNumber}
                 {...formItemLayout}
               >
@@ -142,7 +161,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
 
               <Form.Item
                 label={L('Special Request')}
-                name="specialRequest"
+                name={'specialRequest'}
                 rules={rules.specialRequest}
                 {...formItemLayout}
               >
@@ -150,11 +169,11 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
               </Form.Item>
               <Form.Item
                 label={L('Booking Type')}
-                name="bookingType"
+                name={'bookingType'}
                 rules={rules.bookingType}
                 {...formItemLayout}
               >
-                <Select placeholder="Please Select" defaultValue={0}>
+                <Select placeholder="Please Select">
                   <Select.Option value={0}>Customer</Select.Option>
                   <Select.Option value={1}>Service</Select.Option>
                 </Select>
@@ -162,18 +181,18 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
 
               <Form.Item
                 label={L('Item Type')}
-                name="roomType"
+                name={'roomType'}
                 rules={rules.roomType}
                 {...formItemLayout}
               >
-                <Select placeholder="Please Select" defaultValue={0} onChange={this.onItemChange}>
+                <Select placeholder="Please Select" onChange={this.onItemChange}>
                   <Select.Option value={0}>Room</Select.Option>
                   <Select.Option value={1}>Apartment</Select.Option>
                 </Select>
               </Form.Item>
               <Form.Item
                 label={L('Paid Price')}
-                name="price"
+                name={'price'}
                 rules={rules.pricePaid}
                 {...formItemLayout}
               >
@@ -181,7 +200,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label={L('Please Select Items')} name="item" {...formItemLayout}>
+              <Form.Item label={L('Please Select Items')} name={'itemId'} {...formItemLayout}>
                 <Select placeholder="Please Select">
                   {roomItems.map((item) => {
                     return (
@@ -195,11 +214,11 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
 
               <Form.Item
                 label={L('Booking Status')}
-                name="bookingStatus"
+                name={'bookingStatus'}
                 rules={rules.bookingStatus}
                 {...formItemLayout}
               >
-                <Select placeholder="Please Select" defaultValue={0}>
+                <Select placeholder="Please Select">
                   <Select.Option value={0}>Active</Select.Option>
                   <Select.Option value={1}>Revoked</Select.Option>
                 </Select>
@@ -207,7 +226,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
 
               <Form.Item
                 label={L('Admin Comments')}
-                name="adminComments"
+                name={'adminComments'}
                 rules={rules.adminComments}
                 {...formItemLayout}
               >

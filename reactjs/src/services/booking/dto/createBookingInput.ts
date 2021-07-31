@@ -6,7 +6,7 @@ export default class CreateBookingInput {
   guestContact!: string;
   guestEmail!: string;
   specialRequest!: string;
-  pricePaid!: number;
+  price!: number;
   bookingType!: string;
   bookingStatus!: string;
   adminComments!: string;

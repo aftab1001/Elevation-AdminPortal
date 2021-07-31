@@ -27,7 +27,7 @@ class BookingStore {
       guestContact: '',
       guestEmail: '',
       specialRequest: '',
-      pricePaid: 0,
+      price: 0,
       bookingType: '',
       bookingStatus: '',
       adminComments: '',
