@@ -8,6 +8,8 @@ import rules from './createOrUpdateBookings.validation';
 import BookingStore from './../../../stores/bookingStore';
 import BookingItemStore from './../../../stores/bookingItemStore';
 import BookingService from './../../../services/booking/bookingService';
+import FormItem from 'antd/lib/form/FormItem';
+import moment from 'moment';
 
 export interface ICreateOrUpdateBookingsProps {
   visible: boolean;
@@ -24,6 +26,8 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
     super(props);
   }
   state = {
+    fromDate: moment(),
+    toDate: moment(),
     items: [],
   };
   getItemTypes = async (itemType: number) => {
@@ -42,6 +46,15 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
 
   onRangeChange = (momentValues: any, dateRange: any) => {
     console.log(dateRange);
+  };
+  onFieldsChange = (changedFields: any, allFields: any) => {
+    const fDate = this.props.formRef.current?.getFieldValue('fromDate');
+    const tDate = this.props.formRef.current?.getFieldValue('toDate');
+    if (fDate && tDate) {
+      this.setState({ fromDate: fDate, toDate: tDate });
+    } else {
+      this.setState({ fromDate: moment(), toDate: moment() });
+    }
   };
   render() {
     const formItemLayout = {
@@ -64,7 +77,8 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
     };
 
     const { visible, onCancel, onCreate, formRef } = this.props;
-    const { items } = this.state;
+    const { fromDate, toDate, items } = this.state;
+    const dateFormat = 'YYYY-MM-DD';
     const { RangePicker } = DatePicker;
     let roomItems =
       items.length === 0
@@ -79,7 +93,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
         width={1050}
         style={{ top: 50 }}
       >
-        <Form ref={formRef}>
+        <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
@@ -89,12 +103,19 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
                 {...formItemLayout}
               >
                 <RangePicker
-                  format={'YYYY-MM-DD'}
+                  format={dateFormat}
                   onChange={this.onRangeChange}
                   inputReadOnly={true}
                   name={'range'}
+                  defaultValue={[moment(new Date(fromDate)), moment(new Date(toDate))]}
                 />
               </Form.Item>
+              <FormItem hidden={true} name={'fromDate'}>
+                <input />
+              </FormItem>
+              <FormItem hidden={true} name={'toDate'}>
+                <input />
+              </FormItem>
 
               <Form.Item
                 label={L('First Name')}
