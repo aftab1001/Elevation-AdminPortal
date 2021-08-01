@@ -77,7 +77,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
     };
 
     const { visible, onCancel, onCreate, formRef } = this.props;
-    const { fromDate, toDate, items } = this.state;
+    const { items } = this.state;
     const dateFormat = 'YYYY-MM-DD';
     const { RangePicker } = DatePicker;
     let roomItems =
@@ -107,7 +107,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
                   onChange={this.onRangeChange}
                   inputReadOnly={true}
                   name={'range'}
-                  defaultValue={[moment(new Date(fromDate)), moment(new Date(toDate))]}
+                  
                 />
               </Form.Item>
               <FormItem hidden={true} name={'fromDate'}>
@@ -167,7 +167,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
 
               <Form.Item
                 label={L('Item Type')}
-                name={'roomType'}
+                name={'itemType'}
                 rules={rules.roomType}
                 {...formItemLayout}
               >
