@@ -6,7 +6,7 @@ import axios from 'axios';
 const qs = require('qs');
 
 declare var abp: any;
-
+console.log(AppConsts.remoteServiceBaseUrl);
 const http = axios.create({
   baseURL: AppConsts.remoteServiceBaseUrl,
   timeout: 90000,
