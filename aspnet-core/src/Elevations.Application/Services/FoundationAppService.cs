@@ -22,12 +22,17 @@
         AsyncCrudAppService<Foundation, FoundationDto, int, PagedResultRequestDto, UpdateFoundationDto, FoundationDto>,
         IFoundationService
     {
-        private ElevationsDbContext context;
+        private readonly ElevationsDbContext context;
         private readonly IConfiguration configuration;
         public FoundationAppService(IRepository<Foundation, int> repository,
                                     IConfiguration configuration)
             : base(repository)
         {
+            var connectionString = configuration.GetConnectionString("Default");
+            var optionsBuilder = new DbContextOptionsBuilder<ElevationsDbContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+            context = new ElevationsDbContext(optionsBuilder.Options);
+            context.ChangeTracker.AutoDetectChangesEnabled = false;
             this.configuration = configuration;
         }
 
@@ -82,12 +87,9 @@
         { 
             //ABP framework is taking too much time to load data.That's why doing some dirty stuff
             //to manually create a dbcontext and getting data from that context.
-            var connectionString = configuration.GetConnectionString("Default");
-            var optionsBuilder = new DbContextOptionsBuilder<ElevationsDbContext>();
-            optionsBuilder.UseSqlServer(connectionString);
+           
 
-            context = new ElevationsDbContext(optionsBuilder.Options);
-            context.ChangeTracker.AutoDetectChangesEnabled = false;
+           
             List<Foundation> foundationsList = context.Foundation.ToList();
 
             List<FoundationDto> foundationDtoList = new();
