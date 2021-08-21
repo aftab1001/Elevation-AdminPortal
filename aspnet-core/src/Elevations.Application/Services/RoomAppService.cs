@@ -12,12 +12,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Elevations.Services
 {
+    using Elevations.Authorization;
     using Elevations.EntityFrameworkCore;
 
     using Microsoft.Extensions.Configuration;
 
-    //  [AbpAuthorize(PermissionNames.Pages_Rooms)]
-    [AbpAllowAnonymous]
+    [AbpAuthorize(PermissionNames.Pages_Rooms)]
     public class RoomAppService :
         AsyncCrudAppService<Rooms, RoomDto, int, PagedRoleResultRequestDto, UpdateRoomDto, RoomDto>,
         IRoomAppService

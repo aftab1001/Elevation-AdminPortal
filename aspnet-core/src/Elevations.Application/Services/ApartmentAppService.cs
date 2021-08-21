@@ -12,6 +12,7 @@
 
     using Castle.Components.DictionaryAdapter;
 
+    using Elevations.Authorization;
     using Elevations.EntityFrameworkCore;
     using Elevations.EntityFrameworkCore.HotelDto;
     using Elevations.Roles.Dto;
@@ -20,8 +21,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
 
-    //[AbpAuthorize(PermissionNames.Pages_Apartments)]
-    [AbpAllowAnonymous]
+    [AbpAuthorize(PermissionNames.Pages_Apartments)]
     public class ApartmentAppService :
         AsyncCrudAppService<Apartments, ApartmentDto, int, PagedRoleResultRequestDto, UpdateApartmentDto, ApartmentDto>,
         IApartmentService

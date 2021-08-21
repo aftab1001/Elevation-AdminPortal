@@ -8,8 +8,10 @@
 
     using Abp.Application.Services;
     using Abp.Application.Services.Dto;
+    using Abp.Authorization;
     using Abp.Domain.Repositories;
 
+    using Elevations.Authorization;
     using Elevations.EntityFrameworkCore;
     using Elevations.EntityFrameworkCore.HotelDto;
     using Elevations.Services.Dto;
@@ -17,7 +19,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
-
+    [AbpAuthorize(PermissionNames.Pages_Donation)]
     public class FoundationAppService :
         AsyncCrudAppService<Foundation, FoundationDto, int, PagedResultRequestDto, UpdateFoundationDto, FoundationDto>,
         IFoundationService
@@ -51,7 +53,7 @@
             return MapToEntityDto(foundation);
         }
 
-        [AllowAnonymous]
+        [AbpAllowAnonymous]
         public override Task<PagedResultDto<FoundationDto>> GetAllAsync(PagedResultRequestDto input)
         {
             return Task.FromResult(GetFoundationImageDetail());

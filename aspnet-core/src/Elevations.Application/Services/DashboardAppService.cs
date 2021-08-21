@@ -7,9 +7,11 @@ using Elevations.Services.Dto;
 
 namespace Elevations.Services
 {
-    //[AbpAuthorize(PermissionNames.Pages_Dashboard)]
-    [AbpAllowAnonymous]
-    public class DashboardAppService : AsyncCrudAppService<Dashboard, DashboardDto, int, PagedRoleResultRequestDto,
+    using Elevations.Authorization;
+
+    [AbpAuthorize(PermissionNames.Pages_Dashboard)]
+    public class DashboardAppService : 
+        AsyncCrudAppService<Dashboard, DashboardDto, int, PagedRoleResultRequestDto,
         DashboardDto, DashboardDto>
 
     {

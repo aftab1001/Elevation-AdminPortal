@@ -88,6 +88,7 @@
             return MapToEntityDto(Booking);
         }
 
+        [AbpAllowAnonymous]
         public override Task<PagedResultDto<BookingDto>> GetAllAsync(PagedResultRequestDto input)
         {
             return Task.FromResult(GetBookingDetail());
@@ -98,7 +99,7 @@
         {
             return await Task.FromResult(GetBookingDetail());
         }
-
+        [AbpAllowAnonymous]
         public async Task<List<BookingDetailsDto>> GetBookingByType(ItemType bookingType)
         {
             List<BookingDetailsDto> bookingDetailList = new();
@@ -125,7 +126,7 @@
 
             return bookingDetailList;
         }
-
+        [AbpAllowAnonymous]
         public async Task<string> GetBookingStatus(
             int itemId,
             BookingType bookingType,
@@ -146,7 +147,7 @@
           
             return string.Empty;
         }
-
+        [AbpAllowAnonymous]
         public async Task<PayModelResponse> ProcessBooking(PayModel payModel)
         {
             try
