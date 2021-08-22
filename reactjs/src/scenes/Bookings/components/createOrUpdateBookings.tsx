@@ -9,7 +9,7 @@ import BookingStore from './../../../stores/bookingStore';
 import BookingItemStore from './../../../stores/bookingItemStore';
 import BookingService from './../../../services/booking/bookingService';
 import FormItem from 'antd/lib/form/FormItem';
-import moment from 'moment';
+import moment from 'antd/node_modules/moment';
 
 export interface ICreateOrUpdateBookingsProps {
   visible: boolean;
@@ -19,6 +19,8 @@ export interface ICreateOrUpdateBookingsProps {
   formRef: React.RefObject<FormInstance>;
   bookingStore: BookingStore;
   bookingItemStore: BookingItemStore;
+  fromDate : string;
+  toDate:string
 }
 
 class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProps> {
@@ -26,8 +28,6 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
     super(props);
   }
   state = {
-    fromDate: moment(),
-    toDate: moment(),
     items: [],
   };
   getItemTypes = async (itemType: number) => {
@@ -47,15 +47,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
   onRangeChange = (momentValues: any, dateRange: any) => {
     console.log(dateRange);
   };
-  onFieldsChange = (changedFields: any, allFields: any) => {
-    const fDate = this.props.formRef.current?.getFieldValue('fromDate');
-    const tDate = this.props.formRef.current?.getFieldValue('toDate');
-    if (fDate && tDate) {
-      this.setState({ fromDate: fDate, toDate: tDate });
-    } else {
-      this.setState({ fromDate: moment(), toDate: moment() });
-    }
-  };
+  
   render() {
     const formItemLayout = {
       labelCol: {
@@ -93,7 +85,7 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
         width={1050}
         style={{ top: 50 }}
       >
-        <Form ref={formRef} onFieldsChange={this.onFieldsChange}>
+        <Form ref={formRef} >
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
@@ -104,7 +96,11 @@ class CreateOrUpdateBookings extends React.Component<ICreateOrUpdateBookingsProp
               >
                 <RangePicker
                   format={dateFormat}
-                  onChange={this.onRangeChange}
+                  defaultValue={[
+                    moment(this.props.fromDate || new Date(),dateFormat),
+                    moment(this.props.toDate || new Date(),dateFormat)
+                ]}
+                  onChange={this.onRangeChange} 
                   inputReadOnly={true}
                   name={'range'}
                   

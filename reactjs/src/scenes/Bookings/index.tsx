@@ -13,12 +13,11 @@ import Stores from '../../stores/storeIdentifier';
 import BookingStore from './../../stores/bookingStore';
 import BookingItemStore from './../../stores/bookingItemStore';
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import "./booking.css";
+import './booking.css';
 
 export interface IBookingProps {
   bookingStore: BookingStore;
-  bookingItemStore:BookingItemStore;
-  
+  bookingItemStore: BookingItemStore;
 }
 
 export interface IBookingState {
@@ -27,18 +26,22 @@ export interface IBookingState {
   skipCount: number;
   bookingId: number;
   filter: string;
+  fDate:string;
+  tDate:string;
 }
 
 const confirm = Modal.confirm;
 const Search = Input.Search;
 
-@inject(Stores.BookingStore,Stores.BookingItemStore)
+@inject(Stores.BookingStore, Stores.BookingItemStore)
 @observer
 class Booking extends AppComponentBase<IBookingProps, IBookingState> {
   formRef = React.createRef<FormInstance>();
 
   state = {
     modalVisible: false,
+    fDate:'',
+    tDate: '',
     maxResultCount: 10,
     skipCount: 0,
     bookingId: 0,
@@ -50,7 +53,6 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
   }
 
   async getAll() {
-    
     await this.props.bookingStore.getAll({
       maxResultCount: this.state.maxResultCount,
       skipCount: this.state.skipCount,
@@ -76,23 +78,27 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
       this.props.bookingStore.createBooking();
     } else {
       await this.props.bookingStore.get(entityDto);
+      
     }
 
-    this.setState({ bookingId: entityDto.id });
-    this.Modal();
+    this.setState({ bookingId: entityDto.id,fDate:this.props.bookingStore.bookingModel.fromDate,
+    tDate:this.props.bookingStore.bookingModel.toDate });
+    
+   
 
     setTimeout(() => {
+      this.Modal();
       if (entityDto.id !== 0) {
         this.formRef.current?.setFieldsValue({
           ...this.props.bookingStore.bookingModel,
         });
+        
       } else {
         this.formRef.current?.resetFields();
       }
-      this.formRef.current?.submit();
-    }, 100);
+      //this.formRef.current?.submit();
+    }, 200);
   }
-  
 
   delete(input: EntityDto) {
     const self = this;
@@ -107,10 +113,10 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
 
   handleCreate = async () => {
     this.formRef.current?.validateFields().then(async (values: any) => {
-      const updatedValues={...values};
-      const [startDate,endDate]=values.dateRange;
-      updatedValues.fromDate=startDate.format('YYYY-MM-DD');
-      updatedValues.toDate=endDate.format('YYYY-MM-DD');
+      const updatedValues = { ...values };
+      const [startDate, endDate] = values.dateRange;
+      updatedValues.fromDate = startDate.format('YYYY-MM-DD');
+      updatedValues.toDate = endDate.format('YYYY-MM-DD');
       if (this.state.bookingId === 0) {
         await this.props.bookingStore.create(updatedValues);
       } else {
@@ -128,7 +134,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
   };
 
   public render() {
-    const { bookings } = this.props.bookingStore;    
+    const { bookings } = this.props.bookingStore;
     const columns = [
       {
         title: L('Item Name'),
@@ -149,14 +155,14 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
         dataIndex: 'fromDate',
         key: 'fromDate',
         width: 50,
-        render: (text: string) => <div>{new Date(text).toLocaleDateString()}</div>,
+        render: (text: string) => <div>{new Date(text).toLocaleDateString('en-US')}</div>,
       },
       {
         title: L('To Date'),
         dataIndex: 'toDate',
         key: 'toDate',
         width: 50,
-        render: (text: string) => <div>{new Date(text).toLocaleDateString()}</div>,
+        render: (text: string) => <div>{new Date(text).toLocaleDateString('en-US')}</div>,
       },
       {
         title: L('Guest Name'),
@@ -232,7 +238,7 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
                   <Menu.Item onClick={() => this.createOrUpdateModalOpen({ id: item.id })}>
                     {L('Edit Bookings')}
                   </Menu.Item>
-                  
+
                   <Menu.Item onClick={() => this.delete({ id: item.id })}>{L('Delete')}</Menu.Item>
                 </Menu>
               }
@@ -308,6 +314,8 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
         <CreateOrUpdateBooking
           formRef={this.formRef}
           visible={this.state.modalVisible}
+          fromDate = {this.state.fDate}
+          toDate = {this.state.tDate}
           onCancel={() =>
             this.setState({
               modalVisible: false,
@@ -318,7 +326,6 @@ class Booking extends AppComponentBase<IBookingProps, IBookingState> {
           bookingStore={this.props.bookingStore}
           bookingItemStore={this.props.bookingItemStore}
         />
-        
       </Card>
     );
   }
